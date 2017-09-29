@@ -6,6 +6,8 @@ const router = express.Router();
 const fetchdata = require('./routes/fetchdata')(router);
 const bodyParser = require('body-parser');
 
+const estate = require('./models/products/estates');
+const leaseCtr = require('./models/products/estatecontracts/leasecontract');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, { useMongoClient: true })

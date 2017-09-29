@@ -3,12 +3,15 @@ const product = require('../products');
 mongoose.Promise = global.Promise;
 
 
-const mobileSchema = product.discriminator('mobile',
+const tabletSchema = product.discriminator('tablet',
 	new mongoose.Schema({
 		memory: String,
 		ram: String,
 		megapixel: String,
+		guarantee: Boolean,
+		simcard: Boolean,
+		scrresolution: String,
 		subcategoryid:{type:'String',default:'electronics'}
 	}));
 
-module.exports = mobileSchema;
+module.exports = tabletShema;

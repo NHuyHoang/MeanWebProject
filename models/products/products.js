@@ -10,7 +10,7 @@ const productSchema = new Schema({
 	producer: { type: String, required: true },
 	cost: { type: Number, required: true },
 	currency: { type: String, required: true },
-	subcategoryid:{ type: Schema.Types.ObjectId, require: true},
+	categoryid:{ type: Schema.Types.ObjectId, require: true},
 	guarantee:String,
 	paymentmethod:{ type: String, required: true},
 	imglist: []

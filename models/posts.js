@@ -15,6 +15,7 @@ const postSchema = new Schema({
     available : { type: Boolean, default: false},
     approval :{ type: Boolean, default: false},
   	product:{},
+    subareaid: { type:Schema.Types.ObjectId, require:true},
   	comment:[commentSchema]
 });
 

@@ -3,8 +3,8 @@ const product = require('../products');
 mongoose.Promise = global.Promise;
 
 
-var laptopSchema = product.discriminator('laptop',
-	new mongo.Schema({
+var laptopSchema = product.discriminator('59ccb33a6b406109345ed118',
+	new mongoose.Schema({
         chip : String,
         ram : String,
         memory : String,
@@ -12,6 +12,6 @@ var laptopSchema = product.discriminator('laptop',
         VGA : String,
         scrresolution : String,
         HDD : String,
-        subcategoryid:{type:'String',default:'electronics'}
+        categoryid:{type:String,default:'elt'}
 	}));
 module.exports = laptopSchema;

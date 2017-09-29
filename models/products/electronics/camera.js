@@ -3,14 +3,14 @@ const product = require('../products');
 mongoose.Promise = global.Promise;
 
 
-const cameraSchema = product.discriminator('camera',
+const cameraSchema = product.discriminator('59ccb33a6b406109345ed116',
 	new mongoose.Schema({
 		iso: String,
 		megapixel: String,
 		fps:Number,
 		lens:String,
 		shots:Number,
-		subcategoryid:{type:'String',default:'electronics'}
+		categoryid:{type:String,default:'elt'}
 	}));
 
 module.exports = cameraSchema;

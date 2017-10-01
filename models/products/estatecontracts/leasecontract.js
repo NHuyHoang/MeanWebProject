@@ -8,6 +8,6 @@ const leaseSchema = new Schema({
 	cost:{ type:Number, require:true },
 	contractduration:String,
 	currency:String
-});
+},{ _id : false });
 
 module.exports = leaseSchema;

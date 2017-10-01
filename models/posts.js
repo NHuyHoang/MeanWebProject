@@ -14,7 +14,7 @@ const postSchema = new Schema({
     vipexpire : Date,
     available : { type: Boolean, default: false},
     approval :{ type: Boolean, default: false},
-  	product:{},
+  	product:[],
     subareaid: { type:Schema.Types.ObjectId, require:true},
   	comment:[commentSchema]
 });

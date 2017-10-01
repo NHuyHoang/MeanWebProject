@@ -9,6 +9,6 @@ const saleSchema = new Schema({
 	cost:{ type:Number, require:true },
 	paymentmethod:String,
 	currency:String
-});
+},{ _id : false });
 
 module.exports = saleSchema;

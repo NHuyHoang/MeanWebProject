@@ -25,7 +25,7 @@ const SaleContract = require('../models/products/estatecontracts/salecontract');
 
 const CURRENCY = ['USD', 'JPY', 'CNY', 'EUR'];
 
-var MAXPOST = 20;
+const MAXPOST = 50;
 
 (() => {	
 	Post.find()
@@ -33,15 +33,15 @@ var MAXPOST = 20;
 	.then((count) => {
 		if(count < MAXPOST)
 		{
-			var t = _.times(MAXPOST - count,() => createPost());
+			let t = _.times(MAXPOST - count,() => createPost());
 			Post.insertMany(t);
 		};
 	})
 })();
 
 function createPost(){
-	var product = generateRandomProduct();
-	var cmt = createCommentsObj();
+	let product = generateRandomProduct();
+	let cmt = createCommentsObj();
 	return Post({
 		userpost: mongoose.Types.ObjectId(getId[_.random(0, getId.length - 1)]),
 		subareaid: mongoose.Types.ObjectId(getArea[_.random(0, getId.length - 1)]),
@@ -61,14 +61,14 @@ function chooseCurrency(){
 }
 
 function createProduct(){
-	var productType = _.random(0,1);
-	var product;
+	let productType = _.random(0,1);
+	let product;
 }
 
 function createComments(array){
-	var cmtModels = mongoose.model('comment',Comments);
-	var idUser = getId[_.random(0, getId.length - 1)];
-	var cmt = new cmtModels({
+	let cmtModels = mongoose.model('comment',Comments);
+	let idUser = getId[_.random(0, getId.length - 1)];
+	let cmt = new cmtModels({
 		usercmt: mongoose.Types.ObjectId(idUser),
 		date: new Date(),
 		cmt: faker.lorem.sentences(),
@@ -78,9 +78,9 @@ function createComments(array){
 }
 
 function createCommentsObj(){
-	var cmtCount = _.random(1,4);
-	var cmtObj = _.times(cmtCount, () => {
-		var reply = _.times(_.random(1,3),() => createComments());
+	let cmtCount = _.random(1,4);
+	let cmtObj = _.times(cmtCount, () => {
+		let reply = _.times(_.random(1,3),() => createComments());
 		return createComments(reply);
 	})
 	return cmtObj;
@@ -89,7 +89,7 @@ function createCommentsObj(){
 
 
 function createCamera(){
-	var iso = ["ISO 100", "ISO 200", "ISO 400", "ISO 800", "ISO 1600", "ISO 3200"];
+	let iso = ["ISO 100", "ISO 200", "ISO 400", "ISO 800", "ISO 1600", "ISO 3200"];
 	return Cameras({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -110,7 +110,7 @@ function createCamera(){
 }
 
 function createLaptop(){
-	var img = _.times(_.random(1,3),() => faker.image.image());
+	let img = _.times(_.random(1,3),() => faker.image.image());
 	return Laptops({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -133,7 +133,7 @@ function createLaptop(){
 }
 
 function createMobile(){
-	var img = _.times(_.random(0,3),() => faker.image.image());
+	let img = _.times(_.random(0,3),() => faker.image.image());
 	return Mobiles({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -152,7 +152,7 @@ function createMobile(){
 }
 
 function createTablet(){
-	var img = _.times(_.random(0,3),() => faker.image.image());
+	let img = _.times(_.random(0,3),() => faker.image.image());
 	return Tablets({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -173,8 +173,8 @@ function createTablet(){
 }
 
 function createBicycle(){
-	var img = _.times(_.random(0,3),() => faker.image.transport());
-	var species = ['bmx','moutain bike','road bike','electric bike'];
+	let img = _.times(_.random(0,3),() => faker.image.transport());
+	let species = ['bmx','moutain bike','road bike','electric bike'];
 	return Bicycles({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -192,9 +192,9 @@ function createBicycle(){
 }
 
 function createCar(){
-	var img = _.times(_.random(0,3),() => faker.image.transport());
-	var species = ['Sedan','Suv','Hatchblack','Pick up', 'Minivan', 'Van couple', 'Convertibles'];
-	var fuel = ['Gas', 'Diesel', 'Electric'];
+	let img = _.times(_.random(0,3),() => faker.image.transport());
+	let species = ['Sedan','Suv','Hatchblack','Pick up', 'Minivan', 'Van couple', 'Convertibles'];
+	let fuel = ['Gas', 'Diesel', 'Electric'];
 	return Cars ({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -219,9 +219,9 @@ function createCar(){
 }
 
 function createMotor(){
-	var img = _.times(_.random(0,3),() => faker.image.transport());
-	var species = ['scooter','embaraye','gear'];
-	var fuel = ['Gas', 'Diesel', 'Electric'];
+	let img = _.times(_.random(0,3),() => faker.image.transport());
+	let species = ['scooter','embaraye','gear'];
+	let fuel = ['Gas', 'Diesel', 'Electric'];
 	return Motors ({
 		description:  faker.lorem.sentences(),
 		productname: faker.lorem.sentence(),
@@ -242,7 +242,7 @@ function createMotor(){
 }
 
 function createLeaseContact(){
-	var lct = mongoose.model('leasecontract',LeaseContract)
+	let lct = mongoose.model('leasecontract',LeaseContract)
 	return lct ({
 		deposit:_.random(1000,100000),
 		cost:_.random(1000,100000),
@@ -252,7 +252,7 @@ function createLeaseContact(){
 }
 
 function createSaleContract(){
-	var sct = mongoose.model('salecontract',SaleContract)
+	let sct = mongoose.model('salecontract',SaleContract)
 	return sct ({
 		land_certificate: faker.random.boolean(),
 		ownership_certificate: faker.random.boolean(),
@@ -263,10 +263,11 @@ function createSaleContract(){
 }
 
 function createEstate(){
-	var contract = {};
-	var contract2 = {}
-	var type = ['houses','departments','offices'];
-	switch (_.random(0,2)) {
+	let contract = {};
+	let contract2 = {}
+	let type = ['houses','departments','offices'];
+	let random = _.random(0,2)
+	switch (random) {
 		case 0:
 		contract = createLeaseContact();
 		break;
@@ -279,22 +280,53 @@ function createEstate(){
 		break;
 
 	}
-
-
-	return Estates({
-		_type: type[_.random(0, type.length -1 )],
-		description:  faker.lorem.sentences(),
-		address: faker.address.streetAddress() + ", " + faker.address.state(),
-		location:{	lat:faker.address.latitude(),
-			log:faker.address.longitude()},							
-		registeredowner:faker.random.boolean(),					//chính chủ
-		area: _.random(10,500),
-		state: faker.lorem.word(),
-		furnitureinclue:faker.random.boolean(),											
-		leasecontract: contract,
-		salecontract: contract2,
-		imglist: []
-	})
+	if(random == 0) {
+			return Estates({
+			_type: type[_.random(0, type.length -1 )],
+			description:  faker.lorem.sentences(),
+			address: faker.address.streetAddress() + ", " + faker.address.state(),
+			location:{	lat:faker.address.latitude(),
+				log:faker.address.longitude()},							
+			registeredowner:faker.random.boolean(),					//chính chủ
+			area: _.random(10,500),
+			state: faker.lorem.word(),
+			furnitureinclue:faker.random.boolean(),											
+			leasecontract: contract,
+			imglist: []
+		})
+	};
+	if(random == 1) {
+			return Estates({
+			_type: type[_.random(0, type.length -1 )],
+			description:  faker.lorem.sentences(),
+			address: faker.address.streetAddress() + ", " + faker.address.state(),
+			location:{	lat:faker.address.latitude(),
+				log:faker.address.longitude()},							
+			registeredowner:faker.random.boolean(),					//chính chủ
+			area: _.random(10,500),
+			state: faker.lorem.word(),
+			furnitureinclue:faker.random.boolean(),											
+			salecontract: contract2,
+			imglist: []
+		})
+	};
+	if(random == 2) {
+			return Estates({
+			_type: type[_.random(0, type.length -1 )],
+			description:  faker.lorem.sentences(),
+			address: faker.address.streetAddress() + ", " + faker.address.state(),
+			location:{	lat:faker.address.latitude(),
+				log:faker.address.longitude()},							
+			registeredowner:faker.random.boolean(),					//chính chủ
+			area: _.random(10,500),
+			state: faker.lorem.word(),
+			furnitureinclue:faker.random.boolean(),											
+			leasecontract: contract,
+			salecontract: contract2,
+			imglist: []
+		})
+	};
+	
 }
 
 function generateRandomProduct(){

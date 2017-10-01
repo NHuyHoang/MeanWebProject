@@ -13,8 +13,9 @@ const estateSchema = new Schema({
 	area:Number,
 	state: { type: String, required: true },
 	furnitureinclue:Boolean,											
-	leasecontract: { type: Schema.Types.Mixed},
-	salecontract: { type: Schema.Types.Mixed},
+	leasecontract: leasecontract,
+	salecontract: salescontract,
+	categoryid:{type:String,default:'est'},
 	imglist: []
 }, {collection : 'esates'});
 

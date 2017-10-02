@@ -4,6 +4,7 @@ const ProductsSv = require('./ProductsService');
 const CateSv = require('./CategoriesService');
 const AreaSv = require('./AreasService');
 const objId = mongoose.Types.ObjectId;
+const _ = require('lodash');
 
 module.exports = {
 	getAll: () => {
@@ -20,68 +21,66 @@ module.exports = {
 		})
 	},
 
-	getByCate: (cateid) => {
-		return Post.find({"product.categoryid":cateid}, (err,data) => {
-			if(err) throw err;
-			return data;
-		})
-	},
-
-
 	getByCate: (parentid, childid) => {
-		return Post.find({"product.categoryid":parentid,"product._type":childid}, (err,data) => {
-			if(err) throw err;
-			return data;
-		})
+		if(childid === undefined)
+			return Post.find({"product.categoryid":parentid}, (err,data) => {
+				if(err) throw err;
+				return data;
+			});
+		else
+			return Post.find({"product.categoryid":parentid,"product._type":childid}, (err,data) => {
+				if(err) throw err;
+				return data;
+			});
 	},
 	//getbycontract use for estate only
-	getByContractType: (contractid) =>{
-		return Post.find({ 
-			$or:[
-			{"product.leasecontract.typecontract":objId(contractid)},
-			{"product.salecontract.typecontract":objId(contractid)}
-			]},
-			(err,data) => {
-				if(err) throw err;
-				return data;
-			})
-	},
 	//find estate by contract type and estate type
 	getByContractType: (contractid,type) =>{
-		return Post.find({ $and:[{ 
-			$or:[
-			{"product.leasecontract.typecontract":objId(contractid)},
-			{"product.salecontract.typecontract":objId(contractid)}
-			]},{"product._type":type}]},
-			(err,data) => {
-				if(err) throw err;
-				return data;
-			})
-	},
-
-	getByParentArea:(areaid) => {
-		return AreaSv.getById(areaid)
-			.then(data => {
-				let area = [];
-				data.subareas.forEach(entry => {
-					area.push(entry._id);
-				});
-				return area;
-			})
-			.then(data => {
-				return Post.find({subareaid:{$in:data}},(err,data) => {
+		if(type === undefined)
+			return Post.find({ 
+				$or:[
+				{"product.leasecontract.typecontract":objId(contractid)},
+				{"product.salecontract.typecontract":objId(contractid)}
+				]},
+				(err,data) => {
+					if(err) throw err;
+					return data;
+			});
+		else
+			return Post.find({ $and:[{ 
+				$or:[
+				{"product.leasecontract.typecontract":objId(contractid)},
+				{"product.salecontract.typecontract":objId(contractid)}
+				]},{"product._type":type}]},
+				(err,data) => {
 					if(err) throw err;
 					return data;
 				})
-			});
-
 	},
 
-	getBySubArea: (areaid) => {
-		return Post.find({"subareaid":objId(areaid)}, (err,data) => {
-			if(err) throw err;
-			return data;
-		})
+	getByArea:(areaid, subid) => {
+		if(areaid && subid === undefined){
+			return AreaSv.getById(areaid)
+				.then(data => {
+					let area = [];
+					data.subareas.forEach(entry => {
+						area.push(entry._id);
+					});
+					return area;
+				})
+				.then(data => {
+					return Post.find({subareaid:{$in:data}})
+						.populate('userpost')
+						.then(data => data)
+						.catch(reject => reject);
+				});
+		}
+		else if(subid && areaid === undefined){
+			return Post.find({"subareaid":subid})
+				.populate('userpost')
+				.then(data => data)
+				.catch(reject => reject);
+		}
 	},
 
 
@@ -96,6 +95,7 @@ module.exports = {
 	update: (id, input) => {
 		return Post.findOneAndUpdate({_id:id}, input, (err, data) => {
 			if(err) throw err;
+			return data;
 		})
 	},
 

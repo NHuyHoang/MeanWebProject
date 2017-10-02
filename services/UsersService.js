@@ -43,8 +43,9 @@ module.exports = {
 	},
 	//find id and remove
 	remove: (id) => {
-		return User.findByIdAndRemove({_id:id}, (err) => {
-			if(err) throw err
+		return User.findByIdAndRemove({_id:id}, (err, doc) => {
+			if(err) throw err;
+			doc.remove();//trigger the pre remove -> delete all post
 		});
 	}
 }

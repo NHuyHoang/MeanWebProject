@@ -29,10 +29,16 @@ module.exports = {
 	update:(req,res) => {
 		const id = req.body.id;
 		const user = req.body.user;
-		console.log(user);
 		if(!id || !user) res.json({message:"invalid request"});
 		else UsersService.update(id, user).then((data) => {
 			res.send(data);
 		});
+	},
+	remove:(req,res) => {
+		const id = req.body.id;
+		if(!id) res.json({message:"invalid id"});
+		else UsersService.remove(id).then((data) => {
+			res.send(data);
+		})
 	}
 }

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Post = require('./posts');
 mongoose.Promise = global.Promise;
 
 const Schema = mongoose.Schema;
@@ -40,4 +41,21 @@ const userSchema = new Schema({
 	point: Number
 });
 
+userSchema.post('remove',function(next) {
+	Post.find({userpost:this._id},(err, data) => {
+		if(err) throw err;
+		let result = [];
+		data.forEach(entry => {
+			result.push(entry._id);
+		});
+		return result;
+	}).then((data) => {
+		Post.remove({_id:{$in:data}})
+			.then(() => {
+				console.log("successful remove all the related post with user");
+			})
+			.catch(reject => console.log(reject));
+	})
+})
+    
 module.exports = mongoose.model('user', userSchema);

@@ -28,4 +28,20 @@ app.listen(3000, () => {
 	console.log('listening on port 3000');
 });
 
-
+let MobileSchema = require ('./models/products/electronics/mobile');
+let mobile = new MobileSchema({
+	description:  "des",
+	productname: "productname",
+	state: "new",
+	producer: "producer",
+	cost: 5000,
+	currency: "USD",
+	categoryid:"elt",
+	guarantee:"3years",
+	paymentmethod:"VISA",
+	memory: "16gb",
+	ram: "2gb",
+	megapixel: "12mgpx",
+	abcd:"123" // document khong hop le
+});
+console.log(mobile);

@@ -25,7 +25,7 @@ const SaleContract = require('../models/products/estatecontracts/salecontract');
 
 const CURRENCY = ['USD', 'JPY', 'CNY', 'EUR'];
 
-const MAXPOST = 50;
+const MAXPOST = 1000;
 
 (() => {	
 	Post.find()

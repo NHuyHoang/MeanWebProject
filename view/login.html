@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="icon" type="image/gif" href="./asset/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/login_style.css">
+        <script
+                src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    </head>
+
+    <body>
+
+        <div id="navbar" class="ui tiny borderless fixed menu">
+             <img id="nav_logo" src="asset/logo_typo_tiny.png"/>
+           <a class="item"> <i class="lagre home icon"></i></a>
+            <a class="item"> <i class="lagre search icon"></i></a>
+            <div class="right menu">
+                <div class="item">
+                    <div id="signin_btn" class="ui tiny buttons">
+                        <button  class="ui mini button">Sign in</button>
+                        <div class="or"></div>
+                        <button class="ui mini positive button">Sign up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <img id="wallpaper" src="asset/wallpaper.jpg"/>
+            <div class="" id="content_login">
+                <header>Welcome</header>
+                <form class="ui big form" action="user_home.html">
+                    <div class=" field">
+                        <div class="ui right labeled left icon input">
+                            <i class="user  icon"></i>
+                            <input placeholder="Your email" type="email">
+                        </div>
+                    </div>
+                    <div class=" field">
+                        <div class="ui right labeled left icon input">
+                            <i class="hide  icon"></i>
+                            <input placeholder="Your password" type="password">
+                        </div>
+                    </div>
+                    <button onclick="window.location='user_home.html'" class="ui large positive button">Sign in</button>
+                    <div class="ui horizontal divider">
+                        <p>OR</p>
+                    </div>
+                    <button id="fb_btn" class="ui facebook button">
+                        <i class="facebook icon"></i>
+                        Login with Facebook
+                    </button>
+                    <button id="gg_btn" class="ui google plus button">
+                        <i class="google plus icon"></i>
+                        Login with Google
+                    </button>
+                    <div class="ui divider">
+                    </div>
+                    <h5>You don't have any account? Create one &nbsp;<a>here</a></h5>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <div id="social">
+                <div class="ui tiny icon buttons">
+                    <button class="ui facebook button">
+                        <i class="facebook icon"></i>
+                    </button>
+                    <button class="ui twitter button">
+                        <i class="twitter icon"></i>
+                    </button>
+                    <button class="ui google plus button">
+                        <i class="google plus icon"></i>
+                    </button>
+                </div>
+            </div>
+            <figcaption>
+                <p>Designed and deverloped by <span>hyhoang</span><br>© 2017 MEAN, Group</p>
+            </figcaption>
+
+        </footer>
+    </body>
+</html>

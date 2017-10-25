@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <link rel="icon" type="image/gif" href="./asset/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!--materialize css-->
+
+        <!-------semantic------------>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+        <!------------------->
+        <link rel="stylesheet" href="./css/style.css">
+
+        <script
+                src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+
+        <!-------------------------->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+        <!---------slider----------->
+        <link href="./css/nouislider.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main_style.css">
+        <link rel="stylesheet" href="./css/post_creating.css">
+    </head>
+
+    <body>
+
+        <div id="navbar" class="ui tiny icon borderless fixed secondary pointing menu">
+
+            <img id="nav_logo" src="asset/logo_typo_tiny.png"/>
+
+            <a class="active item"> <i class="lagre home icon"></i></a>
+            <a class=" item"> <i class="lagre search icon"></i></a>
+            <div id="right_menu" class="right menu">
+                <img id="avatar" src="./asset/ava_2.png">
+                <a class="item">
+                    <i class="lagre world icon"></i>
+                </a>
+                <a class="item">
+                    <i class="lagre  inbox icon"></i>
+                </a>
+                <a class="item">
+                    <i class="lagre red power icon"></i>
+                </a>
+
+            </div>
+            <a id="ellipsis_icon" class="item">
+                <i class="lagre ellipsis vertical icon"></i>
+            </a>
+        </div>
+        <div id="content">
+
+            <div id="left_panel" class="">
+                <div id="left_panel_header">
+                    <img id="avatar" src="./asset/ava_2.png">
+                    <div id="user_rating" class="ui big star rating" data-rating="3">
+                        <i class="icon"></i>
+                        <i class="icon"></i>
+                        <i class="icon"></i>
+                        <i class="icon"></i>
+                        <i class="icon"></i>
+                    </div>
+                </div>
+                <div id="item1">
+                    <div id="name">
+                        <i class="big address card outline icon"></i>
+                        <p>Peter parker</p>
+                    </div>
+                    <div id="email">
+                        <i class="big mail icon"></i>
+                        <p>litlespider@gmail.com</p>
+                    </div>
+                    <div id="post_count">
+                        <div><i class="big browser icon"></i></div>
+                        <p>2 posts</p>
+                    </div>
+                </div>
+                <div id="item2">
+                    <button class="ui fluid basic teal labeled icon button">
+                        <i class=" big inbox icon"></i>
+                        Check inbox
+                    </button>
+                </div>
+                <div id="item3">
+                    <button class="ui fluid basic red labeled icon button">
+                        <i class=" big edit icon"></i>
+                        Create post
+                    </button>
+                </div>
+                <div id="item4">
+                    <button class="ui fluid basic positive labeled icon button">
+                        <i class=" big write square icon"></i>
+                        Create post
+                    </button>
+                </div>
+
+            </div>
+            <!-----------main_panel------------>
+            <div id="main_panel" class="ui raised segments">
+                <div class="ui segment header_segment">
+                    <h3>Create post</h3>
+                </div>
+                <div class="ui segment content_segment">
+                    <form class="ui form">
+                        <div class="field">
+                            <label><i class="large  write icon"></i>Title</label>
+                            <input name="post_title" type="text">
+                        </div>
+                        <div class="field">
+                            <label><i class="large marker icon"></i>Area</label>
+                            <div class="ui floating labeled icon dropdown button post_area_selection">
+                                <i class="dropdown icon"></i>
+                                <span class="text">Your area</span>
+                                <div class="menu">
+                                    <div class="item">
+                                        <i class="dropdown icon"></i>
+                                        <span class="text">TP.HCM</span>
+                                        <div class="right menu">
+                                            <div class="item">Quận 1</div>
+                                            <div class="item">Quận 2</div>
+                                            <div class="item">Quận 3</div>
+                                            <div class="item">Quận 4</div>
+                                            <div class="item">Quận 5</div>
+                                            <div class="item">Quận 6</div>
+                                            <div class="item">Quận 7</div>
+                                            <div class="item">Quận 8</div>
+                                            <div class="item">Quận 9</div>
+                                            <div class="item">Quận 10</div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <i class="dropdown icon"></i>
+                                        <span class="text">Hà Nội</span>
+                                        <div class="right menu">
+                                            <div class="item">Quận Ba Đình</div>
+                                            <div class="item">Quận Tây Hồ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="ui selection dropdown custom_drop">
+<input id="post_area" type="hidden">
+<i class="dropdown icon"></i>
+<div class="default text drop_display">Area</div>
+<div class="menu">
+<div class="item" data-value="1">Tp.HCM</div>
+<div class="item" data-value="0">Female</div>
+</div>
+</div>-->
+                        </div>
+                        <div class="field">
+                            <label><i class="large tags icon"></i>Category</label>
+                            <select id="category_selection" name="" multiple="" class="ui search selection dropdown">
+
+                                <option>Electronics</option>
+                                <option>Mobile</option>
+                                <option>Laptop</option>
+                                <option>Tablet</option>
+                                <option>Camera</option>
+                                <option>Vehicle</option>
+                                <option>Bike</option>
+                                <option>Car</option>
+                                <option>Estate</option>
+                                <option>Another</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label><i class="big write square icon"></i>Description</label>
+                            <textarea></textarea>
+                        </div>
+                        <div class="field">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="camera-tab" data-toggle="tab" href="#--camera" role="tab" aria-controls="home" aria-selected="true">Camera</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="car-tab" data-toggle="tab" href="#--car" role="tab" aria-controls="profile" aria-selected="false">Another</a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="ui form form_post_product">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Product name</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+                                            <div class="field">
+                                                <label>Producer</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+
+                                        </div>
+                                        <div class="fields">
+                                            <div class="five wide field">
+
+                                                <label>Cost</label>
+                                                <div class="ui right action left icon input">
+                                                    <input placeholder="" type="number">
+                                                    <div class="ui basic floating dropdown button currency_selector">
+                                                        <div class="text">$</div>
+                                                        <div class="menu">
+                                                            <div class="item">¥</div>
+                                                            <div class="item">€</div>
+                                                            <div class="item">$</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="ui section divider"></div>
+
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>ISO</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+                                            <div class="field">
+                                                <label>MGPX</label>
+                                                <div class="ui right labeled input">
+                                                    <input placeholder="" type="text">
+                                                    <div class="ui basic label">
+                                                        <p>mgpx</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="field">
+                                                <label>Shot(s)</label>
+                                                <input placeholder="" type="number">
+                                            </div>
+                                        </div>
+                                        <div class=" fields">
+                                            <div class="three wide field">
+                                                <label>Fps</label>
+                                                <input placeholder="" type="number">
+                                            </div>
+                                            <div class="thirteen wide field">
+                                                <label>Len(s)</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="--car" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="ui form form_post_product">
+                                        <div class="two fields">
+                                            <div class="field">
+                                                <label>Product name</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+                                            <div class="field">
+                                                <label>Producer</label>
+                                                <input placeholder="" type="text">
+                                            </div>
+
+                                        </div>
+                                        <div class="fields">
+                                            <div class="five wide field">
+
+                                                <label>Cost</label>
+                                                <div class="ui right action left icon input">
+                                                    <input placeholder="" type="number">
+                                                    <div class="ui basic floating dropdown button currency_selector">
+                                                        <div class="text">$</div>
+                                                        <div class="menu">
+                                                            <div class="item">¥</div>
+                                                            <div class="item">€</div>
+                                                            <div class="item">$</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <button class="ui positive button btn_submit" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <!-------end main_panel------------>
+
+        </div>
+        <footer>
+            <div id="social">
+                <div class="ui tiny icon buttons">
+                    <button class="ui facebook button">
+                        <i class="facebook icon"></i>
+                    </button>
+                    <button class="ui twitter button">
+                        <i class="twitter icon"></i>
+                    </button>
+                    <button class="ui google plus button">
+                        <i class="google plus icon"></i>
+                    </button>
+                </div>
+            </div>
+            <figcaption>
+                <p>Designed and deverloped by <span>hyhoang</span><br>© 2017 MEAN, Group</p>
+            </figcaption>
+
+        </footer>
+        <script>
+            $('.ui.dropdown').dropdown();
+            $('.ui.rating').rating();
+        </script>
+    </body>
+</html>

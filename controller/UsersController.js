@@ -12,6 +12,13 @@ module.exports = {
 			res.send(data);
 		})
 	},
+	getByEmailPass:(req,res) => {
+		if(!req.body.email || !req.body.pass) res.json({message:"invalid email or pass"});
+		else UsersService.getByEmailPass(req.body.email,req.body.pass).then((data) => {
+			if(!data) res.send({message:'Not found'});
+			else res.send(data);
+		})
+	},
 	getById:(req,res) => {
 		const id = req.body.id;
 		if(!id) res.json({message:"invalid id"});

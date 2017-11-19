@@ -83,6 +83,11 @@ module.exports = {
 		}
 	},
 
+	getByUserId:(id) =>{
+		return Post.find({"userpost":id}).sort({"date":-1})
+			.then(data => data)
+			.catch(reject => reject);
+	},
 
 	save: (input) => {
 		let post = new Post(input);

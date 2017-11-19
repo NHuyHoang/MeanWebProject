@@ -16,6 +16,12 @@ module.exports = {
 			return data;
 		})
 	},
+	getByEmailPass: (email,pass) => {
+		return User.findOne({email:email,pass:pass},(err, data) =>{
+			if(err) throw err;
+			return data;
+		})
+	},
 	//find user by id
 	getById: (id) => {
 		return User.findOne({_id:id}, (err,data) => {

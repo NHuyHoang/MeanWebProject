@@ -1,0 +1,29 @@
+
+.product_specific_info{
+    background-color: white;
+    height: 50px;
+    line-height: 50px;
+}
+
+.product_specific_info >* {
+    padding: 0;
+    display: inline-block;
+    float: left;
+    margin-left:5px;
+}
+
+.product_specific_info >*:first-child{
+    margin-left: 20px;
+}
+.carousel-item{
+    overflow: hidden;
+    width:100%;
+    height: 350px;
+}
+#right_float{
+    float:right;
+    margin-right: 5px;
+}
+.carousel-item img {
+    object-fit: cover!important;
+}

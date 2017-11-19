@@ -20,12 +20,28 @@ const AllCategory =
 
 module.exports = {
 	getAll: () => {
-		return AllCategory;
+		return AllCategory.then(data => data);
 	},
 
-	getProductCateById: (id) =>{
-		return Category.find({_id:id},(err, data) => {
+	getById: (id) =>{
+		return Category.find({"subcategory._id":id},(err,data) => {
 			if(err) throw err;
-		})
+			return data;
+		}).then((data)=>{
+            data = data[0];
+            let result = {
+                _id:data._id,
+                name:data.name,
+                subcategory:{}
+            }
+            data.subcategory.forEach(element => {
+                if(id == element._id)
+                {
+                    result.subcategory = element;
+                    return;
+                }
+            })
+            return result
+        })
 	}
 }

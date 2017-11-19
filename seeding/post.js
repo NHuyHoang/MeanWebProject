@@ -40,7 +40,10 @@ const MAXPOST = 1000;
 })();
 
 function createPost(){
-	let product = generateRandomProduct();
+	let product =  _.times(_.random(1,4),()=>{
+		return generateRandomProduct();
+	})
+
 	let cmt = createCommentsObj();
 	return Post({
 		userpost: mongoose.Types.ObjectId(getId[_.random(0, getId.length - 1)]),

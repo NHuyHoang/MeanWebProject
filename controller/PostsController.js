@@ -51,6 +51,13 @@ module.exports = {
 				res.send(data)//;
 			})
 	},
+	getByUserId:(req,res) => {
+		let id = req.body.id;
+		if(!id) res.json("invalid request");
+		else
+			PostsService.getByUserId(id)
+				.then((data) => res.send(data))
+	},
 	update: (req, res) => {
 		let info = req.body.info;
 		let id = req.body.id;

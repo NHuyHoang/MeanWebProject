@@ -18,6 +18,7 @@
   "homepage": "https://github.com/NHuyHoang/MeanWebProject#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.12",
@@ -27,7 +28,9 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0"
   },
-  "bable":{
-     "presets": ["env"]
+  "bable": {
+    "presets": [
+      "env"
+    ]
   }
 }

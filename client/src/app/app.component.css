@@ -1,0 +1,204 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two|Pacifico|Dancing+Script:400,700|Anton|Passion+One|Roboto|Poiret+One');
+
+:root{
+    --screen: #F3FAEF;
+    --steel: rgb(10, 53, 18);
+    --denim: #1A2930;
+    --marigold:#F7CE3E;
+    --ground:#E9EBEA;
+    --primaryblue:#0E6EB8;
+    --primaryblue2:#0E8FB8;
+    --primaryblue3:#0EACB8;
+    --primaryblue4:#0EC6B8;
+    --primaryblue5:#D1E9DE;
+    --semanticyellow:#FFD700;
+    --semanticteal:#008080;
+    --semanticred:#B03060;
+    --semanticgreen:#016936;
+}
+body{
+    position: relative;
+    background-color: var(--ground);
+}
+
+#content{
+    position: relative;
+    width:100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 10px;
+    margin-top:70px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#main_panel{
+    margin: 0;
+    height: auto;
+    background-color: white;
+    position: relative;
+    grid-column: 1/13;
+    width:100%;
+    position:relative;
+}
+
+#loader{
+    position: absolute;
+    top:50%;
+    right: 0;
+    left:0;
+    margin: auto;
+    transform:translateY(-50%)  scale(0.5);
+}
+#navbar{
+    color:rgb(255, 255, 255);
+    background-color: rgba(255,255,255, 0.8);
+
+}
+#navbar h3{
+    color: black;
+    font-family: 'Pacifico';
+}
+#navbar a{
+    color:black;
+    font-size: 20px;
+    font-family: serif;
+}
+
+#nav_logo{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+
+    height:100%;
+}
+
+#right_menu .item{
+    display: none;
+}
+
+#right_nemu #ellipsis_icon{
+    display:block;
+}
+
+#container{
+    position: relative;
+    height: auto; /* For 100% screen height */
+    width:  100vw; /* For 100% screen width */
+    overflow: hidden;
+}
+
+
+footer{
+    position: relative;
+    bottom: 0;
+    width:100%;
+    height: 100px;
+    background:white;
+    opacity:1;
+    box-shadow: 0px -1px 20px #444444;
+}
+
+footer span{
+    font-family: 'Pacifico';
+}
+footer >*{
+    position: absolute;
+}
+footer figcaption{
+    display:none;
+}
+
+
+#social{
+    left: 0px;
+    right: 0;
+    top: 50%;
+    margin: auto;
+    padding: 0;
+    -webkit-transform:translateY(-50%);
+}
+#ava_holder{
+    height:60px;
+    width:60px;
+    padding:0;
+    margin:0;
+}
+#avatar{
+    margin:0;
+    padding: 0;
+    max-width: 60px;
+    max-height: 60px;
+    width:100%;
+    height: 100%;
+    margin-right: 20px;
+    object-fit: cover;
+    transform: scale(0.75);
+    border-radius: 50%;
+}
+#avatar:hover {
+    cursor: pointer;
+    filter:brightness(50%);
+}
+
+.disabled{
+    filter: grayscale(1);
+}
+
+/* #content{
+    position: relative;
+    background-color: var(--ground);
+    width:100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 10px;
+    margin-top:70px;
+} */
+
+/*----------for mobile version------------*/
+@media only screen and (min-width: 500px) {
+    footer figcaption{
+        left:0;
+        right:0;
+        top:50%;
+        margin: auto;
+        display: block;
+        left:40px;
+        -webkit-transform:translateY(-50%);
+    }
+
+    #social{
+        margin-left: -400px!important;
+        padding: 0;
+        -webkit-transform:translateY(-50%);
+    }
+    /* #content{
+        width:85%;
+    } */
+
+    #loader{
+        position: absolute;
+        top:50%;
+        right: 0;
+        left:0;
+        margin: auto;
+        transform:translateY(-50%);
+    }
+    #ellipsis_icon{
+        display:none;
+    }
+
+    #right_menu .item{
+        display: block;
+    }
+
+
+
+
+    /*    #post .post_ava{
+    width:5vw;
+    height:5vw;
+}*/
+
+}

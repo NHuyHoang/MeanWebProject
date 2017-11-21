@@ -15,10 +15,10 @@ module.exports = {
 	},
 
 	getById: (id) => {
-		return Post.findOne({_id:id},(err, data) => {
-			if(err) throw err;
-			return data;
-		})
+		return Post.findOne({_id:id})
+			.populate(['userpost','comment.usercmt'])
+			.then(data => data)
+			.catch(reject => reject)
 	},
 
 	getByCate: (parentid, childid) => {
@@ -83,12 +83,19 @@ module.exports = {
 		}
 	},
 
-	getByUserId:(id) =>{
-		return Post.find({"userpost":id}).sort({"date":-1})
+	getByUserId:(id,skip) =>{
+		let find =  Post.find({"userpost":id})
+			.sort({"date":-1}).limit(5).skip(parseInt(skip))
 			.then(data => data)
 			.catch(reject => reject);
-	},
+		let count = Post.count({"userpost":id},(err,count) => count);
 
+		return Promise.all([find,count])
+			.then(values => {
+				values[0].push({'postcount':values[1]});
+				return values[0];
+			})
+	},
 	save: (input) => {
 		let post = new Post(input);
 		post.product.push(ProductsSv.createProduct(input.product));

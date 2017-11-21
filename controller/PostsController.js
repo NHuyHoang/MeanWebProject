@@ -13,7 +13,6 @@ module.exports = {
 		if(!id) res.json("invalid id");
 		else
 			PostsService.getById(id)
-			.populate('userpost')
 			.then((data) => {
 				res.send(data);
 			})
@@ -53,11 +52,13 @@ module.exports = {
 	},
 	getByUserId:(req,res) => {
 		let id = req.body.id;
+		let skip = req.body.skip;
 		if(!id) res.json("invalid request");
 		else
-			PostsService.getByUserId(id)
-				.then((data) => res.send(data))
+			PostsService.getByUserId(id,skip)
+				.then((data) => { res.send(data)})
 	},
+
 	update: (req, res) => {
 		let info = req.body.info;
 		let id = req.body.id;

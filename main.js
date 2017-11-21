@@ -31,8 +31,6 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use('/fetchdata', fetchdata);
 app.use('/fetch', fetch);
-
-
 app.listen(3000, () => {
 	console.log('listening on port 3000');
 });

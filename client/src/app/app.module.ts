@@ -9,13 +9,13 @@ import { LoginPageModule } from './login-page/loginpage.module';
 import { UserHomeModule } from './user-home/user-home.module'
 import { SignInManageService } from './shared-service/sign-in-manage.service';
 import { DateTimeFormatService } from './shared-service/date-time-format.service';
+import { SpecPostModule } from './spec-post/spec-post.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -23,7 +23,8 @@ import { DateTimeFormatService } from './shared-service/date-time-format.service
     LoginPageModule,
     UserHomeModule,
     APP_ROUTING,
-    HttpModule
+    HttpModule,
+    SpecPostModule
   ],
   providers: [Title, SignInManageService, DateTimeFormatService],
   bootstrap: [AppComponent]

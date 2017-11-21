@@ -7,6 +7,7 @@ import { GLOBAL_VAR } from './shared-variable'
 export class PostService {
   
   private USER_POST_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getbyuserid`;
+  private GET_BY_ID_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getbyid`;
   private header = new Headers();
 
   private body = new URLSearchParams();
@@ -18,10 +19,12 @@ export class PostService {
   formatPostList(list:any[]):Post[]{
     let postList:Post[] = [];
     list.forEach((p)=>{
-      let c:Comment[] = [];
-      c = this.formatComment(p.comment);
-      let post = new Post(p._id,p.vipexpire,p.date,p.title,p.subareaid,p.userpost,c,p.product);
-      postList.push(post);
+      if(!p.hasOwnProperty("postcount")){
+        let c:Comment[] = [];
+        c = this.formatComment(p.comment);
+        let post = new Post(p._id,p.vipexpire,p.date,p.title,p.subareaid,p.userpost,c,p.product);
+        postList.push(post);
+      }
     })
     return postList;
   }
@@ -36,9 +39,19 @@ export class PostService {
     return result;
   }
 
-  getUserPost(id:string){
+  getUserPost(id:string,skip:string){
     this.body.set('id',id);
+    this.body.set('skip',skip);
     return this.http.post(this.USER_POST_URL,this.body,{
+      headers:this.header
+    }).map(
+      (res:Response) => res.json()
+    )
+  }
+
+  getById(id:string){
+    this.body.set('id',id);
+    return this.http.post(this.GET_BY_ID_URL,this.body,{
       headers:this.header
     }).map(
       (res:Response) => res.json()

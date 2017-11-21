@@ -62,7 +62,7 @@
     <div class="tab-content" id="myTabContent">
       <div *ngFor="let product of products" class="post_holder">
         <div *ngIf="product.active" class="tab-pane show active" id="" role="tabpanel">
-          <product-info [product]="product" ></product-info>
+          <product-info (click)="onPostRedirect()" [product]="product" [cmtCount]="post.comment.length" ></product-info>
           <!---------------------------------->
           <!---------------------------------->
           <!-- <div *ngIf="tab2">

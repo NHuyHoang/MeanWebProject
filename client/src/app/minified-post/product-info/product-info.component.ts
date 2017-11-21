@@ -9,6 +9,7 @@ import { Http } from '@angular/http';
 export class ProductInfoComponent implements OnInit {
   private loaded = false;
   @Input('product') product;
+  @Input('cmtCount') cmtCount;
   constructor(private http:Http) { }
 
   ngOnInit() {

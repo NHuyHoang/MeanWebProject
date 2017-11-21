@@ -7,6 +7,7 @@ import { AreaService } from '../shared-service/area.service';
 import { DateTimeFormatService } from '../shared-service/date-time-format.service';
 import { CategoryService } from '../shared-service/category.service';
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router } from '@angular/router';
 
 
 
@@ -18,6 +19,7 @@ import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentInit {
   @Input('user') user: User;
   @Input('post') post: Post;
+
   private tab1 = true;
   private tab2 = false;
 
@@ -32,7 +34,8 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
     @Inject(Renderer2) private _render,
     @Inject(AreaService) private areaService,
     @Inject(DateTimeFormatService) private datetimeformatSV,
-    @Inject(CategoryService) private categorySV) {
+    @Inject(CategoryService) private categorySV,
+    @Inject(Router) private router) {
   }
 
   ngOnInit() {
@@ -96,5 +99,9 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
         element.active = true;
       else element.active = false;
     })
+  }
+
+  onPostRedirect(){
+    this.router.navigate(['/post',this.post._id]);
   }
 }

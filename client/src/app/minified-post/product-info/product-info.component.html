@@ -1,25 +1,28 @@
 <div>
   <div [id]="product._id" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-      <li  *ngFor="let img of product.imglist;let i = index"  [attr.data-target]="'#'+product._id" data-slide-to="i + 1" [ngClass]="{'active': i == 0}"></li>
+      <li *ngFor="let img of product.imglist;let i = index" [attr.data-target]="'#'+product._id" data-slide-to="i + 1" [ngClass]="{'active': i == 0}"></li>
     </ol>
     <div class="carousel-inner">
       <div *ngIf="product.imglist.length != 0">
         <div *ngFor="let img of product.imglist;let i = index" class="carousel-item" [ngClass]="{'active':i == 0}">
-          <img  class="d-block h-100 w-100" [src]="img"
-            alt="First slide"  >
+          <img class="d-block h-100 w-100" [src]="img" alt="{{i}} slide">
         </div>
       </div>
       <div *ngIf="product.imglist.length == 0">
+        <!--  <div class="carousel-item">
+              <img class="d-block h-100 w-100" src="../../../assets/noImage.png">
+          </div> -->
         <div class="carousel-item active">
-          <img class="d-block h-100 w-100" src="../../assets/UserHomePage/post_2_img1.jpg" alt="First slide">
+          <!--  <img class="d-block h-100 w-100" src="../../assets/UserHomePage/post_2_img1.jpg" alt="First slide"> -->
+          <img class="d-block h-100 w-100" src="../../../assets/noImage.png">
         </div>
-        <div class="carousel-item">
+        <!-- <div class="carousel-item">
           <img class="d-block h-100 w-100" src="../../assets/UserHomePage/post_2_img2.jpg" alt="Second slide">
         </div>
         <div class="carousel-item">
           <img class="d-block h-100 w-100" src="../../assets/UserHomePage/post_2_img3.jpg" alt="Third slide">
-        </div>
+        </div> -->
       </div>
 
     </div>
@@ -33,22 +36,33 @@
     </a>
   </div>
   <!--</div>-->
-  <div class="product_specific_info">
+  <div *ngIf="product.categoryid != 'est'" class="product_specific_info">
     <div>
       <i class="large dollar icon"></i>
     </div>
-    <div>1500</div>
+    <div>{{product.cost}} {{product.currency}}</div>
     <div>
       <i class="large dropbox icon"></i>
     </div>
-    <div>Iphone X</div>
+    <div>{{product.productname | truncate : 15}}</div>
     <div>
       <i class="large industry icon"></i>
     </div>
-    <div> Apple</div>
+    <div> {{product.producer | truncate : 15}}</div>
     <div id="right_float">
       <i class="big comment outline icon"></i>
     </div>
     <div id="right_float">24</div>
+  </div>
+  <div *ngIf="product.categoryid == 'est'" class="product_specific_info">
+      <div><i class="large dollar icon"></i>
+      </div>
+      <div *ngIf="product.hasOwnProperty('leasecontract')">Lease: {{product.leasecontract?.cost}} </div>
+      <div *ngIf="product.hasOwnProperty('salecontract')">Sale: {{product.salecontract?.cost}} </div>
+      <div><i class="large marker icon"></i>
+      </div>
+      <div>{{product.address}}</div>
+      <div id="right_float"><i class="big comment outline icon"></i></div>
+      <div id="right_float">{{cmtCount}}</div>
   </div>
 </div>

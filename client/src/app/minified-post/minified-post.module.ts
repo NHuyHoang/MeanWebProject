@@ -6,6 +6,7 @@ import { MinifiedPostComponent } from './minified-post.component';
 import { AreaService } from '../shared-service/area.service';
 import { ProductInfoComponent } from './product-info/product-info.component';
 
+
 @NgModule({
     declarations:[ MinifiedPostComponent, ProductInfoComponent ],
     imports:[CommonModule],

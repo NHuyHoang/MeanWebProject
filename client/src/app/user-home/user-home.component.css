@@ -274,6 +274,21 @@
 .product_specific_info >*:first-child{
     margin-left: 20px;
 }
+.loading_post{
+    height: 30px;
+    position: relative;
+}
+.loading_post >*{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+    animation: loading 1s ease-in infinite alternate;
+}
+@keyframes loading {
+    0%   {filter: opacity(1)}
+    100% {filter:opacity(0)}
+}
+
 /*--------------------------------------------*/
 @media only screen and (min-width: 920px){
     #main_panel{

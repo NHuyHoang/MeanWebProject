@@ -23,7 +23,7 @@
         <div>
           <i class="big browser icon"></i>
         </div>
-        <p>{{postsCount}} posts</p>
+        <p>Display {{currentPost}}/{{postsCount}} posts</p>
       </div>
     </div>
     <div id="item2">
@@ -49,5 +49,9 @@
     <div class="post_holder" *ngFor="let post of posts">
       <mini-post [user]="user" [post]="post" ></mini-post>
     </div>
+    <div *ngIf="loading" class="loading_post">
+      <h3>loading more post...</h3>
+    </div>
+
   </div>
 </div>

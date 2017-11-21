@@ -137,7 +137,7 @@ function createCommentsObj(){
 function createCamera(){
 	let iso = ["ISO 100", "ISO 200", "ISO 400", "ISO 800", "ISO 1600", "ISO 3200"];
 	return Cameras({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -158,7 +158,7 @@ function createCamera(){
 function createLaptop(){
 	let img = _.times(_.random(1,3),() => faker.image.image());
 	return Laptops({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -181,7 +181,7 @@ function createLaptop(){
 function createMobile(){
 	let img = _.times(_.random(0,3),() => faker.image.image());
 	return Mobiles({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -200,7 +200,7 @@ function createMobile(){
 function createTablet(){
 	let img = _.times(_.random(0,3),() => faker.image.image());
 	return Tablets({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -222,7 +222,7 @@ function createBicycle(){
 	let img = _.times(_.random(0,3),() => faker.image.transport());
 	let species = ['bmx','moutain bike','road bike','electric bike'];
 	return Bicycles({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -242,7 +242,7 @@ function createCar(){
 	let species = ['Sedan','Suv','Hatchblack','Pick up', 'Minivan', 'Van couple', 'Convertibles'];
 	let fuel = ['Gas', 'Diesel', 'Electric'];
 	return Cars ({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -269,7 +269,7 @@ function createMotor(){
 	let species = ['scooter','embaraye','gear'];
 	let fuel = ['Gas', 'Diesel', 'Electric'];
 	return Motors ({
-		description:  faker.lorem.sentences(),
+		description:  faker.lorem.paragraphs(),
 		productname: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
@@ -329,7 +329,7 @@ function createEstate(){
 	if(random == 0) {
 			return Estates({
 			_type: type[_.random(0, type.length -1 )],
-			description:  faker.lorem.sentences(),
+			description:  faker.lorem.paragraphs(),
 			address: faker.address.streetAddress() + ", " + faker.address.state(),
 			location:{	lat:faker.address.latitude(),
 				log:faker.address.longitude()},							
@@ -344,7 +344,7 @@ function createEstate(){
 	if(random == 1) {
 			return Estates({
 			_type: type[_.random(0, type.length -1 )],
-			description:  faker.lorem.sentences(),
+			description:  faker.lorem.paragraphs(),
 			address: faker.address.streetAddress() + ", " + faker.address.state(),
 			location:{	lat:faker.address.latitude(),
 				log:faker.address.longitude()},							
@@ -359,7 +359,7 @@ function createEstate(){
 	if(random == 2) {
 			return Estates({
 			_type: type[_.random(0, type.length -1 )],
-			description:  faker.lorem.sentences(),
+			description:  faker.lorem.paragraphs(),
 			address: faker.address.streetAddress() + ", " + faker.address.state(),
 			location:{	lat:faker.address.latitude(),
 				log:faker.address.longitude()},							

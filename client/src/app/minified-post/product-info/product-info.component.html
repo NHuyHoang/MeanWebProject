@@ -26,11 +26,11 @@
       </div>
 
     </div>
-    <a class="carousel-control-prev" [href]="'#'+product._id" role="button" data-slide="prev">
+    <a (click)="onNavigate()" class="carousel-control-prev" href="#{{product._id}}" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" [href]="'#'+product._id" role="button" data-slide="next">
+    <a (click)="onNavigate()" class="carousel-control-next" href="#{{product._id}}" role="button" data-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
@@ -55,14 +55,37 @@
     <div id="right_float">24</div>
   </div>
   <div *ngIf="product.categoryid == 'est'" class="product_specific_info">
-      <div><i class="large dollar icon"></i>
+    <div>
+      <i class="large dollar icon"></i>
+    </div>
+    <div *ngIf="product.hasOwnProperty('leasecontract')">Lease: {{product.leasecontract?.cost}} </div>
+    <div *ngIf="product.hasOwnProperty('salecontract')">Sale: {{product.salecontract?.cost}} </div>
+    <div>
+      <i class="large marker icon"></i>
+    </div>
+    <div>{{product.address}}</div>
+    <div id="right_float">
+      <i class="big comment outline icon"></i>
+    </div>
+    <div id="right_float">{{cmtCount}}</div>
+  </div>
+  <div *ngIf="isSpec" class="product_description">
+    <div class="product_specific_info2">
+      <div class="ui fitted horizontal divider">
+        Product specific info
       </div>
-      <div *ngIf="product.hasOwnProperty('leasecontract')">Lease: {{product.leasecontract?.cost}} </div>
-      <div *ngIf="product.hasOwnProperty('salecontract')">Sale: {{product.salecontract?.cost}} </div>
-      <div><i class="large marker icon"></i>
+      <table class="ui definition table">
+        <tbody>
+          <tr *ngFor="let key of keys">
+            <td>{{key | uppercase}}</td>
+            <td>{{product.specificInfo[key]}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="ui fitted horizontal divider">
+        Description
       </div>
-      <div>{{product.address}}</div>
-      <div id="right_float"><i class="big comment outline icon"></i></div>
-      <div id="right_float">{{cmtCount}}</div>
+      <h4>{{product.description}}</h4>
+    </div>
   </div>
 </div>

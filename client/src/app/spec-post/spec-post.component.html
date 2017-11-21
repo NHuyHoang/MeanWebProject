@@ -1,3 +1,4 @@
+
 <div id="content">
   <div id="left_panel" class="">
     <div id="left_panel_header">
@@ -40,7 +41,7 @@
     </div> -->
   </div>
   <div id="main_panel" >
-    <post-holder></post-holder>
+    <post-holder [user]="user" [post]="post"></post-holder>
     <div *ngIf="loading" class="loading_post">
       <h3>loading more post...</h3>
     </div>

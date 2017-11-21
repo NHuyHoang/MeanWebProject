@@ -17,8 +17,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./minified-post.component.css']
 })
 export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentInit {
-  @Input('user') user: User;
-  @Input('post') post: Post;
+  @Input('user') public user = new User();
+  @Input('post') public post = new Post();
+  @Input('isSpec') public isSpec;
 
   private tab1 = true;
   private tab2 = false;
@@ -36,26 +37,20 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
     @Inject(DateTimeFormatService) private datetimeformatSV,
     @Inject(CategoryService) private categorySV,
     @Inject(Router) private router) {
+     
   }
 
   ngOnInit() {
-    this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
-    let s = this._render.createElement('script');
-    s.type = 'text/javascript';
-    s.text = `
-    $('.rating').rating({
-      initialRating: ${this.user.point},
-      maxRating: 5
-    });
-    `;
-    this._render.appendChild(this._doc.body, s);
-    this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
-    this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
+
 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['post']) {
+
+    if (changes['post'].currentValue._id !== undefined) {
+      this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
+      this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
+      this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
       //get area name
       this.areaService.getChildArea(this.post.subareaid).subscribe((data) => {
         this.area = data;
@@ -86,6 +81,20 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
         })
 
       })
+
+    }
+    if (changes['user'].currentValue._id !== undefined) {
+
+      let s = this._render.createElement('script');
+      s.type = 'text/javascript';
+      s.text = `
+          $('.rating').rating({
+            initialRating: ${this.user.point},
+            maxRating: 5
+          });
+          `;
+      this._render.appendChild(this._doc.body, s);
+
     }
   }
 
@@ -95,13 +104,13 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
 
   onToggleTab(tabId: string) {
     this.products.forEach(element => {
-      if (tabId === element._id)
+      if (tabId == element._id)
         element.active = true;
       else element.active = false;
     })
   }
 
-  onPostRedirect(){
-    this.router.navigate(['/post',this.post._id]);
+  onPostRedirect() {
+    this.router.navigate(['/post', this.post._id]);
   }
 }

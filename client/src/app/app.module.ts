@@ -16,6 +16,7 @@ import { SpecPostModule } from './spec-post/spec-post.module';
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,

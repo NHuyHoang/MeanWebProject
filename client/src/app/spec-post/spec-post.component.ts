@@ -14,7 +14,7 @@ import { SignInManageService } from '../shared-service/sign-in-manage.service'
   styleUrls: ['./spec-post.component.css']
 })
 export class SpecPostComponent implements OnInit {
-  private user;
+  private user = new User();
   private post = new Post();
   private postId;
   constructor(
@@ -23,10 +23,12 @@ export class SpecPostComponent implements OnInit {
     @Inject(Renderer2) private _render,
     @Inject(DOCUMENT) private _doc) 
     {
+    window.scrollTo(0,0);
     this.postId = atvRoute.snapshot.params['_id'];
     this.postservice.getById(this.postId).subscribe((data)=>{
-      this.post = data;
+      this.post = new Post(data._id,data.vipexpire,data.date,data.title,data.subareaid,data.userpost,data.comment,data.product);
       this.user = data.userpost;
+      
       this.onAppendScript();
     })
    }

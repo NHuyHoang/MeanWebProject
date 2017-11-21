@@ -25,7 +25,6 @@ mongoose.connect(uri, { useMongoClient: true })
 	.catch(err => {
 		console.log('Fail to connect ' + err);
 	});
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));

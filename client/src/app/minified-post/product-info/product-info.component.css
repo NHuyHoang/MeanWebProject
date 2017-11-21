@@ -27,3 +27,30 @@
 .carousel-item img {
     object-fit: cover!important;
 }
+
+.product_specific_info{
+    background-color: white;
+    height: 50px;
+    line-height: 50px;
+}
+
+.product_specific_info >* {
+    padding: 0;
+    display: inline-block;
+    float: left;
+    margin-left:5px;
+}
+
+.product_specific_info >*:first-child{
+    margin-left: 20px;
+}
+.product_description{
+    width: 95%;
+    height: auto;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.product_description h4{
+    text-align: left;
+}

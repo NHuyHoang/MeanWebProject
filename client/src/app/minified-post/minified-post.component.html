@@ -5,7 +5,7 @@
     </div>
     <div class="post_info_item">
       <div class="post_userinf">
-        <div>{{user.name}}</div>
+        <div>{{user?.name}}</div>
         <div id="post_user_rating">
           <div class="ui mini star rating">
             <i class="icon"></i>
@@ -24,7 +24,7 @@
 
         </div>
       </div>
-      <div class="post_title">
+      <div (click)="onPostRedirect()"  class="post_title">
         <div>{{ellipsisTitle}} </div>
       </div>
       <div class="post_info">
@@ -62,7 +62,7 @@
     <div class="tab-content" id="myTabContent">
       <div *ngFor="let product of products" class="post_holder">
         <div *ngIf="product.active" class="tab-pane show active" id="" role="tabpanel">
-          <product-info (click)="onPostRedirect()" [product]="product" [cmtCount]="post.comment.length" ></product-info>
+          <product-info [isSpec]="isSpec" [product]="product" [cmtCount]="post.comment.length" ></product-info>
           <!---------------------------------->
           <!---------------------------------->
           <!-- <div *ngIf="tab2">

@@ -69,14 +69,6 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
               this.user = new User(data._id, data.email, data.name, data.point, data.img);
               this.loginservice.onEmitSigninUser(this.user);
               this.router.navigate(['user']);
-              /* this.postservice.getUserPost(this.user._id).subscribe(
-                (data:any) =>{
-                  this.loginservice.onEmitSigninUser(this.user);
-                  this.postList = this.postservice.formatPostList(data);
-                  this.router.navigate(['user']);
-                }
-              ) */
-              //window.location.href = "/user";
             }
           })
 

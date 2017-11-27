@@ -1,10 +1,12 @@
+import { User } from "./User";
+
 export class Comment{
     _id:string;
     cmt:string;
     date:Date;
-    usercmt:string;
+    usercmt:User;
     reply:any[];
-    constructor(_id?:string, cmt?:string, date?:string, usercmt?:string, reply?:any[]){
+    constructor(_id?:string, cmt?:string, date?:string, usercmt?:User, reply?:any[]){
         this._id = _id;
         this.cmt = cmt;
         this.date = new Date(date);

@@ -116,7 +116,7 @@ function createComments(array){
 	let idUser = getId[_.random(0, getId.length - 1)];
 	let cmt = new cmtModels({
 		usercmt: mongoose.Types.ObjectId(idUser),
-		date: new Date(),
+		date: faker.date.past(),
 		cmt: faker.lorem.sentences(),
 		reply:array
 	});

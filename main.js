@@ -24,12 +24,13 @@ mongoose.connect(uri, { useMongoClient: true })
 	})
 	.catch(err => {
 		console.log('Fail to connect ' + err);
-	});
+	});	
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use('/fetchdata', fetchdata);
 app.use('/fetch', fetch);
+
 app.listen(3000, () => {
 	console.log('listening on port 3000');
 });

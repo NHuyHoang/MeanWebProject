@@ -1,0 +1,60 @@
+<div id="comments">
+  <div class="comment_item">
+      <div class="comment_ava">
+          <img id="avatar" [src]="user?.img">
+      </div>
+      <div class="comment_item_content">
+          <div class="comment_info">
+              <p>{{user?.name}}
+                  <span>{{dateComment.time}} {{dateComment.date}}</span>
+              </p>
+          </div>
+          <div class="user_comment">
+              <h5>{{comment?.cmt}}</h5>
+          </div>
+          <div class="comment_extend">
+              <div>
+                  <i  *ngIf="showReply" class="teal big angle down icon"></i>
+                  <i  *ngIf="!showReply"class="big angle up icon"></i>
+                  <a (click)="onToggleReply()" data-toggle="collapse" [attr.data-target]="'#'+comment._id" aria-expanded="false" aria-controls="collapseExample">
+                    {{comment?.reply.length}} reply
+                  </a>
+              </div>
+          </div>
+          <div class="comment_reply collapse" [id]="comment._id">
+              <div *ngFor="let rep of reply" id="comments">
+                  <div class="comment_item">
+                      <div class="comment_ava">
+                          <img id="avatar" [src]="rep?.usercmt.img">
+                      </div>
+                      <div class="comment_item_content">
+                          <div class="comment_info">
+                              <p>{{rep?.usercmt.name}}
+                                  <span>{{rep?.date}}</span>
+                              </p>
+                          </div>
+                          <div class="user_comment">
+                              <h5>{{rep.cmt}}</h5>
+                          </div>
+                          <div class="comment_extend">
+                          </div>
+
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div>
+
+                  <div class="ui tiny fluid icon input">
+                      <input placeholder="Leave your comment..." type="text">
+                      <i class="circular inverted blue send outline icon "></i>
+                  </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+</div>

@@ -14,6 +14,7 @@ export class SignInManageService {
   getUserSubscribe(signInUser:BehaviorSubject<User>){
     this.loginPageService.signinUser.subscribe(user => {
       signInUser.next(user);
+      localStorage.setItem('currentUser',JSON.stringify(user));
     });
   }
 

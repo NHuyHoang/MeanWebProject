@@ -26,7 +26,9 @@ export class SpecPostComponent implements OnInit {
     window.scrollTo(0,0);
     this.postId = atvRoute.snapshot.params['_id'];
     this.postservice.getById(this.postId).subscribe((data)=>{
-      this.post = new Post(data._id,data.vipexpire,data.date,data.title,data.subareaid,data.userpost,data.comment,data.product);
+      let postholder = [];
+      postholder.push(data);
+      this.post = this.postservice.formatPostList(postholder)[0];
       this.user = data.userpost;
       
       this.onAppendScript();

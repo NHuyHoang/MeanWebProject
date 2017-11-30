@@ -21,7 +21,9 @@ router.get(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getbyctrtype`,PostsController.getByContractType)
 	  .post(`${prefix}getbyarea`,PostsController.getByArea)
 	  .post(`${prefix}getbyuserid`,PostsController.getByUserId)
-	  .post(`${prefix}update`,PostsController.update);
+	  .post(`${prefix}update`,PostsController.update)
+	  .put(`${prefix}pushcmt`,PostsController.pushComment)
+	  .put(`${prefix}pushrep`,PostsController.pushReply);
 //Area
 prefix = '/area/';
 router.post(`${prefix}getchildarea`,AreasController.getChildArea);

@@ -1,9 +1,10 @@
 import { Component, OnChanges, OnInit, Input, SimpleChanges, Inject } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Post } from '../../../models/Posts';
 import { User } from '../../../models/User';
-
-
+import { Comment } from '../../../models/Comments';
+import { PostService } from '../../shared-service/post.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'post-holder',
@@ -17,22 +18,26 @@ export class PostHolderComponent implements OnChanges, OnInit {
   private isSpec = true;
   private cmtForm = new FormControl();
   private signInUser;
-  constructor(@Inject(FormBuilder) private formbuilder) {
+  private comments;
+  constructor(@Inject(FormBuilder) private formbuilder, @Inject(PostService) private postSV) {
     this.signInUser = JSON.parse(localStorage.getItem('currentUser'));
     this.cmtForm = this.formbuilder.group({
       '_id':"",
-      'userpost':[this.signInUser ],
-      'date':new Date(),
-      'cmt':[],
+      'userpost':this.signInUser._id,
+      'date':"",
+      'cmt':['',Validators.required]
     })
+    
   }
 
   ngOnInit() {
+    
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['post'].currentValue._id !== undefined) {
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
+      this.comments = this.post.comment;
       this.cmtForm.patchValue({
         _id:this.post._id
       })
@@ -43,7 +48,27 @@ export class PostHolderComponent implements OnChanges, OnInit {
   }
 
   onSubmit(){
-    console.log(this.cmtForm.value);
+    if(!this.cmtForm.valid || this.signInUser._id === undefined) return;
+    this.cmtForm.patchValue({
+      date:(new Date()).toISOString(),
+    })
+    this.postSV.pushCmt(this.cmtForm.value).subscribe(data => {
+      if(data.success === true){
+        let retrieved = data.data;
+        this.comments.push(new Comment(retrieved._id,retrieved.cmt,retrieved.date,this.signInUser,retrieved.replay));
+        this.onScrollBot();
+      }
+    });
+  }
+
+  onScrollBot(){
+    let body = document.body,
+    html = document.documentElement;
+
+    let height = Math.max(body.scrollHeight, body.offsetHeight,
+    html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+    window.scrollTo(0,height);
   }
 
  

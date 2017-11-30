@@ -20,6 +20,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
   @Input('user') public user = new User();
   @Input('post') public post = new Post();
   @Input('isSpec') public isSpec;
+  @Input('isHomeMode') public homeMode;
 
   private tab1 = true;
   private tab2 = false;
@@ -112,5 +113,11 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
 
   onPostRedirect() {
     this.router.navigate(['/post', this.post._id]);
+  }
+
+  onCheckAvailable(){
+    if(this.post._id !== undefined){
+      return this.homeMode&&(this.post.approval||this.post.available)
+    }
   }
 }

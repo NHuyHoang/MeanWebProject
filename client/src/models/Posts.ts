@@ -9,6 +9,8 @@ export class Post{
     userpost:string;
     comment:Comment[];
     product:any[];
+    approval:boolean;
+    available:boolean;
     constructor(
         _id?:string, 
         vipexpire?:string, 
@@ -17,7 +19,9 @@ export class Post{
         subareaid?:string,
         userpost?:string,
         comment?:Comment[],
-        product?:any[]
+        product?:any[],
+        approval?:boolean,
+        available?:boolean
     )
     {
         this._id = _id;
@@ -28,6 +32,8 @@ export class Post{
         this.userpost = userpost;
         this.comment = comment;        
         this.product = product;
+        this.approval = approval;
+        this.available = available;
     }
     
     

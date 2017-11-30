@@ -4,9 +4,12 @@ import { Http,URLSearchParams,Headers } from '@angular/http';
 import { Post } from '../../models/Posts';
 import { Comment } from '../../models/Comments';
 import { GLOBAL_VAR } from './shared-variable'
+import { Response } from '@angular/http/src/static_response';
 export class PostService {
   
   private USER_POST_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getbyuserid`;
+  private PUT_COMMENT_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/pushcmt`;
+  private PUT_REPLY_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/pushrep`;
   private GET_BY_ID_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getbyid`;
   private header = new Headers();
 
@@ -22,7 +25,7 @@ export class PostService {
       if(!p.hasOwnProperty("postcount")){
         let c:Comment[] = [];
         c = this.formatComment(p.comment);
-        let post = new Post(p._id,p.vipexpire,p.date,p.title,p.subareaid,p.userpost,c,p.product);
+        let post = new Post(p._id,p.vipexpire,p.date,p.title,p.subareaid,p.userpost,c,p.product,p.approval,p.available);
         postList.push(post);
       }
     })
@@ -53,6 +56,22 @@ export class PostService {
     this.body.set('id',id);
     return this.http.post(this.GET_BY_ID_URL,this.body,{
       headers:this.header
+    }).map(
+      (res:Response) => res.json()
+    )
+  }
+
+  pushCmt(cmt:any){
+    return this.http.put(this.PUT_COMMENT_URL, JSON.stringify(cmt),{
+      headers:{'Content-Type': 'application/json'}
+    }).map(
+      (res:Response) => res.json()
+    )
+  }
+
+  pushRep(rep:any){
+    return this.http.put(this.PUT_REPLY_URL, JSON.stringify(rep),{
+      headers:{'Content-Type': 'application/json'}
     }).map(
       (res:Response) => res.json()
     )

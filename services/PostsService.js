@@ -5,6 +5,7 @@ const CateSv = require('./CategoriesService');
 const AreaSv = require('./AreasService');
 const objId = mongoose.Types.ObjectId;
 const _ = require('lodash');
+const CommentSchema = require('../models/comments');
 
 module.exports = {
 	getAll: () => {
@@ -121,5 +122,43 @@ module.exports = {
 		return Post.remove({_id: {$in: id}}, (err) => {
 			if(err) throw err
 		});
+	},
+
+	pushComment: (cmt) =>{
+		let cmtModel = mongoose.model('comment',CommentSchema);
+		let holder = new cmtModel({
+			usercmt: objId(cmt.userpost),
+			date: cmt.date,
+			cmt: cmt.cmt,
+			reply:[]
+		})
+		return Post.findOneAndUpdate({_id:cmt._id},{$push:{comment:holder}}).then(data => {
+			if(!data) return {success:false};
+			else{
+				
+				return Post.findOne({_id:data._id},(err,data)=>{
+					if(err) return {success:false};
+					else return data;
+				})
+			}
+		});
+	},
+	pushReply:(reply)=>{
+		let cmtModel = mongoose.model('comment',CommentSchema);
+		let holder = new cmtModel({
+			usercmt: objId(reply.userpost),
+			date: reply.date,
+			cmt: reply.cmt,
+			reply:[]
+		})
+		return Post.findOneAndUpdate(
+			{
+				"_id":reply._postid,
+				"comment._id":reply._cmtid
+			},
+			{
+				$push:{"comment.$.reply":holder}
+			}
+		)
 	}
 }

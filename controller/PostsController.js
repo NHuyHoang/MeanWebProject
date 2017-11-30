@@ -1,4 +1,5 @@
 const PostsService = require('../services/PostsService');
+const _ = require('lodash');
 
 module.exports = {
 	getAll: (req, res) => {
@@ -67,5 +68,34 @@ module.exports = {
 			PostsService.update(id,info).then(data => {
 				res.send(data)
 			})
+	},
+	pushComment:(req,res) =>{
+		let cmt = req.body;
+		if( cmt._id === undefined ) res.send({success:false});
+		else 
+			PostsService.pushComment(cmt).then(data=>{
+				console.log(data);
+				res.send({success:true,data:data.comment[data.comment.length-1]})
+			}).catch(err => res.send({success:false,message:err}))
+	},
+	pushReply:(req,res) => {
+		let reply = req.body;
+		if( reply._postid === undefined ) res.send({success:false});
+		else 
+			PostsService.pushReply(reply).then(data=>{
+				PostsService.getById(data._id)
+					.then(data => {
+						let comment = data.comment;
+						_.forEach(comment,(element)=>{
+							if(element._id == reply._cmtid)
+							{
+								console.log(element);
+								res.send({success:true,data:element.reply[element.reply.length - 1]});
+								return;
+							}
+						})
+					})
+			}).catch(err => res.send(err))
 	}
+	
 }

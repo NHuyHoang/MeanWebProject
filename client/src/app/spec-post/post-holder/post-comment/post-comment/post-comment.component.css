@@ -67,3 +67,6 @@
 .comment_reply{
     border-left: 1px solid var(--ground);
 }
+.reply_input:hover {
+    cursor:pointer!important;
+}

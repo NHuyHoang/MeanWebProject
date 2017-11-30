@@ -28,6 +28,7 @@ export class UserHomeComponent implements OnInit, AfterContentChecked {
   private postsCount: number = 0;
   private loading = false;
   private currentPost = 0;
+  private isHomeMode = true;
 
   @HostListener("window:scroll", [])
   onScroll() {

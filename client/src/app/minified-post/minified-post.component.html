@@ -19,7 +19,8 @@
           <i class="mail icon"></i>
         </div>
         <div id="right_float">
-          <i class="large unhide icon"></i>
+          <i *ngIf="onCheckAvailable()" class="large unhide icon"></i>
+          <i *ngIf="!onCheckAvailable()" class="large red hide icon"></i>
           <i class="large write square icon"></i>
 
         </div>

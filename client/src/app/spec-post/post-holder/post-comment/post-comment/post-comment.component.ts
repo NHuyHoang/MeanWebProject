@@ -84,6 +84,7 @@ export class PostCommentComponent implements OnInit, OnChanges {
     this.replyForm.patchValue({
       'date':(new Date()).toISOString()
     })
+    console.log(this.replyForm.value);
     this.postSV.pushRep(this.replyForm.value).subscribe(data => {
       if(data.success === true)
       {

@@ -24,7 +24,12 @@ export class PostComponent implements OnInit, AfterViewInit {
         'min': 0,
         'max': 100
       },
-      tooltips:true
+      tooltips:true,
+      pips: {
+        mode: 'values',
+        values: [10,20,30, 80],
+        density: 4
+      }
     }); 
     $('.ui.dropdown').dropdown();
   }

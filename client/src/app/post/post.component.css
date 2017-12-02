@@ -75,15 +75,14 @@
     transform:translateY(-50%);
 }
 
+#search_inp{
+    box-shadow: 1px 1px 3px #dedede;
+}
+
 #item4 {
     display: inline-block;
 }
-#item4 i{
-    margin: 0;
-    padding: 0;
-    float: left;
-    width:20%;
-}
+
 #item5 {
     display: inline-block;
 }
@@ -110,7 +109,7 @@
 
 #slider{
     float: right;
-    width:80%;
+    width:100%;
     margin-top:8px;
     z-index: 3;
 }

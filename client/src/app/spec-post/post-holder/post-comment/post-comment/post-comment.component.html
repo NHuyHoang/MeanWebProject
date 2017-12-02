@@ -17,7 +17,7 @@
                     <i *ngIf="showReply" class="teal big angle down icon"></i>
                     <i *ngIf="!showReply" class="big angle up icon"></i>
                     <a (click)="onToggleReply()" data-toggle="collapse" [attr.data-target]="'#'+comment._id" aria-expanded="false" aria-controls="collapseExample">
-                        {{comment.reply?.length}} reply
+                        {{reply?.length}} reply
                     </a>
                 </div>
             </div>

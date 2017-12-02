@@ -15,7 +15,7 @@ router.post(`${prefix}`, UsersController.getById)
 	  .post(`${prefix}update`,UsersController.update);
 //post
 prefix = '/post/';
-router.get(`${prefix}getall`,PostsController.getAll)
+router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getbyid`,PostsController.getById)
 	  .post(`${prefix}getbycate`,PostsController.getByCate)
 	  .post(`${prefix}getbyctrtype`,PostsController.getByContractType)

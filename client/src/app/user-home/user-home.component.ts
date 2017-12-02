@@ -3,12 +3,11 @@ import {
   OnInit,
   ViewEncapsulation,
   Inject,
-  Renderer2,
   AfterContentChecked,
   HostListener,
   AfterViewInit
 } from '@angular/core';
-import { DOCUMENT, Title } from '@angular/platform-browser'
+import { Title } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { User } from '../../models/User';
@@ -61,8 +60,6 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
 
   constructor(
     private signInManageSV: SignInManageService,
-    @Inject(Renderer2) private _renderer2,
-    @Inject(DOCUMENT) private _document,
     @Inject(PostService) private postService,
     @Inject(Title) private title,
   ) {
@@ -79,7 +76,7 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
       this.postsCount = data[data.length - 1].postcount;
       this.currentPost = this.posts.length;
     })
-    this.onAppendScript();
+
   }
 
   ngAfterContentChecked() {
@@ -94,31 +91,5 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
     });
   }
 
-
-  onSub() {
-
-  }
-
-  onGeneratePost() {
-
-  }
-
-  onAppendScript(){
-    $('.rating')
-    .rating({
-      initialRating: this.user.point,
-      maxRating: 5
-    });
-   /*  let s = this._renderer2.createElement('script');
-    s.type = `text/javascript`;
-    s.text = `
-    $('.rating')
-    .rating({
-      initialRating: ${this.user.point},
-      maxRating: 5
-    });
-    `;
-    this._renderer2.appendChild(this._document.body, s); */
-  }
 
 }

@@ -8,11 +8,12 @@ const _ = require('lodash');
 const CommentSchema = require('../models/comments');
 
 module.exports = {
-	getAll: () => {
-		return Post.find({},(err,data) => {
-			if(err) throw err;
-			return data;
-		})
+	getAll: (skip) => {
+		return Post.find({})
+			.populate(['userpost','comment.usercmt'])
+			.sort({"date":-1}).limit(10).skip(skip)
+			.then(data => data)
+			.catch(reject => reject)
 	},
 
 	getById: (id) => {
@@ -146,7 +147,7 @@ module.exports = {
 	pushReply:(reply)=>{
 		let cmtModel = mongoose.model('comment',CommentSchema);
 		let holder = new cmtModel({
-			usercmt: objId(reply.userpost),
+			usercmt: objId(reply.usercmt),
 			date: reply.date,
 			cmt: reply.cmt,
 			reply:[]

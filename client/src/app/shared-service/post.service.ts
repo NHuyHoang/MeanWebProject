@@ -11,6 +11,7 @@ export class PostService {
   private PUT_COMMENT_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/pushcmt`;
   private PUT_REPLY_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/pushrep`;
   private GET_BY_ID_URL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getbyid`;
+  private GET_ALL = `${GLOBAL_VAR.APP_URL_PREFIX}post/getall`;
   private header = new Headers();
 
   private body = new URLSearchParams();
@@ -61,6 +62,14 @@ export class PostService {
     )
   }
 
+  getAll(skip:number){
+    this.body.set('skip',skip.toString());
+    return this.http.post(this.GET_ALL,this.body,{
+      headers:this.header
+    }).map(
+      (res:Response) => res.json()
+    )
+  }
   pushCmt(cmt:any){
     return this.http.put(this.PUT_COMMENT_URL, JSON.stringify(cmt),{
       headers:{'Content-Type': 'application/json'}

@@ -268,3 +268,6 @@ transform: translate(0, 100%);
 top: 50%;
 right: 120%;
 }
+:focus {
+  outline: none!important;
+}

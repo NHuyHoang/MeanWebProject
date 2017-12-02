@@ -7,16 +7,15 @@ import { AppComponent } from './app.component';
 import { MainPageModule } from './main-page/mainpage.module';
 import { LoginPageModule } from './login-page/loginpage.module';
 import { UserHomeModule } from './user-home/user-home.module'
-import { SignInManageService } from './shared-service/sign-in-manage.service';
-import { DateTimeFormatService } from './shared-service/date-time-format.service';
+import { SignInManageService, DateTimeFormatService } from './shared-service/shared-service'
 import { SpecPostModule } from './spec-post/spec-post.module';
+import { PostModule } from './post/post.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -25,7 +24,8 @@ import { SpecPostModule } from './spec-post/spec-post.module';
     UserHomeModule,
     APP_ROUTING,
     HttpModule,
-    SpecPostModule
+    SpecPostModule,
+    PostModule
   ],
   providers: [Title, SignInManageService, DateTimeFormatService],
   bootstrap: [AppComponent]

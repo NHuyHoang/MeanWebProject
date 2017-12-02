@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Camera } from '../../../models/Product-child/Camera';
 import { Estate } from '../../../models/Estate';
 import { Product } from '../../../models/Product';
-import { ProductService } from '../../shared-service/product.service';
+import { ProductService } from '../../shared-service/shared-service';
 import { Bicycle } from '../../../models/Product-child/Products-module';
 
 @Component({

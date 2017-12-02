@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { MinifiedPostComponent } from './minified-post.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
 import { SharedModule } from '../../shared-module/shared.module';
-import { ProductService } from '../shared-service/product.service';
 import { SharedServiceModule } from '../shared-service/shared-service.module';
 
 

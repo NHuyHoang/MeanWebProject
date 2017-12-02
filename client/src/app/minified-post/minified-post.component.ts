@@ -1,22 +1,18 @@
-import { Component, OnInit, OnChanges, AfterContentInit, Input, Renderer2, Inject, SimpleChanges } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser'
+import { Component, OnInit, OnChanges, AfterViewInit, Input, Inject, SimpleChanges } from '@angular/core';
 
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
-import { AreaService } from '../shared-service/area.service';
-import { DateTimeFormatService } from '../shared-service/date-time-format.service';
-import { CategoryService } from '../shared-service/category.service';
-import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Router } from '@angular/router';
+import { AreaService, DateTimeFormatService, CategoryService } from '../shared-service/shared-service'
 
-
+declare var $:any;
 
 @Component({
   selector: 'mini-post',
   templateUrl: './minified-post.component.html',
   styleUrls: ['./minified-post.component.css']
 })
-export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentInit {
+export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('user') public user = new User();
   @Input('post') public post = new Post();
   @Input('isSpec') public isSpec;
@@ -32,8 +28,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
   private area;
   private datePost = { date: "", time: "" };
   constructor(
-    @Inject(DOCUMENT) private _doc,
-    @Inject(Renderer2) private _render,
+
     @Inject(AreaService) private areaService,
     @Inject(DateTimeFormatService) private datetimeformatSV,
     @Inject(CategoryService) private categorySV,
@@ -86,7 +81,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
     }
     if (changes['user'].currentValue._id !== undefined) {
 
-      let s = this._render.createElement('script');
+     /*  let s = this._render.createElement('script');
       s.type = 'text/javascript';
       s.text = `
           $('.rating').rating({
@@ -95,12 +90,15 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterContentIni
           });
           `;
       this._render.appendChild(this._doc.body, s);
-
+ */
     }
   }
 
-  ngAfterContentInit() {
-
+  ngAfterViewInit(){
+    $('.rating').rating({
+      initialRating: this.user.point,
+      maxRating: 5
+    });
   }
 
   onToggleTab(tabId: string) {

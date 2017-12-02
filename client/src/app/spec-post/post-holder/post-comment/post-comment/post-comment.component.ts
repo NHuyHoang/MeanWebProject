@@ -4,12 +4,14 @@ import { Title } from '@angular/platform-browser';
 
 import { Comment} from '../../../../../models/Comments'
 import { User } from '../../../../../models/User';
-import { UserService } from '../../../../shared-service/user.service';
-import { DateTimeFormatService } from '../../../../shared-service/date-time-format.service';
-import { SignInManageService } from '../../../../shared-service/sign-in-manage.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
-import { PostService } from '../../../../shared-service/post.service';
+import {
+  UserService,
+  DateTimeFormatService,
+  SignInManageService,
+  PostService
+ } from '../../../../shared-service/shared-service';
 
 import * as _ from 'lodash';
 

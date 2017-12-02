@@ -71,7 +71,6 @@
     left: 0;
     right: 0;
     margin: auto;
-    top:35px;
     font-size: 3em;
     letter-spacing: 2px;
     font-family: Pacifico;
@@ -143,7 +142,7 @@
 /*-------------------------*/
 @keyframes wallpaper_motion{
     0%{
-        filter:blur(3px);
+        filter:blur(2px);
         transform: translateY(-50%)  scale(1.1) rotate(0) ;
     }
     80%{

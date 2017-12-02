@@ -5,7 +5,8 @@ import {
   Inject,
   Renderer2,
   AfterContentChecked,
-  HostListener
+  HostListener,
+  AfterViewInit
 } from '@angular/core';
 import { DOCUMENT, Title } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs/Rx';
@@ -14,6 +15,7 @@ import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
 import { SignInManageService } from '../shared-service/sign-in-manage.service';
 import { PostService } from '../shared-service/post.service';
+declare var $:any;
 
 @Component({
   selector: 'app-user-home',
@@ -21,7 +23,7 @@ import { PostService } from '../shared-service/post.service';
   styleUrls: ['./user-home.component.css'],
   //encapsulation: ViewEncapsulation.None
 })
-export class UserHomeComponent implements OnInit, AfterContentChecked {
+export class UserHomeComponent implements OnInit, AfterContentChecked, AfterViewInit {
   private user = new User();
   private userSubcription: BehaviorSubject<User> = new BehaviorSubject(null);
   private posts: Post[];
@@ -84,6 +86,14 @@ export class UserHomeComponent implements OnInit, AfterContentChecked {
     this.title.setTitle(`${this.user.name}'s home`);
   }
 
+  ngAfterViewInit(){
+    $('.rating')
+    .rating({
+      initialRating: this.user.point,
+      maxRating: 5
+    });
+  }
+
 
   onSub() {
 
@@ -94,7 +104,12 @@ export class UserHomeComponent implements OnInit, AfterContentChecked {
   }
 
   onAppendScript(){
-    let s = this._renderer2.createElement('script');
+    $('.rating')
+    .rating({
+      initialRating: this.user.point,
+      maxRating: 5
+    });
+   /*  let s = this._renderer2.createElement('script');
     s.type = `text/javascript`;
     s.text = `
     $('.rating')
@@ -103,7 +118,7 @@ export class UserHomeComponent implements OnInit, AfterContentChecked {
       maxRating: 5
     });
     `;
-    this._renderer2.appendChild(this._document.body, s);
+    this._renderer2.appendChild(this._document.body, s); */
   }
 
 }

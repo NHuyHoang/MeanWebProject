@@ -4,9 +4,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DOCUMENT } from '@angular/platform-browser'
 
 import { User } from '../../models/User';
-import { PostService } from '../shared-service/post.service';
 import { Post } from '../../models/Posts';
-import { SignInManageService } from '../shared-service/sign-in-manage.service'
+import { PostService, SignInManageService} from '../shared-service/shared-service'
 
 @Component({
   selector: 'app-spec-post',

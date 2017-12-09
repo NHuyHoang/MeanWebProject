@@ -161,5 +161,90 @@ module.exports = {
 				$push:{"comment.$.reply":holder}
 			}
 		)
-	}
+	},
+	getMinMaxCost:()=>{
+		let holder = {
+			'USD':[],
+			'JPY':[],
+			'CNY':[],
+			'EUR':[],
+		};
+		let result = {
+			'USD':{min:0,max:0},
+			'JPY':{min:0,max:0},
+			'CNY':{min:0,max:0},
+			'EUR':{min:0,max:0}
+		};
+		let promise1 = Post.find({},{product:1})
+			.then(data => {
+				data.forEach(element=>{
+					element.product.forEach(product=>{
+						if(product.categoryid === "est"){
+							if(product.hasOwnProperty("leasecontract"))
+								holder[product.leasecontract.currency]
+									.push(product.leasecontract.cost);
+							if(product.hasOwnProperty("salecontract"))
+								holder[product.salecontract.currency]
+									.push(product.salecontract.cost);
+						}
+						else{
+							holder[product.currency].push(product.cost)
+						}
+					})
+				})
+				for(let key in holder){
+					result[key].min = (_.min(holder[key])); 
+					result[key].max = (_.max(holder[key])); 
+				}
+				return result;
+			})
+		let promise2 = exchangeCurrency();
+		return Promise.all([promise1,promise2])
+			.then(values => {
+				let exc = values[1];
+				let minmax = values[0];
+				let compare = {min:[],max:[]};
+				//convert to USD
+				compare.min.push(minmax.USD.min);
+				compare.max.push(minmax.USD.max);
+				for(let k in exc){
+					minmax[k].min *= exc[k];
+					minmax[k].max *= exc[k];
+					compare.min.push(minmax[k].min);
+					compare.max.push(minmax[k].max);
+				}
+				//compare
+				let max = _.max(compare.max);
+				let min = _.min(compare.min);
+				minmax.USD.min = min.toFixed(2);
+				minmax.USD.max = max.toFixed(2);
+				//revert
+				for(let k in exc){
+					minmax[k].min = (min / exc[k]).toFixed(2);
+					minmax[k].max = (max /exc[k]).toFixed(2);
+				}
+				minmax.exc = exc;
+				return minmax;
+			})
+	},
+}
+
+function exchangeCurrency(){
+	/* let TOKEN = "206861fec801f01e3c4744465be21f3b";
+	var request = require('request-promise');
+	return request(`http://apilayer.net/api/live?access_key=${TOKEN}&currencies=CNY,JPY,EUR&format=1`)
+		.then(data => {
+			data = JSON.parse(data);
+			return {
+				"JPY":data.quotes.USDJPY,
+				"CNY":data.quotes.USDCNY,
+				"EUR":data.quotes.USDEUR
+			}
+		}) */
+
+	return {
+        "JPY": 112.128998,
+        "CNY": 6.613604,
+        "EUR": 0.840204
+    }
 }

@@ -12,8 +12,31 @@ export const GLOBAL_VAR = {
         'motor':'59ce02c4dcc1ef295cad156a',
         'another_vehicle':'59ce02c4dcc1ef295cad1569',
 
-        'lease':'59ccbd9d0946c325f89056df',
-        'sale':'59ccbd9d0946c325f89056de'
+        'lease estate':'59ccbd9d0946c325f89056df',
+        'sale estate':'59ccbd9d0946c325f89056de'
 
     },
+    CURRENCY:[
+        {
+            'name':'US Dollar',
+            'ellipsis':'USD'
+        },
+        {
+            'name':'Japanese Yen',
+            'ellipsis':'JPY'
+        },
+        {
+            'name':'Chinese Yuan',
+            'ellipsis':'CNY'
+        },
+        {
+            'name':'Euro',
+            'ellipsis':'EUR'
+        },
+        {
+            'name':'VietNam Dong',
+            'ellipsis':'VND'
+        },
+        
+    ]
 }

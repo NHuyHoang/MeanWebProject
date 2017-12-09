@@ -16,37 +16,14 @@
                         <i class="large blue marker icon"></i>
                         <span class="text">Your area</span>
                         <div class="menu">
-                            <div class="item">
+                            <div *ngFor="let area of areas" class="item">
                                 <i class="dropdown icon"></i>
-                                Right
+                                {{area?.name}}
                                 <div class="right menu">
-                                    <div class="item">1</div>
-                                    <div class="item">2</div>
-                                    <div class="item">3</div>
+                                    <div *ngFor="let subarea of area?.subareas" class="item">
+                                        <option [value]="subarea._id">{{subarea?.name}}</option>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item">
-                                Quận 2
-                            </div>
-                            <div class="item">
-                                Quận Thủ Đức
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="item3">
-                    <div id="category_btn" class="ui fluid floating labeled icon dropdown button">
-                        <i class="large blue list icon"></i>
-                        <span class="text">Category</span>
-                        <div class="menu">
-                            <div class="item">
-                                Electronics
-                            </div>
-                            <div class="item">
-                                Vehicles
-                            </div>
-                            <div class="item">
-                                Estate
                             </div>
                         </div>
                     </div>
@@ -56,15 +33,20 @@
                         <i class="large blue euro icon"></i>
                         <span class="text">Currency</span>
                         <div class="menu">
-                            <div class="item">
-                                Quận 2
-                            </div>
-                            <div class="item">
-                                Quận Thủ Đức
+                            <div *ngFor="let c of CURRENCY" class="item">
+                                <option [value]="c.ellipsis"> {{c.name}} ({{c.ellipsis}})</option>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="item3">
+                    <div id="category_btn">
+                        <select id="multi-select" name="category" multiple="" class="ui fluid search dropdown" [disabled]="ctgrCount === 3">
+                            <option (click)="categoriesCount()" *ngFor="let p of PRODUCTS" [innerHTML]="p?.type | titlecase" [value]="p?._id"  ></option>
+                        </select>
+                    </div>
+                </div>
+
                 <div id="item4">
                     <div id="slider"></div>
                 </div>
@@ -177,6 +159,11 @@
         </div>
     </div>
     <div id="main_panel" class="ui raised">
-
+        <div *ngFor="let post of posts" class="post_holder">
+            <mini-post [user]="post?.userpost" [post]="post"></mini-post>
+        </div>
+        <div *ngIf="loading" class="loading_post">
+            <h3>loading more post...</h3>
+        </div>
     </div>
 </div>

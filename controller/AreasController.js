@@ -8,5 +8,11 @@ module.exports = {
             AreasService.getChildArea(id).then((data) => {
                 res.send(data);
             })
+    },
+    getAll:(req,res) =>{
+        return AreasService.getAll()
+            .then(data => {
+                res.send(data);
+            });
     }
 }

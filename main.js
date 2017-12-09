@@ -31,6 +31,12 @@ app.use(cors(corsOptions));
 app.use('/fetchdata', fetchdata);
 app.use('/fetch', fetch);
 
+/* 
+var request = require('request');
+request('http://apilayer.net/api/live?access_key=206861fec801f01e3c4744465be21f3b&from=USD&to=GBP&amount=10',function (error, response, body){
+	console.log(response.body);
+}) */
+seeding;
 app.listen(3000, () => {
 	console.log('listening on port 3000');
 });

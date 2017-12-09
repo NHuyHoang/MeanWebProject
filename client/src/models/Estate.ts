@@ -4,13 +4,14 @@ export class Estate {
     description: string;
     address: string;
     location: any;								//{ lat : Number, log : Number }
-    registeredowner: boolean;					//chính chủ
+    registered_owner: boolean;					//chính chủ
     area: number
     state: string;
-    furnitureinclue: boolean;
+    furniture_include: boolean;
     leasecontract: any;
     salecontract: any;
     categoryid: string;
+    sold:string;
     imglist: string[];
     constructor(input?: any) {
         this._id = input._id;
@@ -21,16 +22,16 @@ export class Estate {
             'log': input.location.log,
             'lat': input.location.lat
         };							//{ lat  =  Number, log  =  Number }
-        this.registeredowner = input.registeredowner;					//chính chủ
+        this.registered_owner = input.registered_owner;					//chính chủ
         this.area = input.area;
         this.state = input.state;
-        this.furnitureinclue = input.furnitureinclue;
+        this.furniture_include = input.furniture_include;
         if (input.leasecontract !== undefined) {
             this.leasecontract = {
                 typecontract: input.leasecontract.typecontract,
                 deposit: input.leasecontract.deposit,
                 cost: input.leasecontract.cost,
-                contractduration: input.leasecontract.contractduration,
+                contract_duration: input.leasecontract.contract_duration,
                 currency: input.leasecontract.currency
             };
         }
@@ -40,10 +41,11 @@ export class Estate {
                 land_certificate: input.salecontract.land_certificate,
                 ownership_certificate: input.salecontract.ownership_certificate,
                 cost: input.salecontract.cost,
-                paymentmethod: input.salecontract.paymentmethod,
+                payment_method: input.salecontract.payment_method,
                 currency: input.salecontract.currency
             };
         }
+        this.sold = input.sold;
         this.categoryid = input.categoryid;
         this.imglist = input.imglist;
     }

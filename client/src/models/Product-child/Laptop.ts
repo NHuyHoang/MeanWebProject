@@ -10,7 +10,7 @@ export class Laptop extends Product{
             'memory':input.memory,
             'SSD':input.SSD,
             'VGA':input.VGA,
-            'scrresolution':input.scrresolution,
+            'screen_solution':input.screen_solution,
             'HDD':input.HDD
         };
     }

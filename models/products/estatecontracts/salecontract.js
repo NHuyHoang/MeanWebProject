@@ -7,7 +7,7 @@ const saleSchema = new Schema({
 	land_certificate: Boolean,
 	ownership_certificate: Boolean,
 	cost:{ type:Number, require:true },
-	paymentmethod:String,
+	payment_method:String,
 	currency:String
 },{ _id : false });
 

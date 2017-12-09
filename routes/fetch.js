@@ -23,10 +23,12 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getbyuserid`,PostsController.getByUserId)
 	  .post(`${prefix}update`,PostsController.update)
 	  .put(`${prefix}pushcmt`,PostsController.pushComment)
-	  .put(`${prefix}pushrep`,PostsController.pushReply);
+	  .put(`${prefix}pushrep`,PostsController.pushReply)
+	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost);
 //Area
 prefix = '/area/';
 router.post(`${prefix}getchildarea`,AreasController.getChildArea);
+router.get(`${prefix}getall`,AreasController.getAll);
 //Cate
 prefix = '/cate/';
 router.post(`${prefix}getbyid`,CatesController.getById);

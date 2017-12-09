@@ -41,7 +41,7 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
     private router:Router
   ) {
     this.loginForm = formbuilder.group({
-      'email': ['Roscoe_Ratke@gmail.com'],
+      'email': ['bluegasus@gmail.com'],
       'pass': ['ip_jQZJ8qGXUNBa', this.customValidator(this.PASS_REGEX).bind(this)]
     })
   }

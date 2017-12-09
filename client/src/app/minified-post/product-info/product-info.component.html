@@ -34,7 +34,7 @@
     <div>
       <i class="large dropbox icon"></i>
     </div>
-    <div>{{product.productname | truncate : 15}}</div>
+    <div>{{product.product_name | truncate : 15}}</div>
     <div>
       <i class="large industry icon"></i>
     </div>
@@ -42,14 +42,14 @@
     <div id="right_float">
       <i class="big comment outline icon"></i>
     </div>
-    <div id="right_float">24</div>
+    <div id="right_float">{{cmtCount}}</div>
   </div>
   <div *ngIf="product.categoryid == 'est'" class="product_specific_info">
     <div>
       <i class="large dollar icon"></i>
     </div>
-    <div *ngIf="product.hasOwnProperty('leasecontract')">Lease: {{product.leasecontract?.cost}} </div>
-    <div *ngIf="product.hasOwnProperty('salecontract')">Sale: {{product.salecontract?.cost}} </div>
+    <div *ngIf="product.hasOwnProperty('leasecontract')">Lease: {{product.leasecontract?.cost}} {{product.leasecontract?.currency}}</div>
+    <div *ngIf="product.hasOwnProperty('salecontract')">Sale: {{product.salecontract?.cost}} {{product.salecontract?.currency}}</div>
     <div>
       <i class="large marker icon"></i>
     </div>
@@ -60,21 +60,31 @@
     <div id="right_float">{{cmtCount}}</div>
   </div>
   <div *ngIf="isSpec" class="product_description">
-    <div class="product_specific_info2">
-      <div class="ui fitted horizontal divider">
-        Product specific info
-      </div>
+
+    <div class="product_specific_info2 ui segment">
+      <a class="ui blue ribbon label sold_label">
+        <h5>Product's specific info</h5>
+      </a>
+      <!-- <a *ngIf="product.sold" class="ui red ribbon label sold_label"><h6>SOLD</h6></a> -->
+      <a *ngIf="product.sold" class="item">
+        <div class="ui red horizontal label">
+          <h5>SOLD OUT</h5>
+        </div>
+      </a>
+      <hr>
       <table class="ui definition table">
         <tbody>
           <tr *ngFor="let key of keys">
-            <td>{{key | uppercase}}</td>
+            <td>{{key | uppercase | _truncate }}</td>
             <td>{{product.specificInfo[key]}}</td>
           </tr>
         </tbody>
       </table>
-      <div class="ui fitted horizontal divider">
-        Description
-      </div>
+      <div class="ui fitted horizontal divider"></div>
+      <a class="ui teal ribbon label sold_label">
+        <h5>Description</h5>
+      </a>
+      <hr>
       <h5>{{product.description}}</h5>
     </div>
   </div>

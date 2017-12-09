@@ -10,7 +10,7 @@ const tabletSchema = product.discriminator('59ccb33a6b406109345ed117',
 		megapixel: String,
 		guarantee: Boolean,
 		simcard: Boolean,
-		scrresolution: String,
+		screen_solution: String,
 		categoryid:{type:String,default:'elt'}
 	}));
 

@@ -27,6 +27,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   private ctgrArr = [];
   private area;
   private datePost = { date: "", time: "" };
+  private cmtCount = 0;
   constructor(
 
     @Inject(AreaService) private areaService,
@@ -47,9 +48,11 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
       this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
       this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
+      this.cmtCount = this.post.comment.length;
       //get area name
       this.areaService.getChildArea(this.post.subareaid).subscribe((data) => {
         this.area = data;
+        
         //get category name
         this.post.product.forEach((element) => {
           let categoryName: string;
@@ -71,7 +74,6 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
               this.products.push(element)
               if (this.products.length == 1)
                 this.products[0].active = true;
-
             })
           }
         })
@@ -115,6 +117,8 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
 
   onCheckAvailable(){
     if(this.post._id !== undefined){
+      if (this.homeMode === undefined)
+        this.homeMode = true;
       return this.homeMode&&(this.post.approval||this.post.available)
     }
   }

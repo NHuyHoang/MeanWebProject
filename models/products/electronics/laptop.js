@@ -10,7 +10,7 @@ var laptopSchema = product.discriminator('59ccb33a6b406109345ed118',
         memory : String,
         SSD : String,
         VGA : String,
-        scrresolution : String,
+        screen_solution : String,
         HDD : String,
         categoryid:{type:String,default:'elt'}
 	}));

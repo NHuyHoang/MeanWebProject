@@ -22,7 +22,9 @@
     "express": "^4.15.4",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.12",
-    "mongoose-schema-extend": "^0.2.2"
+    "mongoose-schema-extend": "^0.2.2",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

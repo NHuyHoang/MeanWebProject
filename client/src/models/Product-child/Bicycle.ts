@@ -6,7 +6,7 @@ export class Bicycle extends Product{
         super(input);
         this.specificInfo = {
             'species':input.species,
-            'yearbought':input.yearbought
+            'year_bought':input.year_bought
         };
     }
 }

@@ -9,12 +9,13 @@ const estateSchema = new Schema({
 	description:  { type: String, required: true},
 	address:{ type: String, required: true },
 	location:{ type: Schema.Types.Mixed },								//{ lat : Number, log : Number }
-	registeredowner:{ type:Boolean, required: true },					//chính chủ
+	registered_owner:{ type:Boolean, required: true },					//chính chủ
 	area:Number,
 	state: { type: String, required: true },
-	furnitureinclue:Boolean,											
+	furniture_include:Boolean,											
 	leasecontract: leasecontract,
 	salecontract: salescontract,
+	sold:{type:Boolean},
 	categoryid:{type:String,default:'est'},
 	imglist: []
 }, {collection : 'esates'});

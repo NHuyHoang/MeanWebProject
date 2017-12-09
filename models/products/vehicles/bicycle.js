@@ -5,7 +5,7 @@ const Product = require('../products');
 const bicycleSchema = Product.discriminator('59ce02c4dcc1ef295cad156c',
 	new Schema({
 		species:String, 			 				//bmx moutain-bike road-bike electric-bike..
-		yearbought:Number,
+		year_bought:Number,
 		categoryid:{type:String,default:'vhc'}
 	}));
 

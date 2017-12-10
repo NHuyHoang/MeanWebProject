@@ -59,7 +59,7 @@
     padding-left:30px;
 }
 
-#area_btn,#category_btn{
+#area_btn,#currency_dropdown{
     height: 100%;
     text-align: left;
     margin: auto;
@@ -67,7 +67,7 @@
     box-shadow: 1px 1px 3px #dedede;
 }
 
-#area_btn span,#category_btn span{
+#area_btn span,#currency_dropdown span{
     position:absolute;
     top:50%;
     left:80px;
@@ -223,6 +223,11 @@
 .right.menu{
     overflow-y: scroll;
     height:200px;
+}
+
+.product_menu{
+    overflow-y: scroll!important;
+    height:200px!important;
 }
 
 #right_float{

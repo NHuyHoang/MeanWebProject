@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, Renderer2} from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DOCUMENT } from '@angular/platform-browser'
 
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
-import { PostService, SignInManageService} from '../shared-service/shared-service'
+import { PostService, SignInManageService} from '../shared-service/shared-service';
+declare let $:any
 
 @Component({
   selector: 'app-spec-post',
@@ -18,36 +18,26 @@ export class SpecPostComponent implements OnInit {
   private postId;
   constructor(
     @Inject(ActivatedRoute)private atvRoute,
-    @Inject(PostService) private postservice,
-    @Inject(Renderer2) private _render,
-    @Inject(DOCUMENT) private _doc) 
+    @Inject(PostService) private postservice) 
     {
-    window.scrollTo(0,0);
-    this.postId = atvRoute.snapshot.params['_id'];
-    this.postservice.getById(this.postId).subscribe((data)=>{
+    window.scrollTo(0,0);                                           //scroll to top of the page 
+    this.postId = atvRoute.snapshot.params['_id'];                  //get the post id from url
+    this.postservice.getById(this.postId).subscribe((data)=>{       //get the post by the id
       let postholder = [];
       postholder.push(data);
-      this.post = this.postservice.formatPostList(postholder)[0];
+      this.post = this.postservice.formatPostList(postholder)[0];   //format posts 
       this.user = data.userpost;
       
-      this.onAppendScript();
+      //sematic-ui rating jquery for display user point
+      $('.rating')
+      .rating({
+        initialRating: this.user.point,
+        maxRating: 5,
+      });
     })
    }
 
   ngOnInit() {
 
-  }
-
-  onAppendScript(){
-    let s = this._render.createElement('script');
-    s.type = `text/javascript`;
-    s.text = `
-    $('.rating')
-    .rating({
-      initialRating: ${this.user.point},
-      maxRating: 5,
-    });
-    `;
-    this._render.appendChild(this._doc.body, s);
   }
 }

@@ -23,7 +23,7 @@ export class ProductInfoComponent implements OnInit,OnChanges {
 
   ngOnChanges(changes:SimpleChanges){
     if(changes['product'] !==undefined && changes['product'].currentValue._id !== undefined){
-      console.log(this.product);
+      //get the prototype of product
       this.product = this.productSV.getPrototype(this.product);
       if(this.product.categoryid !== "est")
         this.keys = Object.keys(this.product.specificInfo);

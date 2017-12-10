@@ -34,31 +34,7 @@ module.exports = {
 			return area;
 		})
 	}
-	/*getParentId:(childId) => {
-		return Area.find({},(err, data) => {
-			if(err) throw err;
-			return data;
-		})
-			.then(data => {
-				let result;
-				data.forEach(parent => {
-					let check = false;
-					parent.subareas.forEach(child => {
-						if(child._id == childId){
-							check = true;
-							
-						};
-						console.log(child.name);
-					});
-					if(check) {
-						result = parent.subareas;
-						console.log(result);
-						throw new Error();
-					}
-				});
-				return result
-			})
-	}*/
+	
 }
 
 

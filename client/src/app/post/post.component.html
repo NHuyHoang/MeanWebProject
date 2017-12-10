@@ -7,7 +7,7 @@
             <div id="left_panel_content">
                 <div id="item1">
                     <div id="search_inp" class="ui fluid transparent icon input">
-                        <input type="text" placeholder="Search post title...">
+                        <input id="titleSearchInp" placeholder="Search post title...">
                     </div>
 
                 </div>
@@ -20,8 +20,8 @@
                                 <i class="dropdown icon"></i>
                                 {{area?.name}}
                                 <div class="right menu">
-                                    <div *ngFor="let subarea of area?.subareas" class="item">
-                                        <option [value]="subarea._id">{{subarea?.name}}</option>
+                                    <div *ngFor="let subarea of area?.subareas" class="item" (click)="onAreaSelect(subarea._id)">
+                                        <option  [value]="subarea._id">{{subarea?.name}}</option>
                                     </div>
                                 </div>
                             </div>
@@ -29,21 +29,32 @@
                     </div>
                 </div>
                 <div id="item2">
-                    <div id="area_btn" class="ui fluid floating labeled icon dropdown button">
+                    <div id="currency_dropdown" class="ui fluid floating labeled icon dropdown button">
                         <i class="large blue euro icon"></i>
-                        <span class="text">Currency</span>
+                        <span class="text">US Dollar (USD)</span>
                         <div class="menu">
-                            <div *ngFor="let c of CURRENCY" class="item">
-                                <option [value]="c.ellipsis"> {{c.name}} ({{c.ellipsis}})</option>
+                            <div *ngFor="let c of CURRENCY" class="item" (click)="onCurrencySelect(c.ellipsis)">
+                                <option  [value]="c.ellipsis"> {{c.name}} ({{c.ellipsis}})</option>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="item3">
+                <!-- <div id="item3">
                     <div id="category_btn">
                         <select id="multi-select" name="category" multiple="" class="ui fluid search dropdown" [disabled]="ctgrCount === 3">
-                            <option (click)="categoriesCount()" *ngFor="let p of PRODUCTS" [innerHTML]="p?.type | titlecase" [value]="p?._id"  ></option>
+                            <option (click)="categoriesCount()" *ngFor="let p of PRODUCTS" [innerHTML]="p?.type | titlecase | _truncate" [value]="p?._id"  ></option>
                         </select>
+                    </div>
+                </div> -->
+                <div id="item2">
+                    <div id="currency_dropdown" class="ui fluid floating labeled icon dropdown button">
+                        <i class="large blue dropbox icon"></i>
+                        <span class="text">Category</span>
+                        <div class="menu product_menu">
+                            <div *ngFor="let p of PRODUCTS" class="item" (click)="onCategorySelect(p._id)">
+                                <option  [value]="p?._id"> {{p?.type | titlecase | _truncate}}</option>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -60,8 +71,7 @@
         <div id="button_segments" class="ui inverted segments">
             <div class="ui  fluid buttons">
                 <button class="ui basic red  button create_btn">Create one</button>
-                <button (click)="onShowRange()" class="ui basic green  button find_btn">Find post</button>
-                <button class="ui basic blue  button reset_btn">Reset</button>
+                <button (click)="onFindPost()" class="ui basic green  button find_btn">Find post</button>
             </div>
         </div>
         <div id="vippost_segments" class="ui segments">
@@ -158,7 +168,7 @@
             </div>
         </div>
     </div>
-    <div id="main_panel" class="ui raised">
+    <div id="main_panel" class="">
         <div *ngFor="let post of posts" class="post_holder">
             <mini-post [user]="post?.userpost" [post]="post"></mini-post>
         </div>

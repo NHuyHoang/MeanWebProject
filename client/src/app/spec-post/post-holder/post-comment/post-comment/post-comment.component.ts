@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, Inject} from '@angu
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
-import { Comment} from '../../../../../models/Comments'
+import { Comment } from '../../../../../models/Comments'
 import { User } from '../../../../../models/User';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ActivatedRoute } from '@angular/router';
@@ -13,7 +13,6 @@ import {
   PostService
  } from '../../../../shared-service/shared-service';
 
-import * as _ from 'lodash';
 
 @Component({
   selector: 'post-comment',
@@ -38,7 +37,7 @@ export class PostCommentComponent implements OnInit, OnChanges {
     @Inject(PostService) private postSV){
     
     this.signInUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.replyForm = formBuilder.group({
+    this.replyForm = formBuilder.group({                                      //create a reply form
       '_postid':atvRoute.snapshot.params['_id'],
       '_cmtid':'',
       'usercmt':this.signInUser._id,
@@ -53,17 +52,19 @@ export class PostCommentComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes:SimpleChanges){
     if(changes['comment'].currentValue._id !== undefined){
-      this.dateComment.date = this.datetimeformatSV.formatDate(this.comment.date);
-      this.dateComment.time = this.comment.date.getHours().toString() + "h" + this.comment.date.getMinutes().toString();
+      this.dateComment.date = this.datetimeformatSV.formatDate(this.comment.date);      //format date time comment
+      this.dateComment.time = this.comment.date.getHours().toString()
+                               + "h" + this.comment.date.getMinutes().toString();
       this.user = this.comment.usercmt;
       this.reply = [];
       if(this.comment.reply !== undefined){
         this.reply = this.comment.reply;
         this.reply.forEach(element => {
-          let date = this.datetimeformatSV.formatDate(element.date);
-          let time = element.date.getHours().toString() + "h" + element.date.getMinutes().toString();
-          element.date = `${time} ${date}`;
-          this.userSV.getUserInfo(element.usercmt).subscribe(
+          let date = this.datetimeformatSV.formatDate(element.date);                  //format date time reply
+          let time = element.date.getHours().toString()
+                     + "h" + element.date.getMinutes().toString();
+          element.date = `${time} ${date}`;                                           
+          this.userSV.getUserInfo(element.usercmt).subscribe(                        //get the user reply info
             user =>{
               element.usercmt = user;
             })
@@ -79,19 +80,21 @@ export class PostCommentComponent implements OnInit, OnChanges {
     return this.showReply =!this.showReply;
   }
   
+  //submit reply
   onSubmitReply(){
     if(this.replyForm.invalid || this.signInUser._id === undefined) return;
     this.replyForm.patchValue({
       'date':(new Date()).toISOString()
     })
-    console.log(this.replyForm.value);
-    this.postSV.pushRep(this.replyForm.value).subscribe(data => {
-      if(data.success === true)
-      {
+    this.postSV.pushRep(this.replyForm.value).subscribe(data => {                       //save the reply to database
+      if(data.success === true)                                                         //if success push a reply to comment
+      {                                                                     
         this.collapsed = true;
         this.showReply = true;
         data.data.usercmt = this.signInUser;
-        this.reply.push(data.data);
+        this.reply.push(
+          new Comment(data.data._id,data.data.cmt,data.data.date,this.signInUser,[])
+        )
       }
     })
   }

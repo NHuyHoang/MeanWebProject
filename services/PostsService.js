@@ -162,6 +162,8 @@ module.exports = {
 			}
 		)
 	},
+
+	//get the min max cost of product for each currency type
 	getMinMaxCost:()=>{
 		let holder = {
 			'USD':[],
@@ -216,12 +218,12 @@ module.exports = {
 				//compare
 				let max = _.max(compare.max);
 				let min = _.min(compare.min);
-				minmax.USD.min = min.toFixed(2);
-				minmax.USD.max = max.toFixed(2);
+				minmax.USD.min = Number.parseFloat(min.toFixed(2));
+				minmax.USD.max = Number.parseFloat(max.toFixed(2));
 				//revert
 				for(let k in exc){
-					minmax[k].min = (min / exc[k]).toFixed(2);
-					minmax[k].max = (max /exc[k]).toFixed(2);
+					minmax[k].min = Number.parseFloat((min / exc[k]).toFixed(2));
+					minmax[k].max = Number.parseFloat((max /exc[k]).toFixed(2));
 				}
 				minmax.exc = exc;
 				return minmax;
@@ -230,6 +232,8 @@ module.exports = {
 }
 
 function exchangeCurrency(){
+	//get the currency ratio of 
+	//exchange from USD to another currency
 	/* let TOKEN = "206861fec801f01e3c4744465be21f3b";
 	var request = require('request-promise');
 	return request(`http://apilayer.net/api/live?access_key=${TOKEN}&currencies=CNY,JPY,EUR&format=1`)

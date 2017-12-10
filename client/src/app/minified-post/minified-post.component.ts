@@ -38,13 +38,12 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
-
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['post'].currentValue._id !== undefined) {
+      //format the mini post
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
       this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
       this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
@@ -82,27 +81,17 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
 
     }
     if (changes['user'].currentValue._id !== undefined) {
-
-     /*  let s = this._render.createElement('script');
-      s.type = 'text/javascript';
-      s.text = `
-          $('.rating').rating({
-            initialRating: ${this.user.point},
-            maxRating: 5
-          });
-          `;
-      this._render.appendChild(this._doc.body, s);
- */
     }
   }
 
   ngAfterViewInit(){
+    //semantic-ui display user point
     $('.rating').rating({
       initialRating: this.user.point,
       maxRating: 5
     });
   }
-
+  //toggle product tab
   onToggleTab(tabId: string) {
     this.products.forEach(element => {
       if (tabId == element._id)
@@ -110,7 +99,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
       else element.active = false;
     })
   }
-
+  //navigate to the specific post
   onPostRedirect() {
     this.router.navigate(['/post', this.post._id]);
   }

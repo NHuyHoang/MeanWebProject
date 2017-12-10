@@ -18,6 +18,8 @@ export class AppComponent implements AfterContentChecked {
   private signInUser: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private title: Title, private signInManageSv: SignInManageService) {
+
+    // subscribe for the user who successfully logined
     signInManageSv.getUserSubscribe(this.signInUser);
     this.signInUser.subscribe(user => {
       if (user._id !== undefined) {

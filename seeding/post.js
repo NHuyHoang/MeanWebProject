@@ -143,7 +143,7 @@ function createCamera(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -165,7 +165,7 @@ function createLaptop(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -189,7 +189,7 @@ function createMobile(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -209,7 +209,7 @@ function createTablet(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -232,7 +232,7 @@ function createBicycle(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -253,7 +253,7 @@ function createCar(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -281,7 +281,7 @@ function createMotor(){
 		product_name: faker.lorem.sentence(),
 		state: faker.lorem.word(),
 		producer: faker.lorem.words(),
-		cost: faker.random.number(),
+		cost:_.random(10,5000),
 		currency: chooseCurrency(),		
 		guarantee:faker.lorem.words(),
 		payment_method:faker.lorem.words(),
@@ -300,7 +300,7 @@ function createLeaseContact(){
 	let lct = mongoose.model('leasecontract',LeaseContract)
 	return lct ({
 		deposit:_.random(1000,100000),
-		cost:_.random(1000,100000),
+		cost:_.random(10,5000),
 		contract_duration:_.random(1,10) + " year(s)",
 		currency:chooseCurrency()
 	})
@@ -311,7 +311,7 @@ function createSaleContract(){
 	return sct ({
 		land_certificate: faker.random.boolean(),
 		ownership_certificate: faker.random.boolean(),
-		cost:_.random(1000,100000),
+		cost:_.random(10,5000),
 		payment_method:faker.lorem.words(),
 		currency:chooseCurrency()
 	})

@@ -32,11 +32,7 @@ export const GLOBAL_VAR = {
         {
             'name':'Euro',
             'ellipsis':'EUR'
-        },
-        {
-            'name':'VietNam Dong',
-            'ellipsis':'VND'
-        },
+        }
         
     ]
 }

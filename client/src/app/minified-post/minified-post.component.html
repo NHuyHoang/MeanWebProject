@@ -1,9 +1,11 @@
 <div id="post" class="ui raised segments">
   <div id="post_info">
     <div class="post_ava">
-      <img id="avatar" [src]=user.img>
+      <img (click)="onNavigateUserHome()" id="avatar" [src]=user.img>
     </div>
+    <div *ngIf="onCompareDate(post?.vipexpire)" class="ribbon-wrapper-green"><div class="ribbon-green">VIP</div></div>
     <div class="post_info_item">
+      
       <div class="post_userinf">
         <div>{{user?.name}}</div>
         <div id="post_user_rating">
@@ -17,13 +19,16 @@
         </div>
         <div>
           <i class="mail icon"></i>
-        </div>
-        <div *ngIf="homeMode === true" id="right_float">
-          <i *ngIf="onCheckAvailable()" class="large unhide icon"></i>
-          <i *ngIf="!onCheckAvailable()" class="large red hide icon"></i>
-          <i class="large configure icon"></i>
+        
+        
 
         </div>
+        <div *ngIf="onCheckUserPost()">
+          <i *ngIf="onCheckAvailable()" class=" unhide icon"></i>
+          <i *ngIf="!onCheckAvailable()" class=" red hide icon"></i>
+          <i  class="configure icon"></i>
+        </div>
+        
       </div>
       <div (click)="onPostRedirect()"  class="post_title">
         <div>{{ellipsisTitle}} </div>

@@ -24,18 +24,26 @@ export class ProductInfoComponent implements OnInit,OnChanges {
   ngOnChanges(changes:SimpleChanges){
     if(changes['product'] !==undefined && changes['product'].currentValue._id !== undefined){
       //get the prototype of product
+      console.log(typeof(this.product.furniture_include));
       this.product = this.productSV.getPrototype(this.product);
       if(this.product.categoryid !== "est")
         this.keys = Object.keys(this.product.specificInfo);
-      /* else {
-        this.keys = {leaseKey:undefined,saleKey:undefined};
+      else {
+        this.keys = {
+          info:[],
+          leaseKey:undefined,
+          saleKey:undefined
+        };
         if(this.product.hasOwnProperty("leasecontract")){
+          this.keys.leaseKey = Object.keys(this.product.leasecontract);
+          this.keys.leaseKey.shift();
         }
         if(this.product.hasOwnProperty("salecontract")){
-          
+          this.keys.saleKey = Object.keys(this.product.salecontract);
+          this.keys.saleKey.shift();
         }
-
-      } */
+        this.keys.info = ["_type","address","registered_owner","state","furniture_include"];
+      }
     }
   }
 
@@ -57,4 +65,7 @@ export class ProductInfoComponent implements OnInit,OnChanges {
     
   }
 
+  typeofBoolean(value){
+    return typeof(value) === "boolean";
+  } 
 }

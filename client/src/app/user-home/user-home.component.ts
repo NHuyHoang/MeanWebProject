@@ -14,6 +14,8 @@ import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
 import { SignInManageService } from '../shared-service/sign-in-manage.service';
 import { PostService } from '../shared-service/post.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../shared-service/shared-service';
 declare var $: any;
 
 @Component({
@@ -57,11 +59,24 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
   constructor(
     @Inject(PostService) private postService,
     @Inject(Title) private title,
+    @Inject(UserService) private userService,
+    private atvRouter:ActivatedRoute,
   ) {
-    this.user = JSON.parse(localStorage.getItem("currentUser"));
-    if (this.user._id !== undefined) {
-      this.getUserPost();
+    let userId = this.atvRouter.snapshot.params['id'];
+    console.log(userId);
+    if(!userId){
+      this.user = JSON.parse(localStorage.getItem("currentUser"));
+      if (this.user._id !== undefined) {
+        this.getUserPost();
+      }
     }
+    else{
+      this.userService.getUserInfo(userId).subscribe(data => {
+        this.user = data;
+        this.getUserPost();
+      })
+    }
+    
   }
   //get next 5 posts
   getUserPost(){

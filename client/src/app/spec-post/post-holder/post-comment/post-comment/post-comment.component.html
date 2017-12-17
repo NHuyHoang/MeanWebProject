@@ -1,7 +1,7 @@
 <div id="comments">
     <div class="comment_item">
         <div class="comment_ava">
-            <img id="avatar" [src]="user?.img">
+            <img (click)="onNavigateUserHome(user?._id)" id="avatar" [src]="user?.img">
         </div>
         <div class="comment_item_content">
             <div class="comment_info">
@@ -25,7 +25,7 @@
                 <div *ngFor="let rep of reply" id="comments">
                     <div class="comment_item">
                         <div class="comment_ava">
-                            <img id="avatar" [src]="rep?.usercmt.img">
+                            <img (click)="onNavigateUserHome(rep?.usercmt._id)" id="avatar" [src]="rep?.usercmt.img">
                         </div>
                         <div class="comment_item_content">
                             <div class="comment_info">

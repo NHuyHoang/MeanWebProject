@@ -52,7 +52,7 @@ userSchema.post('remove',function(next) {
 	}).then((data) => {
 		Post.remove({_id:{$in:data}})
 			.then(() => {
-				console.log("successful remove all the related post with user");
+				console.log("successfully remove all the related post with user");
 			})
 			.catch(reject => console.log(reject));
 	})

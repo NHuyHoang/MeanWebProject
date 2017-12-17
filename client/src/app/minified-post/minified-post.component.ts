@@ -14,7 +14,7 @@ declare var $:any;
 })
 export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('user') public user = new User();
-  @Input('post') public post = new Post();
+  @Input('post') public post;
   @Input('isSpec') public isSpec;
   @Input('isHomeMode') public homeMode;
 
@@ -110,5 +110,24 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
         this.homeMode = true;
       return this.homeMode&&(this.post.approval||this.post.available)
     }
+  }
+  //hide or show the post's configuration if this post is not owned by user
+  onCheckUserPost(){
+    if(this.post._id !== undefined){
+      let user = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.post.userpost._id)
+        return this.post.userpost._id === user._id;
+      else return this.post.userpost === user._id;
+    }
+    return false;
+  }
+
+  onCompareDate(date:Date){
+    let d = new Date();
+    return date > d;
+  }
+
+  onNavigateUserHome(){
+    this.router.navigate(['user',this.post.userpost._id]);
   }
 }

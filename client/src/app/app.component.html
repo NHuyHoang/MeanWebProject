@@ -17,7 +17,7 @@
       </div>
     </div>
     <div *ngIf=!notSignIn id="right_menu" class="right menu">
-      <img id="avatar" src={{user.img}}>
+      <img (click)="onNavigateUserHome()" id="avatar" src={{user.img}}>
       <a class="item">
         <i class="lagre world icon"></i>
       </a>

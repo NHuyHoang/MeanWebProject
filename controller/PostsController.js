@@ -98,6 +98,15 @@ module.exports = {
 	},
 	getMinMaxCost:(req,res)=>{
 		PostsService.getMinMaxCost().then(data => res.send(data));
+	},
+	getWithFilter:(req,res)=>{
+		if(!req.body) res.send({"success":false});
+		else{
+			PostsService.getWithFilter(req.body).then(data => res.send(data))
+		}
+	},
+	getVipPost:(req,res)=>{
+		PostsService.getVipPost(req.body).then(data=>res.send(data));
 	}
 
 }

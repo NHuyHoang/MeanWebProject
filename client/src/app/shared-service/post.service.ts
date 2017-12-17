@@ -12,7 +12,8 @@ export class PostService {
   private PUT_REPLY_URL = `${this.URL_PREFIX}pushrep`;
   private GET_BY_ID_URL = `${this.URL_PREFIX}getbyid`;
   private GET_ALL = `${this.URL_PREFIX}getall`;
-  private GET_MINMAX_COST_URL = `${this.URL_PREFIX}getminmaxcost`
+  private GET_MINMAX_COST_URL = `${this.URL_PREFIX}getminmaxcost`;
+  private GET_WITH_FILTER_URL = `${this.URL_PREFIX}getwithfilter`;
   private header = new Headers();
 
   private body = new URLSearchParams();
@@ -91,5 +92,13 @@ export class PostService {
   getMinMaxCost(){
     return this.http.get(this.GET_MINMAX_COST_URL)
       .map((res:Response) => res.json())
+  }
+
+  getWithFilter(filter:any){
+    return this.http.post(this.GET_WITH_FILTER_URL, JSON.stringify(filter),{
+      headers:{'Content-Type': 'application/json'}
+    }).map(
+      (res:Response) => res.json()
+    )
   }
 }

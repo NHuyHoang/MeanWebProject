@@ -5,7 +5,7 @@ const cors = require("cors");	//cross-origin sharing standard
 
 const uri = 'mongodb://localhost:27017/meanWebDB_1';
 const router = express.Router();
-const fetchdata = require('./routes/fetchdata')(router);
+//const fetchdata = require('./routes/fetchdata')(router);
 const bodyParser = require('body-parser');
 const seeding = require('./seeding/post');
 const fetch = require('./routes/fetch');
@@ -28,7 +28,10 @@ mongoose.connect(uri, { useMongoClient: true })
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+
 app.use('/fetch', fetch);
+
+seeding;
 
 app.listen(3000, () => {
 	console.log('listening on port 3000');

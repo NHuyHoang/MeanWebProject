@@ -10,6 +10,7 @@ const ROUTES:Routes = [
     {path:"", component:MainPageComponent},
     {path:"login", component:LoginPageComponent},
     {path:"user", component:UserHomeComponent},
+    {path:"user/:id", component:UserHomeComponent},
     {path:"post/:_id", component:SpecPostComponent},
     {path:"post", component:PostComponent}
 ]

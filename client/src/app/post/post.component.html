@@ -1,3 +1,4 @@
+
 <div id="content">
     <div id="left_panel">
         <div id="filter_segment" class="ui  segments">
@@ -21,7 +22,7 @@
                                 {{area?.name}}
                                 <div class="right menu">
                                     <div *ngFor="let subarea of area?.subareas" class="item" (click)="onAreaSelect(subarea._id)">
-                                        <option  [value]="subarea._id">{{subarea?.name}}</option>
+                                        <option [value]="subarea._id">{{subarea?.name}}</option>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +35,7 @@
                         <span class="text">US Dollar (USD)</span>
                         <div class="menu">
                             <div *ngFor="let c of CURRENCY" class="item" (click)="onCurrencySelect(c.ellipsis)">
-                                <option  [value]="c.ellipsis"> {{c.name}} ({{c.ellipsis}})</option>
+                                <option [value]="c.ellipsis"> {{c.name}} ({{c.ellipsis}})</option>
                             </div>
                         </div>
                     </div>
@@ -47,12 +48,12 @@
                     </div>
                 </div> -->
                 <div id="item2">
-                    <div id="currency_dropdown" class="ui fluid floating labeled icon dropdown button">
+                    <div id="category_dropdown" class="ui fluid floating labeled icon dropdown button">
                         <i class="large blue dropbox icon"></i>
                         <span class="text">Category</span>
                         <div class="menu product_menu">
                             <div *ngFor="let p of PRODUCTS" class="item" (click)="onCategorySelect(p._id)">
-                                <option  [value]="p?._id"> {{p?.type | titlecase | _truncate}}</option>
+                                <option [value]="p?._id"> {{p?.type | titlecase | _truncate}}</option>
                             </div>
                         </div>
                     </div>
@@ -72,103 +73,23 @@
             <div class="ui  fluid buttons">
                 <button class="ui basic red  button create_btn">Create one</button>
                 <button (click)="onFindPost()" class="ui basic green  button find_btn">Find post</button>
+                <button (click)="onReset()" class="ui basic blue  button find_btn">Reset filter</button>
             </div>
         </div>
-        <div id="vippost_segments" class="ui segments">
-            <div id="segment_header" class="ui  segment">
-                <p>Vip post</p>
-            </div>
-            <div id="vippost_segment_item" class="ui blue left aligned  segment">
-                <p>Lorem ipsum dolor sit amet, consect...</p>
-
-                <div id="vippost_content">
-                    <div class="vippost_content_cost">
-                        <i class="large blue dollar icon"></i>
-                        <p>23</p>
-                    </div>
-                    <div class="vippost_content_area">
-                        <i class="large blue marker icon"></i>
-                        <p>TP.HCM</p>
-                    </div>
-                    <div class="vippost_content_product">
-                        <i class="large blue dropbox icon"></i>
-                        <p>Mercedex 78fc...</p>
-                    </div>
-                    <div class="vippost_content_cate">
-                        <i class="large blue tag icon"></i>
-                        <p>Vehicle | car</p>
-                    </div>
-                </div>
-            </div>
-            <div id="vippost_segment_item" class="ui blue left aligned  segment">
-                <p>Lorem ipsum dolor sit amet, consect...</p>
-
-                <div id="vippost_content">
-                    <div class="vippost_content_cost">
-                        <i class="large blue dollar icon"></i>
-                        <p>23</p>
-                    </div>
-                    <div class="vippost_content_area">
-                        <i class="large blue marker icon"></i>
-                        <p>TP.HCM</p>
-                    </div>
-                    <div class="vippost_content_product">
-                        <i class="large blue dropbox icon"></i>
-                        <p>Mercedex 78fc...</p>
-                    </div>
-                    <div class="vippost_content_cate">
-                        <i class="large blue tag icon"></i>
-                        <p>Vehicle | car</p>
-                    </div>
-                </div>
-            </div>
-            <div id="vippost_segment_item" class="ui blue left aligned  segment">
-                <p>Lorem ipsum dolor sit amet, consect...</p>
-
-                <div id="vippost_content">
-                    <div class="vippost_content_cost">
-                        <i class="large blue dollar icon"></i>
-                        <p>23</p>
-                    </div>
-                    <div class="vippost_content_area">
-                        <i class="large blue marker icon"></i>
-                        <p>TP.HCM</p>
-                    </div>
-                    <div class="vippost_content_product">
-                        <i class="large blue dropbox icon"></i>
-                        <p>Mercedex 78fc...</p>
-                    </div>
-                    <div class="vippost_content_cate">
-                        <i class="large blue tag icon"></i>
-                        <p>Vehicle | car</p>
-                    </div>
-                </div>
-            </div>
-            <div id="vippost_segment_item" class="ui blue left aligned  segment">
-                <p>Lorem ipsum dolor sit amet, consect...</p>
-
-                <div id="vippost_content">
-                    <div class="vippost_content_cost">
-                        <i class="large blue dollar icon"></i>
-                        <p>23</p>
-                    </div>
-                    <div class="vippost_content_area">
-                        <i class="large blue marker icon"></i>
-                        <p>TP.HCM</p>
-                    </div>
-                    <div class="vippost_content_product">
-                        <i class="large blue dropbox icon"></i>
-                        <p>Mercedex 78fc...</p>
-                    </div>
-                    <div class="vippost_content_cate">
-                        <i class="large blue tag icon"></i>
-                        <p>Vehicle | car</p>
-                    </div>
-                </div>
-            </div>
+        <div id="vippost_segments" class="">
+            
         </div>
     </div>
     <div id="main_panel" class="">
+        <div *ngIf="filterMode" class="ui mini teal icon message">
+            <i class="search icon"></i>
+            <div class="content">
+                <div class="header">
+                    {{postCount}} results found!
+                </div>
+                <p>Display {{loaded}}/{{postCount}} posts</p>
+            </div>
+        </div>
         <div *ngFor="let post of posts" class="post_holder">
             <mini-post [user]="post?.userpost" [post]="post"></mini-post>
         </div>

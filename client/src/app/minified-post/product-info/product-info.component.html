@@ -63,7 +63,7 @@
 
     <div class="product_specific_info2 ui segment">
       <a class="ui blue ribbon label sold_label">
-        <h5>Product's specific info</h5>
+        <h3 class="ui header">Product's specific info</h3>
       </a>
       <!-- <a *ngIf="product.sold" class="ui red ribbon label sold_label"><h6>SOLD</h6></a> -->
       <a *ngIf="product.sold" class="item">
@@ -72,7 +72,7 @@
         </div>
       </a>
       <hr>
-      <table class="ui definition table">
+      <table *ngIf="this.product.categoryid !== 'est'" class="ui definition table">
         <tbody>
           <tr *ngFor="let key of keys">
             <td>{{key | uppercase | _truncate }}</td>
@@ -80,9 +80,67 @@
           </tr>
         </tbody>
       </table>
+      <div *ngIf="this.product.categoryid == 'est'">
+        <table class="ui definition table">
+          <tbody>
+            <tr *ngFor="let key of keys.info">
+              <td>{{key | uppercase | _truncate }}</td>
+              <td *ngIf="!typeofBoolean(product[key]); else icon">{{product[key]}}</td>
+              <ng-template #icon>
+                <td>
+                  <i *ngIf="product[key]" class=" big green checkmark icon"></i>
+                  <i *ngIf="!product[key]" class=" big red remove icon"></i>
+                </td>
+              </ng-template>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="keys.leaseKey !== undefined">
+          <a class="ui olive ribbon label sold_label">
+            <h3 class="ui header">Leasing information</h3>
+          </a>
+          <hr>
+          <table class="ui definition table">
+            <tbody>
+              <tr *ngFor="let key of keys.leaseKey">
+                <td>{{key | uppercase | _truncate }}</td>
+                <td *ngIf="!typeofBoolean(product.leasecontract[key]); else icon">{{product.leasecontract[key]}}</td>
+                <ng-template #icon>
+                  <td>
+                    <i *ngIf="product.leasecontract[key]" class=" big green checkmark icon"></i>
+                    <i *ngIf="!product.leasecontract[key]" class=" big red remove icon"></i>
+                  </td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div *ngIf="keys.saleKey !== undefined">
+          <a class="ui orange ribbon label sold_label">
+            <h3 class="ui header">Sale information</h3>
+          </a>
+          <hr>
+          <table class="ui definition table">
+            <tbody>
+              <tr *ngFor="let key of keys.saleKey">
+                <td>{{key | uppercase | _truncate }}</td>
+                <td *ngIf="!typeofBoolean(product.salecontract[key]); else icon">{{product.salecontract[key]}}</td>
+                <ng-template #icon>
+                  <td>
+                    <i *ngIf="product.salecontract[key]" class=" big green checkmark icon"></i>
+                    <i *ngIf="!product.salecontract[key]" class=" big red remove icon"></i>
+                  </td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
       <div class="ui fitted horizontal divider"></div>
       <a class="ui teal ribbon label sold_label">
-        <h5>Description</h5>
+        <h3 class="ui header">Description</h3>
       </a>
       <hr>
       <h5>{{product.description}}</h5>

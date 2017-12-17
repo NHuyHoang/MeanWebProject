@@ -24,7 +24,7 @@ module.exports = {
 	},
 	//find user by id
 	getById: (id) => {
-		return User.findOne({_id:id}).select({ _id:1, email:1, name:1, img:1})
+		return User.findOne({_id:id}).select({ _id:1, email:1, name:1, img:1, point:1})
 	},
 	//save user
 	save: (info) => {

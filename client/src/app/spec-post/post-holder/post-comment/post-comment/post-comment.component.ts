@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { Comment } from '../../../../../models/Comments'
 import { User } from '../../../../../models/User';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   UserService,
   DateTimeFormatService,
@@ -32,7 +32,8 @@ export class PostCommentComponent implements OnInit, OnChanges {
     @Inject(UserService) private userSV,
     @Inject(DateTimeFormatService) private datetimeformatSV,
     @Inject(FormBuilder) private formBuilder,
-    @Inject(Title)private title,
+    @Inject(Title) private title,
+    @Inject(Router) private router,
     @Inject(ActivatedRoute) private atvRoute,
     @Inject(PostService) private postSV){
     
@@ -82,7 +83,10 @@ export class PostCommentComponent implements OnInit, OnChanges {
   
   //submit reply
   onSubmitReply(){
-    if(this.replyForm.invalid || this.signInUser._id === undefined) return;
+    if(this.replyForm.invalid || this.signInUser._id === undefined) {
+      alert("Please login for comment or reply another user");
+      return
+    };
     this.replyForm.patchValue({
       'date':(new Date()).toISOString()
     })
@@ -92,10 +96,16 @@ export class PostCommentComponent implements OnInit, OnChanges {
         this.collapsed = true;
         this.showReply = true;
         data.data.usercmt = this.signInUser;
-        this.reply.push(
-          new Comment(data.data._id,data.data.cmt,data.data.date,this.signInUser,[])
-        )
+        let dateHolder = new Date(data.data.date);
+        let date = this.datetimeformatSV.formatDate(dateHolder);                  //format date time reply
+        let time = dateHolder.getHours().toString()
+                   + "h" + dateHolder.getMinutes().toString();
+        data.data.date =  `${time} ${date}`;
+        this.reply.push(data.data)
       }
     })
+  }
+  onNavigateUserHome(id){
+    this.router.navigate(['user',id])
   }
 }

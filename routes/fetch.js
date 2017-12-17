@@ -24,7 +24,9 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}update`,PostsController.update)
 	  .put(`${prefix}pushcmt`,PostsController.pushComment)
 	  .put(`${prefix}pushrep`,PostsController.pushReply)
-	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost);
+	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost)
+	  .post(`${prefix}getwithfilter`,PostsController.getWithFilter)
+	  .post(`${prefix}getvippost`,PostsController.getVipPost);
 //Area
 prefix = '/area/';
 router.post(`${prefix}getchildarea`,AreasController.getChildArea);

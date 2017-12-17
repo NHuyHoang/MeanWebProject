@@ -26,6 +26,7 @@ const SaleContract = require('../models/products/estatecontracts/salecontract');
 const CURRENCY = ['USD', 'JPY', 'CNY', 'EUR'];
 
 const MAXPOST = 5000;
+let VIPCOUNT = 0;
 
 const IMGTEMP = {
 	'camera':[
@@ -89,12 +90,19 @@ function createPost(){
 
 	let cmt = createCommentsObj();
 	let area = getArea[_.random(0, getArea.length - 1)];
+	let random =	faker.random.boolean();
+	let date = faker.date.past();
+	let vipexpire = date;
+	if(random && VIPCOUNT <= 100){
+		vipexpire = faker.date.future();
+		VIPCOUNT++;
+	}
 	return Post({
 		userpost: mongoose.Types.ObjectId(getId[_.random(0, getId.length - 1)]),
 		subareaid: mongoose.Types.ObjectId(area),
 		title : faker.lorem.sentences(),
-		date : faker.date.past(),
-		vipexpire : faker.date.future(),
+		date : date,
+		vipexpire : vipexpire,
 		available : faker.random.boolean(),
 		approval : faker.random.boolean(),
 		product: product,

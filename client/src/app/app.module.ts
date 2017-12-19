@@ -10,12 +10,13 @@ import { UserHomeModule } from './user-home/user-home.module'
 import { SignInManageService, DateTimeFormatService } from './shared-service/shared-service'
 import { SpecPostModule } from './spec-post/spec-post.module';
 import { PostModule } from './post/post.module';
+import { VisitUserModule } from './visit-user/visit-user.module';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,8 @@ import { PostModule } from './post/post.module';
     APP_ROUTING,
     HttpModule,
     SpecPostModule,
-    PostModule
+    PostModule,
+    VisitUserModule
   ],
   providers: [Title, SignInManageService, DateTimeFormatService],
   bootstrap: [AppComponent]

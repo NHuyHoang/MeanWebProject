@@ -27,13 +27,14 @@
       </div>
     </div>
     <div id="item2">
-      <button (click)="onSub()" class="ui fluid basic teal labeled icon button">
-        <i class=" big inbox icon"></i>
-        Check inbox
+      <button [routerLink]="['post']" [queryParams]="user"  class="ui fluid basic orange labeled icon button">
+        <i class=" big newspaper  icon"></i>
+        User's post
       </button>
+
     </div>
     <div id="item3">
-      <button class="ui fluid basic red labeled icon button">
+      <button [routerLink]="['post-create']"  class="ui fluid basic red labeled icon button">
         <i class=" big edit icon"></i>
         Create post
       </button>
@@ -44,14 +45,14 @@
         Edit info
       </button>
     </div>
+    <div id="item5">
+      <button (click)="onSub()" class="ui fluid basic teal labeled icon button">
+        <i class=" big inbox icon"></i>
+        Check inbox
+      </button>
+    </div>
   </div>
-  <div id="main_panel" >
-    <div class="post_holder" *ngFor="let post of posts">
-      <mini-post [user]="user" [post]="post" [isHomeMode]="isHomeMode" ></mini-post>
-    </div>
-    <div *ngIf="loading" class="loading_post">
-      <h3>loading more post...</h3>
-    </div>
-
+  <div id="main_panel">
+    <router-outlet></router-outlet>
   </div>
 </div>

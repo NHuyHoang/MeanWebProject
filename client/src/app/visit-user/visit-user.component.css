@@ -1,4 +1,7 @@
 
+/*-------------------content-------------------*/
+
+/*---------left panel---------------------*/
 
 
 #left_panel{
@@ -10,7 +13,7 @@
     display: grid;
     grid-gap:5px;
     grid-auto-columns: 100%;
-    grid-template-rows: 10vw 100px 40px repeat(3,40px);
+    grid-template-rows: 10vw 150px 40px repeat(4,40px);
 
 }
 
@@ -60,7 +63,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: repeat(2,50px);
+    grid-template-rows: repeat(3,50px);
     background-color: var(--primaryblue)
 }
 #item1 >*{
@@ -122,7 +125,11 @@
     grid-row: 6/7;
 }
 
-#item2:hover, #item3:hover, #item4:hover{
+#item5 {
+    grid-row: 7/8;
+}
+
+#item2:hover, #item3:hover, #item4:hover, #item5:hover{
 
     background-color:var(--ground);
     

@@ -106,6 +106,6 @@ export class PostCommentComponent implements OnInit, OnChanges {
     })
   }
   onNavigateUserHome(id){
-    this.router.navigate(['user',id])
+    this.router.navigate(['visit',id])
   }
 }

@@ -128,6 +128,6 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onNavigateUserHome(){
-    this.router.navigate(['user',this.post.userpost._id]);
+    this.router.navigate(['visit',this.post.userpost._id]);
   }
 }

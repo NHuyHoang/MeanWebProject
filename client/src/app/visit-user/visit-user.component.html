@@ -1,0 +1,60 @@
+<div id="content">
+    <div id="left_panel" class="">
+      <div id="left_panel_header">
+        <img id="avatar" [src]=user.img>
+        <div id="user_rating" class="ui big star rating">
+          <i class="icon"></i>
+          <i class="icon"></i>
+          <i class="icon"></i>
+          <i class="icon"></i>
+          <i class="icon"></i>
+        </div>
+      </div>
+      <div id="item1">
+        <div id="name">
+          <i class="big address card outline icon"></i>
+          <p>{{user.name}}</p>
+        </div>
+        <div id="email">
+          <i class="big mail icon"></i>
+          <p>{{user.email}}</p>
+        </div>
+        <div id="post_count">
+          <div>
+            <i class="big browser icon"></i>
+          </div>
+          <p>Display {{currentPost}}/{{postsCount}} posts</p>
+        </div>
+      </div>
+      <div id="item2">
+        <button (click)="onChangeMode()" [routerLink]="['post/create']" class="ui fluid basic red labeled icon button">
+          <i class=" big edit icon"></i>
+          Create post
+        </button>
+      </div>
+      <div id="item4">
+        <button class="ui fluid basic positive labeled icon button">
+          <i class=" big write square icon"></i>
+          Edit info
+        </button>
+      </div>
+      <div id="item5">
+        <button (click)="onSub()" class="ui fluid basic teal labeled icon button">
+          <i class=" big inbox icon"></i>
+          Check inbox
+        </button>
+      </div>
+    </div>
+    <div id="main_panel">
+      <router-outlet></router-outlet>
+
+        <div class="post_holder" *ngFor="let post of posts">
+          <mini-post [user]="user" [post]="post"></mini-post>
+        </div>
+
+      <div *ngIf="loading" class="loading_post">
+        <h3>loading more post...</h3>
+      </div>
+  
+    </div>
+  </div>

@@ -72,7 +72,6 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
   }
 
   onFindPost() {
-    console.log(this.filter);
     if ($("#titleSearchInp").val() !== "") {
       this.filter['title'] = $("#titleSearchInp").val();
     }
@@ -82,7 +81,6 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
     this.range.max = Number.parseFloat(range[1].textContent);
     this.filter['range'] = this.range;
     this.filterMode = true;
-    console.log(this.filter);
     this.loaded = 0;
     this.posts = [];
     this.onGetPost();
@@ -114,7 +112,6 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
     }
     this.loading = false;
     data = this.postSV.formatPostList(data)
-    console.log(data);
     data.forEach(element => {
       this.posts.push(element);
     });
@@ -133,7 +130,6 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
   onCurrencySelect(currency) {
     this.onUpdateSlider(currency);
     this.filter['currency'] = currency;
-    console.log(currency);
   }
 
   onAreaSelect(area) {

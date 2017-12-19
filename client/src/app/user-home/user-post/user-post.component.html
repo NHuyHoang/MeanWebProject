@@ -1,0 +1,6 @@
+<div class="post_holder" *ngFor="let post of posts">
+    <mini-post [user]="user" [post]="post" [isHomeMode]="isHomeMode"></mini-post>
+</div>
+<div *ngIf="loading" class="loading_post">
+    <h3>loading more post...</h3>
+</div>

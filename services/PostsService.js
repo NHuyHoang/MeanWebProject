@@ -310,6 +310,11 @@ module.exports = {
 		let d = new Date();
 		filter.vipexpire = {"$gte": d};
 		return Post.find(filter);
+	},
+	getPostCountByUserId(id){
+		return Post.find({userpost:id}).count().then(data => {
+			return {count:data};
+		});
 	}
 }
 

@@ -25,8 +25,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "./assets/script/nouislider.js",
-        "../node_modules/semantic-ui-css/semantic.js",
-        "../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"
+        "../node_modules/semantic-ui-css/semantic.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

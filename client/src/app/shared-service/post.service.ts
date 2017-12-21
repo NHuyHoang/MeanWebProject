@@ -14,6 +14,7 @@ export class PostService {
   private GET_ALL = `${this.URL_PREFIX}getall`;
   private GET_MINMAX_COST_URL = `${this.URL_PREFIX}getminmaxcost`;
   private GET_WITH_FILTER_URL = `${this.URL_PREFIX}getwithfilter`;
+  private GET_POST_COUNT_URL = `${this.URL_PREFIX}getpostcount`;
   private header = new Headers();
 
   private body = new URLSearchParams();
@@ -97,6 +98,16 @@ export class PostService {
   getWithFilter(filter:any){
     return this.http.post(this.GET_WITH_FILTER_URL, JSON.stringify(filter),{
       headers:{'Content-Type': 'application/json'}
+    }).map(
+      (res:Response) => res.json()
+    )
+  }
+
+  getPostCount(id){
+    this.body.set('id',id);
+    console.log(id);
+    return this.http.post(this.GET_POST_COUNT_URL,this.body,{
+      headers:this.header
     }).map(
       (res:Response) => res.json()
     )

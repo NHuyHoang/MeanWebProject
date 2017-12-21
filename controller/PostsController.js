@@ -61,7 +61,6 @@ module.exports = {
 			PostsService.getByUserId(id, skip)
 				.then((data) => { res.send(data) })
 	},
-
 	update: (req, res) => {
 		let info = req.body.info;
 		let id = req.body.id;
@@ -107,6 +106,9 @@ module.exports = {
 	},
 	getVipPost:(req,res)=>{
 		PostsService.getVipPost(req.body).then(data=>res.send(data));
+	},
+	getPostCountByUserId:(req,res) => {
+		PostsService.getPostCountByUserId(req.body.id).then(data => res.send(data));
 	}
 
 }

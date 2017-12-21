@@ -1,4 +1,184 @@
-<p>
-  post-creating works!
-</p>
-<a (click)="onNavigate()">back</a>
+<div id="main_panel" class="ui raised segments">
+
+  <div class=" header_segment">
+    <h3 class="ui header ">Create post</h3>
+  </div>
+
+  <div class=" content_segment">
+    <form class="ui form">
+      <div *ngIf="!next">
+          <h3 class="ui dividing header">Post information</h3>
+      <div class="field">
+        <label>
+          <i class="large  write icon"></i>Title</label>
+        <input name="post_title" type="text">
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>
+            <i class="large marker icon"></i>City</label>
+            <div class="ui compact selection dropdown city_dropdown">
+              <i class="dropdown icon"></i>
+              <div class="text">Select your city</div>
+              <div class="menu">
+                <div *ngFor="let area of areas" [innerHTML]="area.name" (click)="onChangeArea(area.name)" class="item"></div>
+              </div>
+            </div>
+        </div>
+        <div class="field">
+          <label>
+            <i class="large map pin icon"></i>District</label>
+            <div class="ui compact selection dropdown district_dropdown">
+              <i class="dropdown icon"></i>
+              <div class="text">Select your district</div>
+              <div class="menu">
+                <div *ngFor="let district of districts" [innerHTML]="district.name" (click)="onDistrictChoice(district._id)" class="item"></div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>
+          <i class="large tags icon"></i>Category</label>
+        <select id="category_selection" name="" multiple="" class="ui search selection dropdown">
+
+          <option *ngFor="let product of products" [value]="product._id" [innerHTML]="product.type | _truncate | titlecase"></option>
+        </select>
+      </div>
+      <div class="field">
+        <label>
+          <i class="big write square icon"></i>Description</label>
+        <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500"></ckeditor>
+      </div>
+      <div (click)="onNext()" class="ui animated button" tabindex="0">
+        <div  class="visible content">Next</div>
+        <div class="hidden content">
+          <i class="right arrow icon"></i>
+        </div>
+      </div>
+    </div>
+      <div *ngIf="next">
+        <h3 class="ui dividing header">Product information</h3>
+        <div class="field">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="camera-tab" data-toggle="tab" href="#--camera" role="tab" aria-controls="home" aria-selected="true">Camera</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="car-tab" data-toggle="tab" href="#--car" role="tab" aria-controls="profile" aria-selected="false">Another</a>
+            </li>
+
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
+              <div class="ui form form_post_product">
+                <div class="two fields">
+                  <div class="field">
+                    <label>Product name</label>
+                    <input placeholder="" type="text">
+                  </div>
+                  <div class="field">
+                    <label>Producer</label>
+                    <input placeholder="" type="text">
+                  </div>
+
+                </div>
+                <div class="fields">
+                  <div class="five wide field">
+
+                    <label>Cost</label>
+                    <div class="ui right action left icon input">
+                      <input placeholder="" type="number">
+                      <div class="ui basic floating dropdown button currency_selector">
+                        <div class="text">$</div>
+                        <div class="menu">
+                          <div class="item">¥</div>
+                          <div class="item">€</div>
+                          <div class="item">$</div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <div class="ui section divider"></div>
+
+                <div class="three fields">
+                  <div class="field">
+                    <label>ISO</label>
+                    <input placeholder="" type="text">
+                  </div>
+                  <div class="field">
+                    <label>MGPX</label>
+                    <div class="ui right labeled input">
+                      <input placeholder="" type="text">
+                      <div class="ui basic label">
+                        <p>mgpx</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Shot(s)</label>
+                    <input placeholder="" type="number">
+                  </div>
+                </div>
+                <div class=" fields">
+                  <div class="three wide field">
+                    <label>Fps</label>
+                    <input placeholder="" type="number">
+                  </div>
+                  <div class="thirteen wide field">
+                    <label>Len(s)</label>
+                    <input placeholder="" type="text">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="--car" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="ui form form_post_product">
+                <div class="two fields">
+                  <div class="field">
+                    <label>Product name</label>
+                    <input placeholder="" type="text">
+                  </div>
+                  <div class="field">
+                    <label>Producer</label>
+                    <input placeholder="" type="text">
+                  </div>
+
+                </div>
+                <div class="fields">
+                  <div class="five wide field">
+
+                    <label>Cost</label>
+                    <div class="ui right action left icon input">
+                      <input placeholder="" type="number">
+                      <div class="ui basic floating dropdown button currency_selector">
+                        <div class="text">$</div>
+                        <div class="menu">
+                          <div class="item">¥</div>
+                          <div class="item">€</div>
+                          <div class="item">$</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="ui positive button btn_submit" type="submit">Submit</button>
+        <div class="ui animated fade  positive button" tabindex="0">
+          <div class="visible content">Sign-up for a Pro account</div>
+          <div class="hidden content">
+            $12.99 a month
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

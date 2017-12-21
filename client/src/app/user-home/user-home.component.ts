@@ -26,19 +26,22 @@ declare var $: any;
 })
 export class UserHomeComponent implements OnInit, AfterContentChecked, AfterViewInit {
   private user = new User();
-
+  private postCount = 0;
 
 
   constructor(
     @Inject(PostService) private postService,
     @Inject(Title) private title,
-    @Inject(UserService) private userService,
     @Inject(Router) private router,
     private atvRouter: ActivatedRoute,
   ) {
     window.scrollTo(0, 0)
     this.user = JSON.parse(localStorage.getItem("currentUser"));
-    this.router.navigate(['user/post']);
+    this.postService.getPostCount(this.user._id).subscribe(data => {
+      this.postCount = data.count;
+      this.router.navigate(['user/post']);
+    });
+    
   }
 
   ngOnInit() {

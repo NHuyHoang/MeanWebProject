@@ -4,6 +4,8 @@ const UsersController = require('../controller/UsersController');
 const PostsController = require('../controller/PostsController');
 const AreasController = require('../controller/AreasController');
 const CatesController = require('../controller/CatesController');
+const UploadController = require('../controller/UploadController');
+const GApiController = require('../controller/GoogleApiController');
 //User
 let prefix = '/user/';
 router.post(`${prefix}`, UsersController.getById)
@@ -35,4 +37,8 @@ router.get(`${prefix}getall`,AreasController.getAll);
 //Cate
 prefix = '/cate/';
 router.post(`${prefix}getbyid`,CatesController.getById);
+//Upload
+prefix = '/google/';
+router.post(`${prefix}drive/upload`,GApiController.GUpload);
+
 module.exports = router;

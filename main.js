@@ -11,10 +11,19 @@ const seeding = require('./seeding/post');
 const fetch = require('./routes/fetch');
 
 //allow which url can access
-const corsOptions = {
+/* const corsOptions = {
 	origin: 'http://127.0.0.1:4200',//allowed
 	optionsSuccessStatus: 200
-}
+} */
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:4200');
+    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri, { useMongoClient: true })
@@ -27,7 +36,7 @@ mongoose.connect(uri, { useMongoClient: true })
 	});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 
 app.use('/fetch', fetch);
 

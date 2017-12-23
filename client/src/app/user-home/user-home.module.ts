@@ -10,9 +10,22 @@ import { PostCreatingComponent } from './post-creating/post-creating.component';
 import { RouterModule } from '@angular/router';//import this to use router-outlet
 import { UserPostComponent } from './user-post/user-post.component';
 import { SharedModule } from '../../shared-module/shared.module';
+import { UploadImgModule } from '../upload-image/upload-image.module';
+
 @NgModule({
-    declarations:[ UserHomeComponent, PostCreatingComponent, UserPostComponent ],
-    imports:[ CommonModule, MinifiedPostModule, RouterModule,FormsModule, CKEditorModule, SharedModule ],
+    declarations:[ 
+        UserHomeComponent, 
+        PostCreatingComponent, 
+        UserPostComponent
+     ],
+    imports:[ 
+        CommonModule, 
+        MinifiedPostModule, 
+        RouterModule,FormsModule, 
+        CKEditorModule, 
+        SharedModule,
+        UploadImgModule 
+    ],
     providers:[PostService, AreaService, CategoryService]
 })
 export class UserHomeModule{}

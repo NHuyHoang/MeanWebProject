@@ -60,6 +60,10 @@
       <div *ngIf="next">
         <h3 class="ui dividing header">Product information</h3>
         <div class="field">
+          <label>Product images</label>
+          <upload-image></upload-image>
+        </div>
+        <div class="field">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="camera-tab" data-toggle="tab" href="#--camera" role="tab" aria-controls="home" aria-selected="true">Camera</a>
@@ -67,7 +71,6 @@
             <li class="nav-item">
               <a class="nav-link" id="car-tab" data-toggle="tab" href="#--car" role="tab" aria-controls="profile" aria-selected="false">Another</a>
             </li>
-
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
@@ -81,11 +84,9 @@
                     <label>Producer</label>
                     <input placeholder="" type="text">
                   </div>
-
                 </div>
                 <div class="fields">
                   <div class="five wide field">
-
                     <label>Cost</label>
                     <div class="ui right action left icon input">
                       <input placeholder="" type="number">
@@ -98,13 +99,9 @@
                         </div>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
-
                 <div class="ui section divider"></div>
-
                 <div class="three fields">
                   <div class="field">
                     <label>ISO</label>

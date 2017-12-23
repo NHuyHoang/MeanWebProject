@@ -1,0 +1,30 @@
+<div class="image_preview_content">
+  <div class="ui three column grid">
+    <div *ngFor="let item of uploader.queue" class="column">
+      <div class="ui fluid image">
+        <div *ngIf="uploading" class="ui active dimmer">
+            <div class="ui text loader">Loading</div>
+          </div>
+        <a *ngIf="!uploaded" (click)="item.remove()" class="ui right corner label">
+          <i class="remove icon"></i>
+        </a>
+        <img id="" src="" imgPreview [image]="item?._file" class="media_object" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="button_content">
+  <input class="ui button" id="imgInp" name="photos" type="file" ng2FileSelect [uploader]="uploader" multiple />
+
+  <div class="group_button">
+    <div class="ui buttons">
+      <button class="ui basic blue button" type="button" (click)="onUpload()">
+        Upload all
+      </button>
+      <button class="ui basic red button" type="button" (click)="onUpload()">
+        Delete all
+      </button>
+    </div>
+  </div>
+</div>

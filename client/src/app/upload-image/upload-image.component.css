@@ -1,0 +1,28 @@
+.group_button{
+    position: relative;
+}
+.ui.buttons{
+  margin-top:5px!important;
+  display: inline-block!important;
+  float: right;
+}
+
+.ui.basic.blue.button:hover{
+    color:white!important;
+    background: var(--primaryblue)!important;
+}
+
+.ui.basic.red.button:hover{
+    color:white!important;
+    background: var(--semanticred)!important;
+}
+
+.media_object{
+    height:120px;
+    width:200px
+
+}
+.button_content{
+    margin-top:10px;
+}
+

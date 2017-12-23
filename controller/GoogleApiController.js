@@ -5,16 +5,19 @@ const DIR = './view';
 
 module.exports = {
     GUpload: (req, res) => {
+        //after upload to local -> upload to drive
         LocalUpload(req, res)
             .then(files => {
+                //upload to drive 
+                //output id of files
                 GDriveUpload(files)
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err));
+                    .then(data => res.send({data:data}))
+                    .catch(err => res.send(err));
             })
-            .catch(err => console.log(err));
+            .catch(err => res.send(err));
     },
     localUpload: (req, res) => {
-        //after upload to local -> upload to drive
+        
         LocalUpload(req, res)
             .then(data => console.log(data))
             .catch(err => console.log(err));
@@ -54,11 +57,14 @@ function LocalUpload(req) {
 }
 
 function GDriveUpload(files) {
+    //holder array
     var uploadedFiles = [];
     return new Promise((resolve, reject) => {
+        //upload each file
         files.forEach(file => {
             let upload = Google.GUpload(file).then(result => {
                 uploadedFiles.push(result);
+                //end if uploaded all
                 if (uploadedFiles.length == files.length) {
                     resolve(uploadedFiles);
                 };

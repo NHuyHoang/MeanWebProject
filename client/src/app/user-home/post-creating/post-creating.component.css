@@ -106,9 +106,24 @@
     
 }
 
-.ui.header{
-    font-family: Dancing Script;
+#header_segment>*{
+    font-family: Dancing Script!important;
 }
 
 
+.next_step_btn{
+    display:inline-block!important;
+    float: right!important;
+}
 
+.btn_field{
+    margin-top:80px!important;
+}
+
+.image_field{
+    height: auto!important;
+}
+
+.bottom_menu{
+    margin-bottom: 20px!important;
+}

@@ -24,6 +24,20 @@ module.exports = {
                     }).catch(err => reject(err));
             });
         })
+    },
+    GFileRemove:function(id){
+        return new Promise((resolve, reject)=>{
+            fs.readFile(TOKEN_SECRET, function processClientSecrets(err, content) {
+                if (err) {
+                    console.log('Error loading client secret file: ' + err);
+                    reject(err);
+                }
+                authorize(JSON.parse(content))
+                    .then(oauth => {
+                        resolve(gDelete(oauth,id));
+                    }).catch(err => reject(err));
+            });
+        })
     }
 }
 // Load client secrets from a local file.
@@ -161,7 +175,7 @@ function gUpload(auth,file) {
                     if (err) return console.log(err);
                     console.log('File deleted successfully');
                 });
-                resolve({ id: gfile.id })
+                resolve(gfile.id )
             }
         });
     })

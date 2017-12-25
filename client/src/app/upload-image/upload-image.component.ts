@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FileUploaderCustom } from './FileUploaderCustom';
-import { Response } from '@angular/http'
+import { Response } from '@angular/http';
+import { GdriveService } from '../shared-service/shared-service'
 const URL = 'http://127.0.0.1:3000/fetch/google/drive/upload';
 
 @Component({
@@ -13,7 +14,9 @@ export class UploadImageComponent implements OnInit {
   private uploader = new FileUploaderCustom({ url: URL });
   private uploading = false;
   private uploaded = false;
-  constructor() {
+  private imageId;
+  private uploadSuccess = false;
+  constructor(private gdrive: GdriveService) {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log("oke");
       var responsePath = JSON.parse(response);
@@ -31,10 +34,23 @@ export class UploadImageComponent implements OnInit {
     this.uploading = true;
     this.uploader.uploadAllFiles()
       .subscribe(res => {
-          this.uploading = false;
-          console.log(res);
-          this.uploaded = true;
-        }
+        this.uploading = false;
+        this.uploaded = true;
+        this.imageId = res;
+        this.uploadSuccess = true;
+      }
       );
+  }
+
+  onReSelect() {
+    this.uploading = true;
+    this.gdrive.removeFile(this.imageId).subscribe(result => {
+      if (result.success) {
+        this.uploader.queue = [];
+        this.uploaded = false;
+        this.uploading = false;
+        this.uploadSuccess = false;
+      }
+    })
   }
 }

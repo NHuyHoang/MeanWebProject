@@ -6,6 +6,7 @@ import { AreaService } from './area.service';
 import { CategoryService } from './category.service';
 import { DateTimeFormatService } from './date-time-format.service';
 import { SignInManageService } from './sign-in-manage.service';
+import { GdriveService } from './gdrive.service';
 
 @NgModule({
     declarations:[],
@@ -17,7 +18,8 @@ import { SignInManageService } from './sign-in-manage.service';
         DateTimeFormatService,
         PostService,
         SignInManageService,
-        UserService ],
+        UserService,
+        GdriveService ],
     exports:[ ]
 })
 export class SharedServiceModule{}

@@ -130,10 +130,9 @@
 }
 
 #item2:hover, #item3:hover, #item4:hover, #item5:hover{
-
     background-color:var(--ground);
-    
 }
+
 
 
 

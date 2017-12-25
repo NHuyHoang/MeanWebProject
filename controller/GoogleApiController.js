@@ -1,3 +1,4 @@
+
 const Google = require('../services/GoogleService');
 var multer = require('multer');
 var fs = require('fs');
@@ -16,11 +17,12 @@ module.exports = {
             })
             .catch(err => res.send(err));
     },
-    localUpload: (req, res) => {
-        
-        LocalUpload(req, res)
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+    GFileRemove:(req, res) => {
+        var idArray = req.body.data;
+        GDriveRemove(idArray)
+            .then(result => {
+                res.send(result)})
+            .catch(err => res.send(err));
     }
 }
 
@@ -70,6 +72,21 @@ function GDriveUpload(files) {
                 };
             }).catch(err => reject(err));
 
+        })
+    })
+}
+
+function GDriveRemove(idArray) {
+    var removedFiles = 0;
+    console.log(idArray);
+    return new Promise((resolve, reject) => {
+        idArray.forEach(id => {
+            console.log(id);
+            let remove = Google.GFileRemove(id).then(result => {
+                removedFiles++;
+                if(removedFiles == idArray.length)
+                    resolve({success:true});
+            }).catch(err => reject(err));
         })
     })
 }

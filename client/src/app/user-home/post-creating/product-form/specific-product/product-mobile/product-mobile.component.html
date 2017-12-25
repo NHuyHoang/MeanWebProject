@@ -1,0 +1,8 @@
+<p>
+  product-mobile works! {{id}}
+</p>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" >
+    <input id="email" placeholder="Your email" type="email" email formControlName="id">
+    <input id="email" placeholder="Your email" type="email" email formControlName="name">
+    <button class="ui button" (click)="onSubmit()">Submit</button>
+</form>

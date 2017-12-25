@@ -39,6 +39,7 @@ prefix = '/cate/';
 router.post(`${prefix}getbyid`,CatesController.getById);
 //Upload
 prefix = '/google/';
-router.post(`${prefix}drive/upload`,GApiController.GUpload);
+router.post(`${prefix}drive/upload`,GApiController.GUpload)
+router.post(`${prefix}drive/remove`,GApiController.GFileRemove);
 
 module.exports = router;

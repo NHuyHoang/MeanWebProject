@@ -1,22 +1,22 @@
 <div id="main_panel" class="ui raised segments">
 
-  <div class=" header_segment">
-    <h3 class="ui header ">Create post</h3>
+  <div class="header_segment">
+    <h3>Create post</h3>
   </div>
 
   <div class=" content_segment">
     <form class="ui form">
-      <div *ngIf="!next">
-          <h3 class="ui dividing header">Post information</h3>
-      <div class="field">
-        <label>
-          <i class="large  write icon"></i>Title</label>
-        <input name="post_title" type="text">
-      </div>
-      <div class="two fields">
+      <div [hidden]="next">
+        <h3 class="ui dividing header">Post information</h3>
         <div class="field">
           <label>
-            <i class="large marker icon"></i>City</label>
+            <i class="large  write icon"></i>Title</label>
+          <input name="post_title" type="text">
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>
+              <i class="large marker icon"></i>City</label>
             <div class="ui compact selection dropdown city_dropdown">
               <i class="dropdown icon"></i>
               <div class="text">Select your city</div>
@@ -24,10 +24,10 @@
                 <div *ngFor="let area of areas" [innerHTML]="area.name" (click)="onChangeArea(area.name)" class="item"></div>
               </div>
             </div>
-        </div>
-        <div class="field">
-          <label>
-            <i class="large map pin icon"></i>District</label>
+          </div>
+          <div class="field">
+            <label>
+              <i class="large map pin icon"></i>District</label>
             <div class="ui compact selection dropdown district_dropdown">
               <i class="dropdown icon"></i>
               <div class="text">Select your district</div>
@@ -35,46 +35,46 @@
                 <div *ngFor="let district of districts" [innerHTML]="district.name" (click)="onDistrictChoice(district._id)" class="item"></div>
               </div>
             </div>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label>
-          <i class="large tags icon"></i>Category</label>
-        <select id="category_selection" name="" multiple="" class="ui search selection dropdown">
-
-          <option *ngFor="let product of products" [value]="product._id" [innerHTML]="product.type | _truncate | titlecase"></option>
-        </select>
-      </div>
-      <div class="field">
-        <label>
-          <i class="big write square icon"></i>Description</label>
-        <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500"></ckeditor>
-      </div>
-      <div (click)="onNext()" class="ui animated button" tabindex="0">
-        <div  class="visible content">Next</div>
-        <div class="hidden content">
-          <i class="right arrow icon"></i>
+        <div class="field">
+          <label>
+            <i class="large tags icon"></i>Category</label>
+          <select id="category_selection" name="" multiple="" class="ui search selection dropdown">
+            <option *ngFor="let product of products" [value]="product._id" [innerHTML]="product.type | _truncate | titlecase"></option>
+          </select>
         </div>
+        <div class="field">
+          <label>
+            <i class="big write square icon"></i>Description</label>
+          <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500"></ckeditor>
+        </div>
+        <button (click)="onNext()" class="ui fluid blue button next_step_btn">Next step</button>
       </div>
-    </div>
-      <div *ngIf="next">
+      <div [hidden]="!next">
         <h3 class="ui dividing header">Product information</h3>
         <div class="field">
-          <label>Product images</label>
-          <upload-image></upload-image>
-        </div>
-        <div class="field">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
+            <li *ngFor="let c of category" class="nav-item">
+              <a [ngClass]="{'active':c.active}" (click)="onToggleTab(c._id)"class="nav-link" [id]="c._id" data-toggle="tab"  role="tab"  aria-selected="true">{{c.type | titlecase | _truncate }}</a>
+            </li>
+            <!-- <li class="nav-item">
               <a class="nav-link active" id="camera-tab" data-toggle="tab" href="#--camera" role="tab" aria-controls="home" aria-selected="true">Camera</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="car-tab" data-toggle="tab" href="#--car" role="tab" aria-controls="profile" aria-selected="false">Another</a>
-            </li>
+            </li> -->
           </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
+          
+          <div  *ngFor="let c of category" class="tab-content" id="myTabContent">
+            <div [hidden]="!c.active" class="tab-pane fade show active" [id]="c._id" role="tabpanel">
+              <product-form [id]="c._id"></product-form>
+            </div>
+            <!-- <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
               <div class="ui form form_post_product">
+                <div class="field">
+                  <upload-image></upload-image>
+                </div>
                 <div class="two fields">
                   <div class="field">
                     <label>Product name</label>
@@ -165,14 +165,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-        <button class="ui positive button btn_submit" type="submit">Submit</button>
-        <div class="ui animated fade  positive button" tabindex="0">
-          <div class="visible content">Sign-up for a Pro account</div>
-          <div class="hidden content">
-            $12.99 a month
+        <div class="field btn_field">
+          <div class="two ui buttons">
+            <button (click)="onNext()" class="ui  right floated default button btn_submit" type="submit">Back</button>
+            <button class="ui right floated green button back_btn">Submit</button>
           </div>
         </div>
       </div>

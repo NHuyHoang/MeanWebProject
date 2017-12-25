@@ -14,6 +14,7 @@ export class PostCreatingComponent implements OnInit, AfterViewInit {
   private areas;
   private districts;
   private products = [];
+  private category = [];
   constructor(
     private router: Router,
     @Inject(AreaService) private areaSV) {
@@ -21,10 +22,11 @@ export class PostCreatingComponent implements OnInit, AfterViewInit {
       this.areas = data;
       
     })
-    this.formatProductsArr();
+    
   }
 
   ngOnInit() {
+    this.formatProductsArr();
   }
 
   onNavigate() {
@@ -32,34 +34,67 @@ export class PostCreatingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $('.ui.dropdown').dropdown({
-    });
+    $('.ui.dropdown').dropdown();
 
   }
 
   onNext() {
-   console.log($('#category_selection').dropdown('get value'));
-   this.next = true;
+    let cateId = $('#category_selection').dropdown('get value');
+    this.category = [];
+    cateId.forEach(id => {
+      let type;
+      this.products.forEach(product => {
+        if (product._id == id) {
+          type = product.type;
+          return;
+        }
+      })
+      let obj = {
+        _id: id,
+        type: type,
+        active: false
+      }
+      this.category.push(obj);
+    })
+    if(this.category[0] !== undefined)
+      this.category[0].active = true;
+    this.next = !this.next;
+    window.scrollTo(0, 0);
   }
 
   onChangeArea(name) {
-   this.areas.forEach(element => {
-     if(element.name === name)
-      {
+    this.areas.forEach(element => {
+      if (element.name === name) {
         this.districts = element.subareas;
         return;
       }
 
-   });
-  } 
+    });
+  }
 
-  onDistrictChoice(id){    
+  onToggleTab(tabId: string) {
+    this.category.forEach(element => {
+      if (tabId == element._id)
+        element.active = true;
+      else element.active = false;
+    })
+  }
+
+  onDistrictChoice(id) {
   }
 
   formatProductsArr() {
+    this.products = [];
+    let value;
     for (let key in GLOBAL_VAR.PRODUCT_ID) {
-      let value = { "_id": GLOBAL_VAR.PRODUCT_ID[key], "type": key };
+      if(key === 'lease estate' || key === 'sale estate'){
+        continue;
+      }
+      value = { "_id": GLOBAL_VAR.PRODUCT_ID[key], "type": key };
       this.products.push(value);
     }
+    this.products.push( {_id:"est",type:"Estate"});
   }
+
+
 }

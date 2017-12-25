@@ -16,6 +16,7 @@
     --semanticteal:#008080;
     --semanticred:#F71B13;
     --semanticgreen:#00BF15;
+    --semanticorange:rgb(255, 72, 0);
 }
 body{
     position: relative;

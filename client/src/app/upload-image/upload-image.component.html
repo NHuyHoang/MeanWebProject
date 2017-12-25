@@ -1,40 +1,44 @@
-<div *ngIf="uploader.queue.length > 0" class="ui segment">
-  <div *ngIf="uploading" class="ui active dimmer">
-    <div class="ui text loader">Processing...</div>
-  </div>
-  <div class="image_preview_content">
-    <div class="ui three column grid">
-      <div *ngFor="let item of uploader.queue" class="column">
-        <div class="ui fluid image">
-          <a *ngIf="!uploaded" (click)="item.remove()" class="ui right corner label">
-            <i class="remove icon"></i>
-          </a>
+<form class="ui form">
+    <h3 class="ui blue dividing header">Upload product's image</h3>
+  <div class="field">
+    <div *ngIf="uploader.queue.length > 0" class="ui segment">
+      <div *ngIf="uploading" class="ui active dimmer">
+        <div class="ui text loader">Processing...</div>
+      </div>
+      <div class="image_preview_content">
+        <div class="ui three column grid">
+          <div *ngFor="let item of uploader.queue" class="column">
+            <div class="ui fluid image">
+              <a *ngIf="!uploaded" (click)="item.remove()" class="ui right corner label">
+                <i class="remove icon"></i>
+              </a>
 
-          <a *ngIf="uploadSuccess" class="ui green right corner label">
-              <i class="checkmark  icon"></i>
-            </a>
-          <img class="ui rounded image" id="" src="" imgPreview [image]="item?._file" class="media_object" />
+              <a *ngIf="uploadSuccess" class="ui green right corner label">
+                <i class="checkmark  icon"></i>
+              </a>
+              <img class="ui rounded image" id="" src="" imgPreview [image]="item?._file" class="media_object" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<form class="ui form">
-  <div class="fields">
-    <div class="ten wide field">
-      <input [disabled]="uploaded" value="Choice some images" class="ui button" id="imgInp" name="photos" type="file" ng2FileSelect
-        [uploader]="uploader" multiple />
-    </div>
-    <div class="six wide field">
-      <div class="group_button">
-        <div class="ui buttons">
-          <button [disabled]="uploaded" class="ui basic blue button" type="button" (click)="onUpload()">
-            Upload all
-          </button>
-          <button [disabled]="!uploaded" class="ui basic red button" type="button" (click)="onReSelect()">
-            Re-select
-          </button>
+  <div class="field">
+    <div class="fields">
+      <div class="ten wide field">
+        <input [disabled]="uploaded" value="Choice some images" class="ui button" id="imgInp" name="photos" type="file" ng2FileSelect
+          [uploader]="uploader" multiple />
+      </div>
+      <div class="six wide field">
+        <div class="group_button">
+          <div class="ui buttons">
+            <button [disabled]="uploaded || uploader.queue.length <= 0" class="ui basic blue button" type="button" (click)="onUpload()">
+              Upload all
+            </button>
+            <button [disabled]="!uploaded" class="ui basic red button" type="button" (click)="onReSelect()">
+              Re-select
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { GLOBAL_VAR } from './shared-variable';
 import { Product } from '../../models/Product';
 import { Estate } from '../../models/Estate';
 import * as Prototype from '../../models/Product-child/Products-module'
+import { Camera, Laptop, Bicycle, Car, Mobile, Motor, Tablet } from '../../models/Product-child/Products-module';
 
 @Injectable()
 export class ProductService {
@@ -27,6 +28,29 @@ export class ProductService {
       case(productId.tablet):
         return new Prototype.Tablet(input); 
       default: return new Product(input); 
+    }
+  }
+
+  getNullProduct(id){
+    let productId = GLOBAL_VAR.PRODUCT_ID;
+    if(id === 'est')
+      return new Estate();
+    switch(id){
+      case(productId.camera):
+        return new Camera();
+      case(productId.laptop):
+        return new Laptop();
+      case(productId.bicycle):
+        return new Bicycle();
+      case(productId.car):
+        return new Car();
+      case(productId.mobile):
+        return new Mobile();
+      case(productId.motor):
+        return new Motor();  
+      case(productId.tablet):
+        return new Tablet(); 
+      default: return new Product(); 
     }
   }
 

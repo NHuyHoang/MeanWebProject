@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FileUploaderCustom } from './FileUploaderCustom';
 import { Response } from '@angular/http';
@@ -16,14 +16,16 @@ export class UploadImageComponent implements OnInit {
   private uploaded = false;
   private imageId;
   private uploadSuccess = false;
+  @Output('imgUploaded') imgUploaded:EventEmitter<string[]> = new EventEmitter<string[]>();
+
   constructor(private gdrive: GdriveService) {
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+    /* this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log("oke");
       var responsePath = JSON.parse(response);
       if (status === 200) {
         console.log(response, responsePath);// the url will be in the response
       }
-    };
+    }; */
   }
 
   ngOnInit() {
@@ -38,8 +40,9 @@ export class UploadImageComponent implements OnInit {
         this.uploaded = true;
         this.imageId = res;
         this.uploadSuccess = true;
-      }
-      );
+        
+        this.imgUploaded.emit(this.onPrepareImgLink());
+      });
   }
 
   onReSelect() {
@@ -50,7 +53,12 @@ export class UploadImageComponent implements OnInit {
         this.uploaded = false;
         this.uploading = false;
         this.uploadSuccess = false;
+        this.imgUploaded.emit([]);
       }
     })
+  }
+
+  onPrepareImgLink(){
+    return this.imageId.data.map(id => `https://drive.google.com/uc?export=view&id=${id}`)
   }
 }

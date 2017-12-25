@@ -1,0 +1,57 @@
+<form class="ui form" [formGroup]="generalInfo">
+  <h3 class="ui blue dividing header">General information</h3>
+  <div class="ui yellow  message">
+      <div class="header">
+        Required information
+      </div>
+      <p>Those below input are the required information</p>
+    </div>
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Product name</label>
+        <input placeholder="Product name..." formControlName="product_name">
+      </div>
+      <div class="field">
+        <label>Producer</label>
+        <input placeholder="Producer..." formControlName="producer">
+      </div>
+    </div>
+    <div class="field">
+      <label>Product's state</label>
+      <input placeholder="Describe your product's state..." formControlName="state">
+    </div>
+    <div class="three fields">
+      <div class="field">
+        <label>Cost</label>
+        <input type="number" placeholder="Product cost..." formControlName="cost">
+      </div>
+      <div class="field">
+        <label>Currency</label>
+        <div class="ui fluid compact selection dropdown currency_dropdown">
+          <i class="dropdown icon"></i>
+          <div class="text">USD</div>
+          <div class="menu">
+            <div (click)="onCurrencySelect(c.ellipsis)" *ngFor="let c of CUR"class="item">{{c.ellipsis | uppercase}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+          <label>Payment method</label>
+          <div class="ui fluid compact selection dropdown payment_dropdown">
+            <i class="dropdown icon"></i>
+            <div class="text">Direct dealing</div>
+            <div class="menu">
+              <div  (click)="onPayMethodSelect('Direct dealing')" class="item">Direct dealing</div>
+              <div (click)="onPayMethodSelect('Bank transfer')" class="item">Bank transfer</div>
+              <div (click)="onPayMethodSelect('Via VISA/MASTERCARD')" class="item">Via VISA/MASTERCARD</div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+      <label>Description</label>
+      <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500" formControlName="description"></ckeditor>
+  </div>
+</form>

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder,FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpecProductService } from '../spec-product.service';
 
 @Component({
@@ -7,27 +7,21 @@ import { SpecProductService } from '../spec-product.service';
   templateUrl: './product-mobile.component.html',
   styleUrls: ['./product-mobile.component.css']
 })
-export class ProductMobileComponent implements OnInit {
+export class ProductMobileComponent implements OnInit, OnChanges {
   @Input('id') id;
-  private productForm:FormGroup;
-  constructor(private formbuilder:FormBuilder,private specProductSV:SpecProductService) { 
-    this.productForm = formbuilder.group({
-      'id':[],
-      'name':[],
-    });
-    specProductSV.setForm(this.productForm);
+  @Input('specificInfo') specificInfo: FormGroup;
+  constructor(private formbuilder: FormBuilder, private specProductSV: SpecProductService) {
+
   }
 
   ngOnInit() {
-
-    //this.productForm.valueChanges.subscribe(value => console.log(value));
-    /* this.productForm.controls.forEach(element => {
-      element.subscribe(value => console.log(value));
-    }); */
   }
 
-  onSubmit(){
-    console.log(this.productForm.controls);
+  ngOnChanges(change: SimpleChanges) {
+  }
+
+  onSubmit() {
+    console.log(this.specificInfo.controls);
   }
 
 }

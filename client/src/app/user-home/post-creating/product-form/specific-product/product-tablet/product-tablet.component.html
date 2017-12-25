@@ -1,3 +1,75 @@
-<p>
+<!-- <p>
   product-tablet works!
 </p>
+
+<form [formGroup]="specificInfo">
+  <input id="email" placeholder="Your email" type="email" email formControlName="memory">
+  <input id="email" placeholder="Your email" type="email" email formControlName="ram">
+  <input id="email" placeholder="Your email" type="email" email formControlName="megapixel">
+  <input id="email" placeholder="Your email" type="email" email formControlName="simcard">
+  <input id="email" placeholder="Your email" type="email" email formControlName="screen_solution">
+
+</form>
+ -->
+
+<form class="ui form" [formGroup]="specificInfo">
+  <h3 class="ui blue dividing header">Mobile information</h3>
+  <div class="ui info  message">
+    <div class="header">
+      Optional information
+    </div>
+    <p>Those below input are the optional information</p>
+  </div>
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Camera megapixel</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="megapixel" type="text">
+          <div class="ui basic label">
+            mgpx
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Memory</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="memory" type="text">
+          <div class="ui basic label">
+            Gb
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="three fields">
+      <div class="field">
+        <label>Screen solution</label>
+        <input type="text" formControlName="screen_solution" type="text" placeholder="1920x1080...">
+      </div>
+      <div class="field">
+        <label>RAM</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="ram" type="text">
+          <div class="ui basic label">
+            Gb
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Sim</label>
+        <select class="ui dropdown">
+          <option value="true">
+            True
+            <i class="green checkmark icon"></i>
+          </option>
+          <option value="false">
+            False
+            <i class="red remove icon"></i>
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>

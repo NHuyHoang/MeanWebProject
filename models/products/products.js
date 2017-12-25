@@ -13,7 +13,7 @@ const productSchema = new Schema({
 	categoryid:{ type: Schema.Types.ObjectId, require: true},
 	guarantee:String,
 	payment_method:{ type: String, required: true},
-	sold:{type:Boolean},
+	sold:{type:Boolean,default:false},
 	imglist: []
 }, {collection : 'products',discriminatorKey : '_type'});
 

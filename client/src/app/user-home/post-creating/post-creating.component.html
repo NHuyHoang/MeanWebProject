@@ -1,39 +1,46 @@
 <div id="main_panel" class="ui raised segments">
-
   <div class="header_segment">
     <h3>Create post</h3>
   </div>
-
   <div class=" content_segment">
-    <form class="ui form">
+    <form class="ui form" [formGroup]="postForm">
       <div [hidden]="next">
-        <h3 class="ui dividing header">Post information</h3>
+        <h3 class="ui blue dividing header">Post information</h3>
+        <div class="field">
+            <div class="ui form warning">
+                <div class="ui warning message">
+                  <div class="header">Notice</div>
+                  <ul class="list">
+                    <li>You must choose your district before moving on next step</li>
+                    <li>You can choose more than 1 type of product</li>
+                  </ul>
+                </div>
+              </div>
+        </div>
         <div class="field">
           <label>
             <i class="large  write icon"></i>Title</label>
-          <input name="post_title" type="text">
+          <input name="post_title" type="text" formControlName="title">
         </div>
-        <div class="two fields">
-          <div class="field">
-            <label>
-              <i class="large marker icon"></i>City</label>
-            <div class="ui compact selection dropdown city_dropdown">
-              <i class="dropdown icon"></i>
-              <div class="text">Select your city</div>
-              <div class="menu">
-                <div *ngFor="let area of areas" [innerHTML]="area.name" (click)="onChangeArea(area.name)" class="item"></div>
-              </div>
+        <div class="field">
+          <label>
+            <i class="large marker icon"></i>City</label>
+          <div class="ui compact selection dropdown city_dropdown">
+            <i class="dropdown icon"></i>
+            <div class="text">Select your city</div>
+            <div class="menu">
+              <div *ngFor="let area of areas" [innerHTML]="area.name" (click)="onChangeArea(area.name)" class="item"></div>
             </div>
           </div>
-          <div class="field">
-            <label>
-              <i class="large map pin icon"></i>District</label>
-            <div class="ui compact selection dropdown district_dropdown">
-              <i class="dropdown icon"></i>
-              <div class="text">Select your district</div>
-              <div class="menu">
-                <div *ngFor="let district of districts" [innerHTML]="district.name" (click)="onDistrictChoice(district._id)" class="item"></div>
-              </div>
+        </div>
+        <div class="field">
+          <label>
+            <i class="large map pin icon"></i>District</label>
+          <div class="ui compact selection dropdown district_dropdown">
+            <i class="dropdown icon"></i>
+            <div class="text">Select your district</div>
+            <div class="menu">
+              <div *ngFor="let district of districts" [innerHTML]="district.name" (click)="onDistrictChoice(district._id)" class="item"></div>
             </div>
           </div>
         </div>
@@ -44,137 +51,40 @@
             <option *ngFor="let product of products" [value]="product._id" [innerHTML]="product.type | _truncate | titlecase"></option>
           </select>
         </div>
-        <div class="field">
-          <label>
-            <i class="big write square icon"></i>Description</label>
-          <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500"></ckeditor>
-        </div>
-        <button (click)="onNext()" class="ui fluid blue button next_step_btn">Next step</button>
-      </div>
-      <div [hidden]="!next">
-        <h3 class="ui dividing header">Product information</h3>
-        <div class="field">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li *ngFor="let c of category" class="nav-item">
-              <a [ngClass]="{'active':c.active}" (click)="onToggleTab(c._id)"class="nav-link" [id]="c._id" data-toggle="tab"  role="tab"  aria-selected="true">{{c.type | titlecase | _truncate }}</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link active" id="camera-tab" data-toggle="tab" href="#--camera" role="tab" aria-controls="home" aria-selected="true">Camera</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="car-tab" data-toggle="tab" href="#--car" role="tab" aria-controls="profile" aria-selected="false">Another</a>
-            </li> -->
-          </ul>
-          
-          <div  *ngFor="let c of category" class="tab-content" id="myTabContent">
-            <div [hidden]="!c.active" class="tab-pane fade show active" [id]="c._id" role="tabpanel">
-              <product-form [id]="c._id"></product-form>
-            </div>
-            <!-- <div class="tab-pane fade show active" id="--camera" role="tabpanel" aria-labelledby="home-tab">
-              <div class="ui form form_post_product">
-                <div class="field">
-                  <upload-image></upload-image>
-                </div>
-                <div class="two fields">
-                  <div class="field">
-                    <label>Product name</label>
-                    <input placeholder="" type="text">
-                  </div>
-                  <div class="field">
-                    <label>Producer</label>
-                    <input placeholder="" type="text">
-                  </div>
-                </div>
-                <div class="fields">
-                  <div class="five wide field">
-                    <label>Cost</label>
-                    <div class="ui right action left icon input">
-                      <input placeholder="" type="number">
-                      <div class="ui basic floating dropdown button currency_selector">
-                        <div class="text">$</div>
-                        <div class="menu">
-                          <div class="item">¥</div>
-                          <div class="item">€</div>
-                          <div class="item">$</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="ui section divider"></div>
-                <div class="three fields">
-                  <div class="field">
-                    <label>ISO</label>
-                    <input placeholder="" type="text">
-                  </div>
-                  <div class="field">
-                    <label>MGPX</label>
-                    <div class="ui right labeled input">
-                      <input placeholder="" type="text">
-                      <div class="ui basic label">
-                        <p>mgpx</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field">
-                    <label>Shot(s)</label>
-                    <input placeholder="" type="number">
-                  </div>
-                </div>
-                <div class=" fields">
-                  <div class="three wide field">
-                    <label>Fps</label>
-                    <input placeholder="" type="number">
-                  </div>
-                  <div class="thirteen wide field">
-                    <label>Len(s)</label>
-                    <input placeholder="" type="text">
-                  </div>
-
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="--car" role="tabpanel" aria-labelledby="profile-tab">
-              <div class="ui form form_post_product">
-                <div class="two fields">
-                  <div class="field">
-                    <label>Product name</label>
-                    <input placeholder="" type="text">
-                  </div>
-                  <div class="field">
-                    <label>Producer</label>
-                    <input placeholder="" type="text">
-                  </div>
-
-                </div>
-                <div class="fields">
-                  <div class="five wide field">
-
-                    <label>Cost</label>
-                    <div class="ui right action left icon input">
-                      <input placeholder="" type="number">
-                      <div class="ui basic floating dropdown button currency_selector">
-                        <div class="text">$</div>
-                        <div class="menu">
-                          <div class="item">¥</div>
-                          <div class="item">€</div>
-                          <div class="item">$</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-          </div>
-        </div>
         <div class="field btn_field">
-          <div class="two ui buttons">
-            <button (click)="onNext()" class="ui  right floated default button btn_submit" type="submit">Back</button>
-            <button class="ui right floated green button back_btn">Submit</button>
-          </div>
+          <button [disabled]="postForm.controls['subareaid'].value === null" (click)="onNext()" class="ui fluid blue button next_step_btn">Next step</button>
         </div>
       </div>
     </form>
+    <div [hidden]="!next">
+      <div *ngIf="category.length == 0">
+        <div class="ui red  message">
+          <div class="header">
+            No type of product selected
+          </div>
+          <p>Please back and choose some type of product in the category dropdown</p>
+        </div>
+      </div>
+      <h3 class="ui dividing header">Product information</h3>
+      <div class="field">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li *ngFor="let c of category" class="nav-item">
+            <a [ngClass]="{'active':c.active}" (click)="onToggleTab(c._id)" class="nav-link" [id]="c._id" data-toggle="tab" role="tab"
+              aria-selected="true">{{c.type | titlecase | _truncate }}</a>
+          </li>
+        </ul>
+        <div *ngFor="let c of category" class="tab-content" id="myTabContent">
+          <div [hidden]="!c.active" class="tab-pane fade show active" [id]="c._id" role="tabpanel">
+            <product-form [id]="c?._id"></product-form>
+          </div>
+        </div>
+      </div>
+      <div class="field btn_field">
+        <div class="two ui buttons">
+          <button (click)="onNext()" class="ui  right floated default button btn_submit" type="submit">Back</button>
+          <button (click)="onSubmit()" class="ui right floated green button back_btn">Submit</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SpecProductService } from '../spec-product.service';
 
 @Component({
   selector: 'app-product-tablet',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-tablet.component.css']
 })
 export class ProductTabletComponent implements OnInit {
-
-  constructor() { }
+  @Input('specificInfo') specificInfo: FormGroup;
+  constructor(private formbuilder: FormBuilder, private specProductSV: SpecProductService) { 
+    
+  }
 
   ngOnInit() {
+    
   }
 
 }

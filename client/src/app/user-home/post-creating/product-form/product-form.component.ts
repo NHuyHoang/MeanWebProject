@@ -8,11 +8,11 @@ import {
   ComponentRef,
   OnChanges,
   SimpleChanges,
-  AfterViewInit
-
+  AfterViewInit,
+  Inject
 } from '@angular/core';
 
-import { GLOBAL_VAR } from '../../../shared-service/shared-service';
+import { GLOBAL_VAR, ProductService } from '../../../shared-service/shared-service';
 import { ProductBicycleComponent } from './specific-product/product-bicycle/product-bicycle.component';
 import { ProductCameraComponent } from './specific-product/product-camera/product-camera.component';
 import { ProductLaptopComponent } from './specific-product/product-laptop/product-laptop.component';
@@ -24,6 +24,9 @@ import { EstateComponent } from './specific-product/estate/estate.component'
 import { ElectronicComponent } from './specific-product/electronic/electronic.component';
 import { VehicleComponent } from './specific-product/vehicle/vehicle.component';
 import { SpecProductService } from './specific-product/spec-product.service';
+import { FormBuilder } from '@angular/forms';
+import { Mobile } from '../../../../models/Product-child/Products-module';
+import { Product } from '../../../../models/Product';
 
 
 @Component({
@@ -46,27 +49,46 @@ import { SpecProductService } from './specific-product/spec-product.service';
 export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('id') id;
   @ViewChild("productForm", { read: ViewContainerRef }) container;
+  private form;
   private categoryId = GLOBAL_VAR.PRODUCT_ID;
-
   private componentRef: ComponentRef<any>;
+  private model;
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private formbuilder: FormBuilder,
+    @Inject(SpecProductService) private specProductSv,
+    @Inject(ProductService) private productSv) 
+  {
 
-  constructor(private resolver: ComponentFactoryResolver, private specProductSV:SpecProductService) { 
-    
   }
 
   ngOnInit() {
+
+    if (this.id !== undefined) {
+      this.specProductSv.setForm(this.id, this.form);
+
+    }
   }
 
-  ngAfterViewInit(){
-    this.specProductSV.getForm().valueChanges.subscribe(value => console.log(value));
+  ngAfterViewInit() {
   }
 
   ngOnChanges(change: SimpleChanges) {
     if (change['id'].currentValue !== undefined) {
+  
+      if (this.id !== 'est') {
+        this.model = this.productSv.getNullProduct(this.id);
+        this.form = this.formbuilder.group({
+          'generalInfo':this.formbuilder.group(new Product()),
+          'specificInfo': this.formbuilder.group(this.model.specificInfo)
+        })
+        this.form.controls['generalInfo'].controls['_type'].value = this.id;
+        this.form.controls['generalInfo'].controls['sold'].value = false;
+      }
+      else{
 
+      }
       this.createComponent(this.id);
-      console.log(this.id);
-
     }
   }
 
@@ -92,7 +114,7 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
         factory = this.resolver.resolveComponentFactory(ProductMotorComponent); break;
       case (this.categoryId.another_electronics):
         factory = this.resolver.resolveComponentFactory(ElectronicComponent); break;
-        case (this.categoryId.another_vehicle):
+      case (this.categoryId.another_vehicle):
         factory = this.resolver.resolveComponentFactory(VehicleComponent); break;
       case ("est"):
         factory = this.resolver.resolveComponentFactory(EstateComponent); break;
@@ -100,7 +122,13 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
     if (factory !== undefined)
       this.componentRef = this.container.createComponent(factory);
-      this.componentRef.instance.id = component;
+    this.componentRef.instance.id = component;
+    this.componentRef.instance.specificInfo = this.form.controls['specificInfo'];
+  }
+
+  getImgUploaded(event){
+    console.log(event);
+    this.form.controls['generalInfo'].controls['imglist'].setValue(event);
   }
 
   ngOnDestroy() {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CKEditorModule } from 'ng2-ckeditor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UserHomeComponent } from './user-home.component';
 import { PostService,AreaService,CategoryService } from '../shared-service/shared-service'
@@ -21,10 +20,10 @@ import { ProductModule } from './post-creating/product-form/product.module';
     imports:[ 
         CommonModule, 
         MinifiedPostModule, 
-        RouterModule,FormsModule, 
-        CKEditorModule, 
+        RouterModule,FormsModule,
         SharedModule,
-        ProductModule
+        ProductModule,
+        ReactiveFormsModule
     ],
     providers:[PostService, AreaService, CategoryService]
 })

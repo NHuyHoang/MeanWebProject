@@ -21,10 +21,8 @@ export class GeneralProductComponent implements OnChanges, OnInit, AfterViewInit
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['id'].currentValue !== undefined) {
-      let cur = $('.currency_dropdown').dropdown('get default text');
-      let pay = $('.payment_dropdown').dropdown('get default text');
-      this.generalInfo.controls['currency'].setValue(cur);
-      this.generalInfo.controls['payment_method'].setValue(pay);
+      this.generalInfo.controls['currency'].setValue('USD');
+      this.generalInfo.controls['payment_method'].setValue('Direct dealing');
     }
   }
   ngAfterViewInit() {
@@ -32,6 +30,8 @@ export class GeneralProductComponent implements OnChanges, OnInit, AfterViewInit
   }
 
   ngAfterViewChecked() {
+    this.generalInfo.controls['guarantee']
+      .setValue($('.guarantee_dropdown').dropdown('get value') == "true");
   }
 
   
@@ -42,5 +42,9 @@ export class GeneralProductComponent implements OnChanges, OnInit, AfterViewInit
 
   onPayMethodSelect(selection){
     this.generalInfo.controls['payment_method'].setValue(selection);
+  }
+
+  onReturnBoolean(value){
+    return value==="true"?true:false
   }
 }

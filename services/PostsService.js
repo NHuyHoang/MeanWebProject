@@ -107,9 +107,13 @@ module.exports = {
 	},
 	save: (input) => {
 		let post = new Post(input);
-		post.product.push(ProductsSv.createProduct(input.product));
-		return post.save((err) => {
-			if (err) throw err;
+		//post.product.push(ProductsSv.createProduct(input.product));
+		post.product.forEach((element)=>{
+			element["_id"] = mongoose.Types.ObjectId();
+		})
+		return post.save((err,results) => {
+			if (err) return err;
+			return results
 		})
 	},
 

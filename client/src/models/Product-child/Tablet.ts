@@ -9,7 +9,7 @@ export class Tablet extends Product{
                 'memory':"",
                 'ram':"",
                 'megapixel':"",
-                'simcard':"",
+                'simcard':false,
                 'screen_solution':"",
             };
         }else{

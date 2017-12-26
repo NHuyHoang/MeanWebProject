@@ -11,6 +11,7 @@ import { EstateComponent } from './estate/estate.component';
 import { ElectronicComponent } from './electronic/electronic.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from 'ng2-ckeditor/lib/src/ckeditor.module';
 
 @NgModule({
     declarations:[
@@ -23,9 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         ProductTabletComponent,
         EstateComponent,
         ElectronicComponent,
-        VehicleComponent
+        VehicleComponent,
     ],
-    imports:[CommonModule, ReactiveFormsModule],
+    imports:[CommonModule, ReactiveFormsModule, CKEditorModule],
     exports:[
         ProductBicycleComponent,
         ProductCameraComponent,

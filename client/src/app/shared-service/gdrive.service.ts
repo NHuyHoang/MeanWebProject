@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http,URLSearchParams,Headers,Response } from '@angular/http';
-import { GLOBAL_VAR } from './shared-service';
+import { GLOBAL_VAR } from './shared-variable';
 
 @Injectable()
 export class GdriveService {

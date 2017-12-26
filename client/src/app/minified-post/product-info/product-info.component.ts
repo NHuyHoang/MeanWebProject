@@ -13,6 +13,7 @@ import { Bicycle } from '../../../models/Product-child/Products-module';
 })
 export class ProductInfoComponent implements OnInit,OnChanges {
   private loaded = false;
+  private carouselId = this.generateUID();
   @Input('product') product;
   @Input('cmtCount') cmtCount;
   @Input('isSpec') isSpec = "";
@@ -22,8 +23,10 @@ export class ProductInfoComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(changes:SimpleChanges){
+    
     if(changes['product'] !==undefined && changes['product'].currentValue._id !== undefined){
       //get the prototype of product
+      
       this.product = this.productSV.getPrototype(this.product);
       if(this.product.categoryid !== "est")
         this.keys = Object.keys(this.product.specificInfo);
@@ -67,4 +70,11 @@ export class ProductInfoComponent implements OnInit,OnChanges {
   typeofBoolean(value){
     return typeof(value) === "boolean";
   } 
+
+  generateUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
 }

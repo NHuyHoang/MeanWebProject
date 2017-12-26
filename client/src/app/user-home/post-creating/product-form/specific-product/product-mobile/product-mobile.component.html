@@ -1,40 +1,42 @@
-<form class="ui form" [formGroup]="specificInfo">
-  <h3 class="ui blue dividing header">Mobile information</h3>
-  <div class="ui info  message">
-    <div class="header">
-      Optional information
+<div class="ui segment">
+  <form class="ui form" [formGroup]="specificInfo">
+    <h3 class="ui blue dividing header">Mobile's information</h3>
+    <div class="ui info  message">
+      <div class="header">
+        Optional information
+      </div>
+      <p>Those below input are the optional information</p>
     </div>
-    <p>Those below input are the optional information</p>
-  </div>
-  <div class="field">
-    <div class="three fields">
-      <div class="field">
-        <label>Camera megapixel</label>
-        <div class="ui right labeled input">
-          <input type="number" formControlName="megapixel" type="text">
-          <div class="ui basic label">
-            mgpx
+    <div class="field">
+      <div class="three fields">
+        <div class="field">
+          <label>Camera megapixel</label>
+          <div class="ui right labeled input">
+            <input type="number" formControlName="megapixel" type="text">
+            <div class="ui basic label">
+              mgpx
+            </div>
           </div>
         </div>
-      </div>
-      <div class="field">
-        <label>Memory</label>
-        <div class="ui right labeled input">
-          <input type="number" formControlName="memory" type="text">
-          <div class="ui basic label">
-            Gb
+        <div class="field">
+          <label>Memory</label>
+          <div class="ui right labeled input">
+            <input type="number" formControlName="memory" type="text">
+            <div class="ui basic label">
+              Gb
+            </div>
           </div>
         </div>
-      </div>
-      <div class="field">
-        <label>RAM</label>
-        <div class="ui right labeled input">
-          <input type="number" formControlName="ram" type="text">
-          <div class="ui basic label">
-            Gb
+        <div class="field">
+          <label>RAM</label>
+          <div class="ui right labeled input">
+            <input type="number" formControlName="ram" type="text">
+            <div class="ui basic label">
+              Gb
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

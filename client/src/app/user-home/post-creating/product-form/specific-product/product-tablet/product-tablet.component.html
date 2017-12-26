@@ -1,19 +1,6 @@
-<!-- <p>
-  product-tablet works!
-</p>
-
-<form [formGroup]="specificInfo">
-  <input id="email" placeholder="Your email" type="email" email formControlName="memory">
-  <input id="email" placeholder="Your email" type="email" email formControlName="ram">
-  <input id="email" placeholder="Your email" type="email" email formControlName="megapixel">
-  <input id="email" placeholder="Your email" type="email" email formControlName="simcard">
-  <input id="email" placeholder="Your email" type="email" email formControlName="screen_solution">
-
-</form>
- -->
-
+<div class="ui segment">
 <form class="ui form" [formGroup]="specificInfo">
-  <h3 class="ui blue dividing header">Mobile information</h3>
+  <h3 class="ui blue dividing header">Tablet's information</h3>
   <div class="ui info  message">
     <div class="header">
       Optional information
@@ -59,7 +46,7 @@
       </div>
       <div class="field">
         <label>Sim</label>
-        <select class="ui dropdown">
+        <select class="ui dropdown sim_dropdown">
           <option value="true">
             True
             <i class="green checkmark icon"></i>
@@ -73,3 +60,4 @@
     </div>
   </div>
 </form>
+</div>

@@ -1,3 +1,23 @@
-<p>
-  product-bicycle works!
-</p>
+<div class="ui segment">
+<form class="ui form" [formGroup]="specificInfo">
+  <h3 class="ui blue dividing header">Mobile information</h3>
+  <div class="ui info  message">
+    <div class="header">
+      Optional information
+    </div>
+    <p>Those below input are the optional information</p>
+  </div>
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Species</label>
+        <input formControlName="species" placeholder="..." />
+      </div>
+      <div class="field">
+        <label>Date bought</label>
+        <input type="date" formControlName="year_bought" />
+      </div>
+    </div>
+  </div>
+</form>
+</div>

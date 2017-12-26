@@ -36,7 +36,7 @@ export class PostHolderComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['post'].currentValue._id !== undefined) {                         //if the @Input('post') have value
+    if (changes['post'].currentValue._id !== undefined) {                         //if the @Input('post') has value
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");     //decrease title length
       this.comments = this.post.comment;                                          //set value for comments obj
       this.cmtForm.patchValue({

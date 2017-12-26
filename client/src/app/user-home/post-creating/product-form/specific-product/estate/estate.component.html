@@ -1,3 +1,173 @@
-<p>
-  estate works!
-</p>
+<form class="ui form" [formGroup]="specificInfo">
+  <div class="ui segment">
+    <h3 class="ui blue header dividing">Estate's information</h3>
+    <div class="field">
+      <div class="two fields">
+        <div class="field">
+          <label>Address</label>
+          <input formControlName="address" />
+        </div>
+        <div class="field">
+          <label>State</label>
+          <input formControlName="state" />
+        </div>
+
+      </div>
+    </div>
+    <div class="field">
+      <div class="three fields">
+        <div class="field">
+          <label>Registered owner</label>
+          <select class="ui dropdown registered_dropdown">
+            <option value="true">
+              True
+              <i class="green checkmark icon"></i>
+            </option>
+            <option value="false">
+              False
+              <i class="red remove icon"></i>
+            </option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Furniture included</label>
+          <select class="ui dropdown furniture_dropdown">
+            <option value="true">
+              True
+              <i class="green checkmark icon"></i>
+            </option>
+            <option value="false">
+              False
+              <i class="red remove icon"></i>
+            </option>
+          </select>
+        </div>
+        <div class="field">
+
+          <label>Estate product</label>
+          <select class="ui dropdown sim_dropdown">
+            <option value="houses">
+              Houses
+            </option>
+            <option value="departments">
+              Departments
+            </option>
+            <option value="offices">
+              Offices
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Estate's contract</label>
+      <div class="field">
+        <div class="ui checkbox">
+          <input (click)="onSelectContract(0)" id="lease_checkbox" type="checkbox">
+          <label>For lease</label>
+        </div>
+        <div class="ui checkbox">
+          <input (click)="onSelectContract(1)" id="sale_checkbox" type="checkbox">
+          <label>For sale</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <ckeditor [config]="{uiColor: '#ffffff'}" debounce="500" formControlName="description"></ckeditor>
+    </div>
+  </div>
+  <div class="ui segment" [hidden]="!type[0]">
+    <h3 class="ui blue header dividing">Lease information</h3>
+    <div class="field" formGroupName="leasecontract">
+      <div class="two fields">
+        <div class="field">
+          <label>Depposit</label>
+          <input formControlName="deposit" />
+        </div>
+        <div class="field">
+          <label>Cost</label>
+          <input formControlName="cost" />
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Contract duration</label>
+          <input type="date" formControlName="contract_duration" />
+        </div>
+        <div class="field">
+          <label>Currency</label>
+          <div class="ui fluid compact selection dropdown ">
+            <i class="dropdown icon"></i>
+            <div class="text">USD</div>
+            <div class="menu">
+              <div (click)="onCurrencySelect(0,s)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!type[1]" class="ui segment">
+    <h3 class="ui blue header dividing">Sale information</h3>
+    <div class="field" formGroupName="salecontract">
+      <div class="two fields">
+        <div class="field">
+          <label>Land certificate</label>
+          <select class="ui dropdown land_dropdown">
+            <option value="true">
+              True
+              <i class="green checkmark icon"></i>
+            </option>
+            <option value="false">
+              False
+              <i class="red remove icon"></i>
+            </option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ownership certificate</label>
+          <select class="ui dropdown owner_dropdown">
+            <option value="true">
+              True
+              <i class="green checkmark icon"></i>
+            </option>
+            <option value="false">
+              False
+              <i class="red remove icon"></i>
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field">
+            <label>Cost</label>
+            <input formControlName="cost" />
+        </div>
+        <div class="field">
+            <label>Payment method</label>
+            <div class="ui fluid compact selection dropdown payment_dropdown">
+              <i class="dropdown icon"></i>
+              <div class="text">Direct dealing</div>
+              <div class="menu">
+                <div (click)="onPayMethodSelect('Direct dealing')" class="item">Direct dealing</div>
+                <div (click)="onPayMethodSelect('Bank transfer')" class="item">Bank transfer</div>
+                <div (click)="onPayMethodSelect('Via VISA/MASTERCARD')" class="item">Via VISA/MASTERCARD</div>
+              </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Currency</label>
+            <div class="ui fluid compact selection dropdown ">
+              <i class="dropdown icon"></i>
+              <div class="text">USD</div>
+              <div class="menu">
+                <div (click)="onCurrencySelect(1,s)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

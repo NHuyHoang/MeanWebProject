@@ -1,20 +1,23 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SpecProductService } from '../spec-product.service';
+import { Component, Input, AfterViewChecked } from '@angular/core';
+declare var $:any;
 
 @Component({
   selector: 'app-product-tablet',
   templateUrl: './product-tablet.component.html',
   styleUrls: ['./product-tablet.component.css']
 })
-export class ProductTabletComponent implements OnInit {
-  @Input('specificInfo') specificInfo: FormGroup;
-  constructor(private formbuilder: FormBuilder, private specProductSV: SpecProductService) { 
+export class ProductTabletComponent implements AfterViewChecked {
+  @Input('specificInfo') specificInfo;
+  constructor() { 
     
   }
 
-  ngOnInit() {
-    
+  ngAfterViewChecked(){
+    if(this.specificInfo !== undefined){
+      this.specificInfo
+        .controls['simcard']
+        .setValue($('.sim_dropdown').dropdown('get value') == "true")
+    }
   }
 
 }

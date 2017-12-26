@@ -1,3 +1,45 @@
-<p>
-  product-camera works!
-</p>
+<div class="ui segment">
+<form class="ui form" [formGroup]="specificInfo">
+  <h3 class="ui blue dividing header">Bicycle's information</h3>
+  <div class="ui info  message">
+    <div class="header">
+      Optional information
+    </div>
+    <p>Those below input are the optional information</p>
+  </div>
+  <div class="field">
+    <label>Your camera's lens</label>
+    <input type="text" formControlName="lens" />
+  </div>
+  <div class="field">
+    <div class="four fields">
+      <div class="field">
+        <label>Camera megapixel</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="megapixel">
+          <div class="ui basic label">
+            mgpx
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>ISO</label>
+        <input type="number" formControlName="iso">
+      </div>
+      <div class="field">
+        <label>Frame per second</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="fps">
+          <div class="ui basic label">
+            fps
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Shots</label>
+        <input type="number" formControlName="shots">
+      </div>
+    </div>
+  </div>
+</form>
+</div>

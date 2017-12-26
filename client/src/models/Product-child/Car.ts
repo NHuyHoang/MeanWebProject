@@ -12,7 +12,7 @@ export class Car extends Product {
                 'lincense_number': "",
                 'gearbox': "",
                 'fuel': "",
-                'origin': "",
+                'origin': true,
                 'slots': "",
                 'cylinder_capacity': ""
             };

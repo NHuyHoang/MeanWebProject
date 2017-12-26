@@ -51,7 +51,6 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
       //get area name
       this.areaService.getChildArea(this.post.subareaid).subscribe((data) => {
         this.area = data;
-        
         //get category name
         this.post.product.forEach((element) => {
           let categoryName: string;

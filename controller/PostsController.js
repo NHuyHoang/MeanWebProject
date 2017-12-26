@@ -109,6 +109,14 @@ module.exports = {
 	},
 	getPostCountByUserId:(req,res) => {
 		PostsService.getPostCountByUserId(req.body.id).then(data => res.send(data));
+	},
+	save:(req,res)=>{
+		if(!req.body) res.send({message:"invalid request"});
+		else{
+			PostsService.save(req.body).then(result => {
+				res.send(result);
+			})
+		}
 	}
 
 }

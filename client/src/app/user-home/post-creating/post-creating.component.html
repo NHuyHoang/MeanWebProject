@@ -3,19 +3,20 @@
     <h3>Create post</h3>
   </div>
   <div class=" content_segment">
-    <form class="ui form" [formGroup]="postForm">
-      <div [hidden]="next">
+    <div class="ui segment" [hidden]="next">
+      <form class="ui form" [formGroup]="postForm">
+
         <h3 class="ui blue dividing header">Post information</h3>
         <div class="field">
-            <div class="ui form warning">
-                <div class="ui warning message">
-                  <div class="header">Notice</div>
-                  <ul class="list">
-                    <li>You must choose your district before moving on next step</li>
-                    <li>You can choose more than 1 type of product</li>
-                  </ul>
-                </div>
-              </div>
+          <div class="ui form warning">
+            <div class="ui warning message">
+              <div class="header">Notice</div>
+              <ul class="list">
+                <li>You must choose your district before moving on next step</li>
+                <li>You can choose more than 1 type of product</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="field">
           <label>
@@ -51,11 +52,12 @@
             <option *ngFor="let product of products" [value]="product._id" [innerHTML]="product.type | _truncate | titlecase"></option>
           </select>
         </div>
-        <div class="field btn_field">
+        <div class="field">
           <button [disabled]="postForm.controls['subareaid'].value === null" (click)="onNext()" class="ui fluid blue button next_step_btn">Next step</button>
         </div>
-      </div>
-    </form>
+
+      </form>
+    </div>
     <div [hidden]="!next">
       <div *ngIf="category.length == 0">
         <div class="ui red  message">

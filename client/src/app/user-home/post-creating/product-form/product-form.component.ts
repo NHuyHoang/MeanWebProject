@@ -24,9 +24,10 @@ import { EstateComponent } from './specific-product/estate/estate.component'
 import { ElectronicComponent } from './specific-product/electronic/electronic.component';
 import { VehicleComponent } from './specific-product/vehicle/vehicle.component';
 import { SpecProductService } from './specific-product/spec-product.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Mobile } from '../../../../models/Product-child/Products-module';
 import { Product } from '../../../../models/Product';
+import { Estate } from '../../../../models/Estate';
 
 
 @Component({
@@ -57,8 +58,7 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
     private resolver: ComponentFactoryResolver,
     private formbuilder: FormBuilder,
     @Inject(SpecProductService) private specProductSv,
-    @Inject(ProductService) private productSv) 
-  {
+    @Inject(ProductService) private productSv) {
 
   }
 
@@ -75,19 +75,19 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges(change: SimpleChanges) {
     if (change['id'].currentValue !== undefined) {
-  
+      this.model = this.productSv.getNullProduct(this.id);
       if (this.id !== 'est') {
-        this.model = this.productSv.getNullProduct(this.id);
+
         this.form = this.formbuilder.group({
-          'generalInfo':this.formbuilder.group(new Product()),
+          'generalInfo': this.formbuilder.group(new Product()),
           'specificInfo': this.formbuilder.group(this.model.specificInfo)
         })
         this.form.controls['generalInfo'].controls['_type'].value = this.id;
-        this.form.controls['generalInfo'].controls['sold'].value = false;
       }
-      else{
-
+      else {
+        this.form = this.formbuilder.group(this.onCreateEstForm());
       }
+      this.form.controls['generalInfo'].controls['sold'].value = false;
       this.createComponent(this.id);
     }
   }
@@ -124,14 +124,47 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
       this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.id = component;
     this.componentRef.instance.specificInfo = this.form.controls['specificInfo'];
+
   }
 
-  getImgUploaded(event){
-    console.log(event);
+  getImgUploaded(event) {
     this.form.controls['generalInfo'].controls['imglist'].setValue(event);
   }
 
   ngOnDestroy() {
+  }
+
+  onCreateEstForm(){
+    return {
+      'generalInfo': this.formbuilder.group({
+        'imglist': [],
+        'sold': [],
+        'categoryid': 'est'
+      }),
+      'specificInfo': this.formbuilder.group({
+        'address': [],
+        '_type': [],
+        'registered_owner': [true],
+        'furniture_include': [true],
+        'state': [],
+        'description': [],
+        'leasecontract': this.formbuilder.group({
+          'typecontract': [,Validators.required],
+          'deposit': [,Validators.required],
+          'cost': [,Validators.required],
+          'contract_duration': [,Validators.required],
+          'currency': [,Validators.required]
+        }),
+        'salecontract':this.formbuilder.group({
+          'typecontract': [,Validators.required],
+          'land_certificate': [true,Validators.required],
+          'cost': [,Validators.required],
+          'ownership_certificate': [true,Validators.required],
+          'payment_method': [,Validators.required],
+          'currency': [,Validators.required]
+        })
+      }),
+    }
   }
 
 }

@@ -1,9 +1,9 @@
 <div class="ui form form_post_product">
-  <div>
-    <general-product *ngIf="id !== 'est'" [id]="id" [generalInfo]="form.controls['generalInfo']"></general-product>
+  <div *ngIf="id !== 'est'" class="ui segment">
+    <general-product  [id]="id" [generalInfo]="form.controls['generalInfo']"></general-product>
   </div>
 
-    <div class="field">
+    <div class="ui segment">
       <upload-image (imgUploaded)="getImgUploaded($event)" ></upload-image>
     </div>
     <div class="field">

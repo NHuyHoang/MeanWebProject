@@ -29,7 +29,8 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost)
 	  .post(`${prefix}getwithfilter`,PostsController.getWithFilter)
 	  .post(`${prefix}getvippost`,PostsController.getVipPost)
-	  .post(`${prefix}getpostcount`,PostsController.getPostCountByUserId);
+	  .post(`${prefix}getpostcount`,PostsController.getPostCountByUserId)
+	  .post(`${prefix}save`,PostsController.save);
 //Area
 prefix = '/area/';
 router.post(`${prefix}getchildarea`,AreasController.getChildArea);

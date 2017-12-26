@@ -1,3 +1,49 @@
-<p>
-  product-motor works!
-</p>
+<div class="ui segment">
+<form class="ui form" [formGroup]="specificInfo">
+  <h3 class="ui blue dividing header">Motorbike's information</h3>
+  <div class="ui info  message">
+    <div class="header">
+      Optional information
+    </div>
+    <p>Those below input are the optional information</p>
+  </div>
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Car species</label>
+        <input formControlName="species" placeholder="Seldan, Mustang... " />
+      </div>
+      <div class="field">
+        <label>Date registered</label>
+        <input type="date" formControlName="year_registered">
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="three fields">
+      <div class="field">
+        <label>Km numbers</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="km_numbers" type="text">
+          <div class="ui basic label">
+            km
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>License number</label>
+        <input formControlName="lincense_number">
+      </div>
+      <div class="field">
+        <label>Cylinder capicity</label>
+        <div class="ui right labeled input">
+          <input type="number" formControlName="cylinder_capacity" type="text">
+          <div class="ui basic label">
+            liters
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

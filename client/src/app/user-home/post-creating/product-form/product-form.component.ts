@@ -9,7 +9,8 @@ import {
   OnChanges,
   SimpleChanges,
   AfterViewInit,
-  Inject
+  Inject,
+  OnDestroy
 } from '@angular/core';
 
 import { GLOBAL_VAR, ProductService } from '../../../shared-service/shared-service';
@@ -47,7 +48,7 @@ import { Estate } from '../../../../models/Estate';
     VehicleComponent
   ],
 })
-export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
+export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input('id') id;
   @ViewChild("productForm", { read: ViewContainerRef }) container;
   private form;
@@ -63,11 +64,6 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
-
-    if (this.id !== undefined) {
-      this.specProductSv.setForm(this.id, this.form);
-
-    }
   }
 
   ngAfterViewInit() {
@@ -77,18 +73,27 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
     if (change['id'].currentValue !== undefined) {
       this.model = this.productSv.getNullProduct(this.id);
       if (this.id !== 'est') {
-
-        this.form = this.formbuilder.group({
-          'generalInfo': this.formbuilder.group(new Product()),
-          'specificInfo': this.formbuilder.group(this.model.specificInfo)
-        })
-        this.form.controls['generalInfo'].controls['_type'].value = this.id;
+        if (this.model.specificInfo !== undefined) {
+          this.form = this.formbuilder.group({
+            'generalInfo': this.formbuilder.group(this.onCreateProductForm()),
+            'specificInfo': this.formbuilder.group(this.model.specificInfo)
+          })
+        }
+        else {
+          this.form = this.formbuilder.group({
+            'generalInfo': this.formbuilder.group(this.onCreateProductForm()),
+            'specificInfo': this.formbuilder.group({})
+          })
+        }
+        this.form.controls['generalInfo'].controls['_type'].setValue(this.id);
+        this.form.controls['generalInfo'].controls['imglist'].setValue([]);
       }
       else {
         this.form = this.formbuilder.group(this.onCreateEstForm());
       }
       this.form.controls['generalInfo'].controls['sold'].value = false;
       this.createComponent(this.id);
+      this.specProductSv.setForm(this.id, this.form);
     }
   }
 
@@ -112,18 +117,19 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
         factory = this.resolver.resolveComponentFactory(ProductLaptopComponent); break;
       case (this.categoryId.motor):
         factory = this.resolver.resolveComponentFactory(ProductMotorComponent); break;
-      case (this.categoryId.another_electronics):
+      /* case (this.categoryId.another_electronics):
         factory = this.resolver.resolveComponentFactory(ElectronicComponent); break;
       case (this.categoryId.another_vehicle):
-        factory = this.resolver.resolveComponentFactory(VehicleComponent); break;
+        factory = this.resolver.resolveComponentFactory(VehicleComponent); break; */
       case ("est"):
         factory = this.resolver.resolveComponentFactory(EstateComponent); break;
 
     }
-    if (factory !== undefined)
+    if (factory !== undefined) {
       this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.id = component;
-    this.componentRef.instance.specificInfo = this.form.controls['specificInfo'];
+      this.componentRef.instance.id = component;
+      this.componentRef.instance.specificInfo = this.form.controls['specificInfo'];
+    }
 
   }
 
@@ -132,39 +138,55 @@ export class ProductFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnDestroy() {
+    console.log("destroyed");
+    this.specProductSv.destroyForm(this.id);
   }
 
-  onCreateEstForm(){
+  onCreateEstForm() {
     return {
       'generalInfo': this.formbuilder.group({
-        'imglist': [],
-        'sold': [],
+        'imglist': [[]],
+        'sold': [false],
         'categoryid': 'est'
       }),
       'specificInfo': this.formbuilder.group({
         'address': [],
+        'location':[{
+          "log" : "",
+          "lat" : ""
+        }],
         '_type': [],
         'registered_owner': [true],
         'furniture_include': [true],
         'state': [],
         'description': [],
         'leasecontract': this.formbuilder.group({
-          'typecontract': [,Validators.required],
-          'deposit': [,Validators.required],
-          'cost': [,Validators.required],
-          'contract_duration': [,Validators.required],
-          'currency': [,Validators.required]
+          'typecontract': [GLOBAL_VAR.PRODUCT_ID['lease estate'], Validators.required],
+          'deposit': [, Validators.required],
+          'cost': [, Validators.required],
+          'contract_duration': [, Validators.required],
+          'currency': ["USD", Validators.required]
         }),
-        'salecontract':this.formbuilder.group({
-          'typecontract': [,Validators.required],
-          'land_certificate': [true,Validators.required],
-          'cost': [,Validators.required],
-          'ownership_certificate': [true,Validators.required],
-          'payment_method': [,Validators.required],
-          'currency': [,Validators.required]
+        'salecontract': this.formbuilder.group({
+          'typecontract': [GLOBAL_VAR.PRODUCT_ID['sale estate'], Validators.required],
+          'land_certificate': [true, Validators.required],
+          'cost': [, Validators.required],
+          'ownership_certificate': [true, Validators.required],
+          'payment_method': [, Validators.required],
+          'currency': ["USD", Validators.required]
         })
       }),
     }
+  }
+
+  onCreateProductForm() {
+    let product = new Product();
+    for(let key in product){
+      if(key == "categoryid" || key == "imglist")
+       continue;
+      product[key] = [,Validators.required]
+    }
+    return product;
   }
 
 }

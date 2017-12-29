@@ -8,8 +8,8 @@
       
       <div class="post_userinf">
         <div>{{user?.name}}</div>
-        <div id="post_user_rating">
-          <div class="ui mini star rating">
+        <div id="post_user_rating ">
+          <div [id]="postIdAsync | async " class="ui mini star rating">
             <i class="icon"></i>
             <i class="icon"></i>
             <i class="icon"></i>

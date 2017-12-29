@@ -19,20 +19,22 @@ export class PostHolderComponent implements OnChanges, OnInit {
   private cmtForm = new FormControl();
   private signInUser;
   private comments;
-  constructor(@Inject(FormBuilder) private formbuilder, @Inject(PostService) private postSV) {
+  constructor( @Inject(FormBuilder) private formbuilder, @Inject(PostService) private postSV) {
     this.signInUser = JSON.parse(localStorage.getItem('currentUser'));
     //create a comment form
-    this.cmtForm = this.formbuilder.group({
-      '_id':"",
-      'userpost':this.signInUser._id,
-      'date':"",
-      'cmt':['',Validators.required]
-    })
-    
+    if (this.signInUser !== null) {
+      this.cmtForm = this.formbuilder.group({
+        '_id': "",
+        'userpost': this.signInUser._id,
+        'date': "",
+        'cmt': ['', Validators.required]
+      })
+    }
+
   }
 
   ngOnInit() {
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -40,39 +42,39 @@ export class PostHolderComponent implements OnChanges, OnInit {
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");     //decrease title length
       this.comments = this.post.comment;                                          //set value for comments obj
       this.cmtForm.patchValue({
-        _id:this.post._id                                                         //set post id for comment form
+        _id: this.post._id                                                         //set post id for comment form
       })
     }
   }
 
   //submit the comment
-  onSubmit(){
-    if(!this.cmtForm.valid || this.signInUser._id === undefined) return;
+  onSubmit() {
+    if (!this.cmtForm.valid || this.signInUser === null) return;
     this.cmtForm.patchValue({                                                     //set the date time comment
-      date:(new Date()).toISOString(),
+      date: (new Date()).toISOString(),
     })
     this.postSV.pushCmt(this.cmtForm.value).subscribe(data => {                   //save the comment to the database
-      if(data.success === true){                                                  //if successfully save
-        let retrieved = data.data;                                                
+      if (data.success === true) {                                                  //if successfully save
+        let retrieved = data.data;
         this.comments.push(                                                       //push the comment to the comments array
-          new Comment(retrieved._id,retrieved.cmt,retrieved.date,
-                      this.signInUser,retrieved.reply)
+          new Comment(retrieved._id, retrieved.cmt, retrieved.date,
+            this.signInUser, retrieved.reply)
         );
         this.onScrollBot();
       }
     });
   }
 
-  onScrollBot(){
+  onScrollBot() {
     let body = document.body,
-    html = document.documentElement;
+      html = document.documentElement;
 
     let height = Math.max(body.scrollHeight, body.offsetHeight,
-    html.clientHeight, html.scrollHeight, html.offsetHeight);
+      html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-    window.scrollTo(0,height);
+    window.scrollTo(0, height);
   }
 
- 
+
 
 }

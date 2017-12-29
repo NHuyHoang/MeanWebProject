@@ -5,7 +5,6 @@ import { ProductService } from './product.service';
 import { AreaService } from './area.service';
 import { CategoryService } from './category.service';
 import { DateTimeFormatService } from './date-time-format.service';
-import { SignInManageService } from './sign-in-manage.service';
 import { GdriveService } from './gdrive.service';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { GdriveService } from './gdrive.service';
         CategoryService,
         DateTimeFormatService,
         PostService,
-        SignInManageService,
         UserService,
         GdriveService ],
     exports:[ ]

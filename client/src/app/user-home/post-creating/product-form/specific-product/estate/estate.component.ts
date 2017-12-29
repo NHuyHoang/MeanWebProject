@@ -21,6 +21,11 @@ export class EstateComponent implements OnInit, OnChanges, AfterViewInit, AfterV
 
   ngAfterViewInit() {
     $('.ui.dropdown').dropdown();
+    $('.currency_dropdown').dropdown('set value',"USD");
+    $('.payment_dropdown').dropdown('set value',"Direct dealing");
+  }
+
+  ngAfterViewChecked() {
     this.specificInfo.controls['registered_owner']
       .setValue($('.registered_dropdown').dropdown('get value') == "true");
     this.specificInfo.controls['furniture_include']
@@ -33,13 +38,11 @@ export class EstateComponent implements OnInit, OnChanges, AfterViewInit, AfterV
     this.specificInfo.controls['salecontract']
       .controls['ownership_certificate']
       .setValue($('.owner_dropdown').dropdown('get value') == "true");
-
-  }
-
-  ngAfterViewChecked() {
-
-    //this.type = $('.ui.checkbox').checkbox('is checked')
-
+    this.specificInfo.controls['_type']
+      .setValue($('.estProduct_dropdown').dropdown('get value'));
+    this.specificInfo.controls['salecontract']
+      .controls['payment_method']
+      .setValue($('.payment_dropdown').dropdown('get value'));
   }
 
   onSelectContract(number) {

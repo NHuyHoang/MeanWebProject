@@ -4,6 +4,6 @@ export * from './date-time-format.service';
 export * from './post.service';
 export * from './product.service';
 export * from './shared-variable';
-export * from './sign-in-manage.service';
 export * from './user.service';
 export * from './gdrive.service';
+export * from './InterceptHttp.service'

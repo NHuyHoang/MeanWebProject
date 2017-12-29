@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { MainPageModule } from './main-page/mainpage.module';
 import { LoginPageModule } from './login-page/loginpage.module';
 import { UserHomeModule } from './user-home/user-home.module'
-import { SignInManageService, DateTimeFormatService } from './shared-service/shared-service'
+import { DateTimeFormatService } from './shared-service/shared-service'
 import { SpecPostModule } from './spec-post/spec-post.module';
 import { PostModule } from './post/post.module';
 import { VisitUserModule } from './visit-user/visit-user.module';
+import { LoginGuard } from './shared-service/login.guard';
+import { LoginPageService } from './login-page/login-page.service';
 
 
 @NgModule({
@@ -28,7 +30,7 @@ import { VisitUserModule } from './visit-user/visit-user.module';
     PostModule,
     VisitUserModule
   ],
-  providers: [Title, SignInManageService, DateTimeFormatService],
+  providers: [Title, DateTimeFormatService, LoginGuard, LoginPageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,7 @@ import {
   OnChanges,
   SimpleChanges
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostService, AreaService, GLOBAL_VAR } from '../shared-service/shared-service';
 import { Post } from '../../models/Posts';
 declare let noUiSlider: any;
@@ -34,7 +35,8 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
   private postCount = 0;
   constructor(
     @Inject(PostService) private postSV,
-    @Inject(AreaService) private areaSV) {
+    @Inject(AreaService) private areaSV,
+    @Inject(Router) private router) {
     this.onGetPost();
     //get all area
     this.areaSV.getAllAreas().subscribe(data => {
@@ -69,6 +71,7 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
   ngAfterViewInit() {
 
     $('.ui.dropdown').dropdown();
+    $('.rating').rating();
   }
 
   onFindPost() {
@@ -184,6 +187,11 @@ export class PostComponent implements OnInit, AfterViewInit, AfterContentInit, O
     this.loaded = 0;
     this.onGetPost();
   }
+
+  onCreatePost(){ 
+    this.router.navigate(['user/post-create']);
+  }
+
   ngOnInit() {
   }
 

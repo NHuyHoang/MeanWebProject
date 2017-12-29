@@ -45,7 +45,7 @@
         <div class="field">
 
           <label>Estate product</label>
-          <select class="ui dropdown sim_dropdown">
+          <select class="ui dropdown estProduct_dropdown">
             <option value="houses">
               Houses
             </option>
@@ -83,11 +83,11 @@
       <div class="two fields">
         <div class="field">
           <label>Depposit</label>
-          <input formControlName="deposit" />
+          <input formControlName="deposit" type="number"/>
         </div>
         <div class="field">
           <label>Cost</label>
-          <input formControlName="cost" />
+          <input formControlName="cost" type="number" />
         </div>
       </div>
       <div class="two fields">
@@ -97,11 +97,11 @@
         </div>
         <div class="field">
           <label>Currency</label>
-          <div class="ui fluid compact selection dropdown ">
+          <div class="ui fluid compact selection dropdown currency_dropdown ">
             <i class="dropdown icon"></i>
             <div class="text">USD</div>
             <div class="menu">
-              <div (click)="onCurrencySelect(0,s)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
+              <div (click)="onCurrencySelect(0,c.ellipsis)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
             </div>
           </div>
         </div>
@@ -139,11 +139,7 @@
           </select>
         </div>
       </div>
-      <div class="three fields">
-        <div class="field">
-            <label>Cost</label>
-            <input formControlName="cost" />
-        </div>
+      <div class="two fields">
         <div class="field">
             <label>Payment method</label>
             <div class="ui fluid compact selection dropdown payment_dropdown">
@@ -157,12 +153,19 @@
             </div>
         </div>
         <div class="field">
-            <label>Currency</label>
-            <div class="ui fluid compact selection dropdown ">
-              <i class="dropdown icon"></i>
-              <div class="text">USD</div>
-              <div class="menu">
-                <div (click)="onCurrencySelect(1,s)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
+            <label>Cost</label>
+            <div class="ui right action  input">
+              <input formControlName="cost"  type="number">
+              <div class="ui basic floating dropdown button currency_dropdown">
+                <div class="text">Currency</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <div *ngFor="let c of CUR"
+                        class="item" 
+                        (click)="onCurrencySelect(1,c.ellipsis)" >
+                        {{c.ellipsis | uppercase}}
+                  </div>
+                </div>
               </div>
             </div>
         </div>

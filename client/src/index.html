@@ -16,8 +16,13 @@
 </head>
 
 <body>
-  <img id="loader" src="./assets/loading.gif">
-  <app-root style="display:none">Loading...</app-root>
+ 
+  <app-root></app-root>
+
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+  </div>
+  
   <!---------semantic------------>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
     crossorigin="anonymous">
@@ -32,13 +37,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
 
-  <script type="text/javascript">
-    $(window).ready(function () {
-      setTimeout(function () {
-        $('app-root').css('display', 'block');
-        $('#loader').css('display','none');
-      }, 2000);
-    });
-  </script>
+
 </body>
+
+<script type="text/javascript">
+  $(window).ready(function () {
+    $('#loader-wrapper').css('display','none');
+  });
+</script>
 </html>

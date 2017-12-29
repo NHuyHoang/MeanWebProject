@@ -12,7 +12,7 @@ export class LoginPageService {
   private user = new User();
   private body = new URLSearchParams();
   private header = new Headers();
-  public signinUser : BehaviorSubject<User> = new BehaviorSubject(this.user);
+  private signinUser : BehaviorSubject<User> = new BehaviorSubject(this.user);
 
   constructor(private http:Http) {
     this.header.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -31,6 +31,11 @@ export class LoginPageService {
 
   onEmitSigninUser(user:User){
     this.signinUser.next(user);
+    console.log("emitted ");
+  }
+
+  onSignInUserSubcribe(){
+    return this.signinUser;
   }
 
 }

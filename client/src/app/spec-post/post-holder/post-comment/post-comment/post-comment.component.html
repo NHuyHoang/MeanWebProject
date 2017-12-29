@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <form [formGroup]="replyForm">
+            <form *ngIf="signInUser !== null" [formGroup]="replyForm">
                 <div class="ui fluid action input">
                     <input type="text" placeholder="Leave your reply..." formControlName="cmt">
                     <button (click)="onSubmitReply()" class="ui blue icon button">

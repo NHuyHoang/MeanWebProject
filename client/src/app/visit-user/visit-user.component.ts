@@ -12,7 +12,6 @@ import { BehaviorSubject } from 'rxjs/Rx';
 
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
-import { SignInManageService } from '../shared-service/sign-in-manage.service';
 import { PostService } from '../shared-service/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../shared-service/shared-service';
@@ -87,14 +86,15 @@ export class VisitUserComponent implements OnInit {
 
   ngAfterContentChecked() {
     this.title.setTitle(`${this.user.name}'s home`);
+    $('.rating')
+    .rating({
+      initialRating: this.user.point,
+      maxRating: 5
+    });
   }
 
   ngAfterViewInit() {
-    $('.rating')
-      .rating({
-        initialRating: this.user.point,
-        maxRating: 5
-      });
+
   }
 
 

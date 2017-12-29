@@ -114,7 +114,7 @@ module.exports = {
 		if(!req.body) res.send({message:"invalid request"});
 		else{
 			PostsService.save(req.body).then(result => {
-				res.send(result);
+				res.send({ _id:result._id });
 			})
 		}
 	}

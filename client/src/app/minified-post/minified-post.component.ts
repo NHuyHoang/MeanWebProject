@@ -4,6 +4,7 @@ import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
 import { Router } from '@angular/router';
 import { AreaService, DateTimeFormatService, CategoryService } from '../shared-service/shared-service'
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 declare var $:any;
 
@@ -28,12 +29,18 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   private area;
   private datePost = { date: "", time: "" };
   private cmtCount = 0;
+
+  private userAsyncObj = new BehaviorSubject<any>({});
+  private postIdAsync = new BehaviorSubject<string>('default');
+
   constructor(
 
     @Inject(AreaService) private areaService,
     @Inject(DateTimeFormatService) private datetimeformatSV,
     @Inject(CategoryService) private categorySV,
     @Inject(Router) private router) {
+    
+    //subscribe for user and postId for setting unique point of each post
      
   }
 
@@ -41,9 +48,9 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
     if (changes['post'].currentValue._id !== undefined) {
       //format the mini post
+      this.postIdAsync.next(this.post._id)
       this.ellipsisTitle = this.post.title.replace(/^(.{50}[^\s]*).*/, "$1");
       this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
       this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
@@ -80,15 +87,20 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
 
     }
     if (changes['user'].currentValue._id !== undefined) {
+      this.userAsyncObj.next(this.user);
     }
   }
 
   ngAfterViewInit(){
+    this.userAsyncObj.subscribe(user => {
+      this.postIdAsync.subscribe(id=>{
+        $(`#${id}`).rating({
+          initialRating: user.point,
+          maxRating: 5
+        });
+      })
+     })
     //semantic-ui display user point
-    $('.rating').rating({
-      initialRating: this.user.point,
-      maxRating: 5
-    });
   }
   //toggle product tab
   onToggleTab(tabId: string) {
@@ -114,6 +126,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   onCheckUserPost(){
     if(this.post._id !== undefined){
       let user = JSON.parse(localStorage.getItem("currentUser"));
+      if(user === null) return false;
       if(this.post.userpost._id)
         return this.post.userpost._id === user._id;
       else return this.post.userpost === user._id;

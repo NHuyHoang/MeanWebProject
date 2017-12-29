@@ -12,7 +12,6 @@ import { BehaviorSubject } from 'rxjs/Rx';
 
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
-import { SignInManageService } from '../shared-service/sign-in-manage.service';
 import { PostService } from '../shared-service/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../shared-service/shared-service';
@@ -39,7 +38,11 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
     this.user = JSON.parse(localStorage.getItem("currentUser"));
     this.postService.getPostCount(this.user._id).subscribe(data => {
       this.postCount = data.count;
-      this.router.navigate(['user/post']);
+      let path = location.pathname;
+      if(path === "/user/post-create")
+        this.router.navigate(['user/post-create']);
+      else
+        this.router.navigate(['user/post']);
     });
     
   }

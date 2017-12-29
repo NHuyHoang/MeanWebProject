@@ -9,22 +9,22 @@
     </a>
     <div class="right menu">
       <div class="item">
-        <div *ngIf=notSignIn class="ui buttons">
+        <div *ngIf="notSignIn" class="ui buttons">
           <button  class="ui mini button" [routerLink]="['login']">Sign in</button>
           <div class="or"></div>
           <button class="ui mini positive button">Sign up</button>
         </div>
       </div>
     </div>
-    <div *ngIf=!notSignIn id="right_menu" class="right menu">
-      <img (click)="onNavigateUserHome()" id="avatar" src={{user.img}}>
+    <div *ngIf="!notSignIn" id="right_menu" class="right menu">
+      <img (click)="onNavigateUserHome()" id="avatar" [src]="img">
       <a class="item">
         <i class="lagre world icon"></i>
       </a>
       <a class="item">
         <i class="lagre  inbox icon"></i>
       </a>
-      <a  [routerLink]="['']" (click)="notSignIn = true" class="item">
+      <a  [routerLink]="['']" (click)="onLogOut()" class="item">
         <i class="lagre red power icon"></i>
       </a>
     </div>

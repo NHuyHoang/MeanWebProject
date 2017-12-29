@@ -113,7 +113,7 @@ module.exports = {
 		})
 		return post.save((err,results) => {
 			if (err) return err;
-			return results
+			return { _id:results._id }
 		})
 	},
 

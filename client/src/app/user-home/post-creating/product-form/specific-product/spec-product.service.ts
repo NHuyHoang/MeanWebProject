@@ -18,6 +18,10 @@ export class SpecProductService {
     return this.productForm;
   }
 
+  destroyForm(id){
+    delete this.productForm[id];
+  }
+
   setSpecProductForm(id,form:FormGroup){
     
     if(this.productForm[id] !== undefined)

@@ -2,8 +2,8 @@
     <mini-post [user]="user" [post]="post" [isSpec]="isSpec"></mini-post>
 </div>
 <!---Comment---->
-<div class="ui  segments">
-    <form [formGroup]="cmtForm" >
+<div *ngIf="signInUser !== null" class="ui  segment">
+    <form  [formGroup]="cmtForm" >
         <div class="ui big fluid icon input">
             <input class="comment_input" placeholder="Leave your comment..." type="text" formControlName="cmt">
 

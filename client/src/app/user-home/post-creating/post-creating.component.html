@@ -1,4 +1,21 @@
-<div id="main_panel" class="ui raised segments">
+<div class="ui basic modal">
+    <div class="ui icon header">
+      <i class="checkmark icon"></i>
+      Successfully post!!!
+    </div>
+    <div class="actions">
+      <div class="ui red basic cancel inverted button">
+        <i class="remove icon"></i>
+        Stay
+      </div>
+      <div (click)="onNavigatePost()" class="ui green ok inverted button">
+        <i class="checkmark icon"></i>
+        View
+      </div>
+    </div>
+  </div>
+<div id="main_panel" class="ui raised segment">
+  <p></p>
   <div class="header_segment">
     <h3>Create post</h3>
   </div>
@@ -83,8 +100,8 @@
       </div>
       <div class="field btn_field">
         <div class="two ui buttons">
-          <button (click)="onNext()" class="ui  right floated default button btn_submit" type="submit">Back</button>
-          <button (click)="onSubmit()" class="ui right floated green button back_btn">Submit</button>
+          <button (click)="onBack()" class="ui  right floated default button btn_submit" type="submit">Back</button>
+          <button *ngIf="!loaded" [disabled]="invalidForm|async" (click)="onSubmit()" class="ui right floated green button back_btn">Submit</button>
         </div>
       </div>
     </div>

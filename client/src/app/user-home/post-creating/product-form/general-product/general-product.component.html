@@ -24,46 +24,44 @@
     <div class="two fields">
       <div class="field">
         <label>Cost</label>
-        <input type="number" placeholder="Product cost..." formControlName="cost">
-      </div>
-      <div class="field">
-        <label>Currency</label>
-        <div class="ui fluid compact selection dropdown currency_dropdown">
-          <i class="dropdown icon"></i>
-          <div class="text">USD</div>
-          <div class="menu">
-            <div (click)="onCurrencySelect(c.ellipsis)" *ngFor="let c of CUR" class="item">{{c.ellipsis | uppercase}}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="two fields">
-        <div class="field">
-            <label>Payment method</label>
-            <div class="ui fluid compact selection dropdown payment_dropdown">
-              <i class="dropdown icon"></i>
-              <div class="text">Direct dealing</div>
-              <div class="menu">
-                <div (click)="onPayMethodSelect('Direct dealing')" class="item">Direct dealing</div>
-                <div (click)="onPayMethodSelect('Bank transfer')" class="item">Bank transfer</div>
-                <div (click)="onPayMethodSelect('Via VISA/MASTERCARD')" class="item">Via VISA/MASTERCARD</div>
+        <div class="ui right action  input">
+          <input formControlName="cost" type="number">
+          <div class="ui basic floating dropdown button currency_dropdown">
+            <div class="text">Currency</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div *ngFor="let c of CUR" class="item" (click)="onCurrencySelect(c.ellipsis)">
+                {{c.ellipsis | uppercase}}
               </div>
             </div>
           </div>
-          <div class="field">
-            <label>Guarantee available</label>
-            <select class="ui dropdown guarantee_dropdown">
-              <option value="false">
-                False
-                <i class="red remove icon"></i>
-              </option>
-              <option value="true">
-                True
-                <i class="green checkmark icon"></i>
-              </option>
-    
-            </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Payment method</label>
+        <div class="ui fluid compact selection dropdown payment_dropdown">
+          <i class="dropdown icon"></i>
+          <div class="text">Direct dealing</div>
+          <div class="menu">
+            <div (click)="onPayMethodSelect('Direct dealing')" class="item">Direct dealing</div>
+            <div (click)="onPayMethodSelect('Bank transfer')" class="item">Bank transfer</div>
+            <div (click)="onPayMethodSelect('Via VISA/MASTERCARD')" class="item">Via VISA/MASTERCARD</div>
           </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Guarantee available</label>
+        <select class="ui dropdown guarantee_dropdown">
+          <option value="false">
+            False
+            <i class="red remove icon"></i>
+          </option>
+          <option value="true">
+            True
+            <i class="green checkmark icon"></i>
+          </option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="field">

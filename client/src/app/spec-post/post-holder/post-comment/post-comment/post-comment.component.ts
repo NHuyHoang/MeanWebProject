@@ -9,7 +9,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {
   UserService,
   DateTimeFormatService,
-  SignInManageService,
   PostService
  } from '../../../../shared-service/shared-service';
 
@@ -38,13 +37,15 @@ export class PostCommentComponent implements OnInit, OnChanges {
     @Inject(PostService) private postSV){
     
     this.signInUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.replyForm = formBuilder.group({                                      //create a reply form
-      '_postid':atvRoute.snapshot.params['_id'],
-      '_cmtid':'',
-      'usercmt':this.signInUser._id,
-      'date':'',
-      'cmt':['',Validators.required]
-    })
+    if(this.signInUser !== null){
+      this.replyForm = formBuilder.group({                                      //create a reply form
+        '_postid':atvRoute.snapshot.params['_id'],
+        '_cmtid':'',
+        'usercmt':this.signInUser._id,
+        'date':'',
+        'cmt':['',Validators.required]
+      })
+    }
   }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class PostCommentComponent implements OnInit, OnChanges {
   
   //submit reply
   onSubmitReply(){
-    if(this.replyForm.invalid || this.signInUser._id === undefined) {
+    if(this.replyForm.invalid || this.signInUser._id === null) {
       alert("Please login for comment or reply another user");
       return
     };

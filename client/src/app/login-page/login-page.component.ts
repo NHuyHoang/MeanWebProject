@@ -68,6 +68,9 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
             else {
               this.user = new User(data._id, data.email, data.name, data.point, data.img);
               this.loginservice.onEmitSigninUser(this.user);
+              if(JSON.parse(localStorage.getItem('currentUser')) === null){
+                  localStorage.setItem('currentUser',JSON.stringify(this.user));
+              }
               this.router.navigate(['user']);
             }
           })

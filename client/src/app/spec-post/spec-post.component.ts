@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { Router } from '@angular/router'
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
-import { PostService, SignInManageService} from '../shared-service/shared-service';
+import { PostService} from '../shared-service/shared-service';
 declare let $:any
 
 @Component({
@@ -18,7 +18,8 @@ export class SpecPostComponent implements OnInit {
   private postId;
   constructor(
     @Inject(ActivatedRoute)private atvRoute,
-    @Inject(PostService) private postservice) 
+    @Inject(PostService) private postservice,
+    @Inject(Router) private router) 
     {
     window.scrollTo(0,0);                                           //scroll to top of the page 
     this.postId = atvRoute.snapshot.params['_id'];                  //get the post id from url
@@ -36,6 +37,10 @@ export class SpecPostComponent implements OnInit {
       });
     })
    }
+
+   onNavigateUserHome(){
+    this.router.navigate(['visit',this.user._id]);
+  }
 
   ngOnInit() {
 

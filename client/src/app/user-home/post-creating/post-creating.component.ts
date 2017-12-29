@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AreaService, GLOBAL_VAR } from '../../shared-service/shared-service';
+import { AreaService, GLOBAL_VAR, PostService } from '../../shared-service/shared-service';
 import { SpecProductService } from './product-form/specific-product/spec-product.service';
 import { AfterViewChecked } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormBuilder } from '@angular/forms';
 import { Post } from '../../../models/Posts';
+import { BehaviorSubject } from 'rxjs';
 declare var $: any;
 
 
@@ -20,14 +21,18 @@ export class PostCreatingComponent implements OnInit, AfterViewInit, AfterViewCh
   private products = [];
   private category = [];
   private productForm;
-  private productValue = {};
   private postForm;
   private categorySelect = [];
+  private invalidForm = new BehaviorSubject<boolean>(false);
+  private loaded = false
+  private postUrl;
+
   constructor(
     private router: Router,
     @Inject(AreaService) private areaSV,
     @Inject(SpecProductService) private specProductSv,
-    @Inject(FormBuilder) private formBuilder) {
+    @Inject(FormBuilder) private formBuilder,
+    @Inject(PostService) private postSv) {
     let user = JSON.parse(localStorage.getItem('currentUser'));
     this.postForm = formBuilder.group({
       'title': [],
@@ -37,7 +42,9 @@ export class PostCreatingComponent implements OnInit, AfterViewInit, AfterViewCh
     this.areaSV.getAllAreas().subscribe(data => {
       this.areas = data;
     })
-
+    $('.ui.basic.modal')
+      .modal('show')
+      ;
   }
 
   ngOnInit() {
@@ -50,6 +57,7 @@ export class PostCreatingComponent implements OnInit, AfterViewInit, AfterViewCh
 
   ngAfterViewInit() {
     $('.ui.dropdown').dropdown();
+    
     //this.specProductSv.getProductForm();
 
   }
@@ -59,59 +67,32 @@ export class PostCreatingComponent implements OnInit, AfterViewInit, AfterViewCh
       this.productForm = this.specProductSv.getProductForm();
     }
 
-    for (let k in this.productForm) {
+    for (let key in this.productForm) {
 
-      this.productForm[k].valueChanges.subscribe(value => {
-        this.productValue[k] = value;
-      });
+      this.productForm[key]
+        .statusChanges.subscribe(status => {
+          if (status == "INVALID")
+            this.invalidForm.next(true);
+          else this.invalidForm.next(false);
+        })
     }
+  }
 
+  onCheckValidPost() {
+    for (let key in this.productForm) {
+      if (this.productForm[key].controls['generalInfo'].invalid)
+        return false;
+    }
+    return true
   }
 
   onNext() {
-    //get type of product
-    let cateId = $('#category_selection').dropdown('get value');
-    if (cateId.length == 0) {
-      this.category = [];
-      this.productValue = {};
-    }
-    else if (cateId.length <= this.category.length) {
-      let pos = 0;
-      this.category.forEach((item, index, object) => {
-        if (cateId.indexOf(item._id) == -1) {
-          object.splice(index, 1);
-        }
-        console.log(item);
-        delete this.productValue[item._id];
-      })
-    }
-    cateId.forEach(id => {
-      let type;
-      let hadId = false;
-      this.category.forEach(element => {
-        if (element._id === id) {
-          hadId = true;
-          return;
-        }
-      })
-      if (!hadId) {
-        this.products.forEach(product => {
-          if (product._id == id) {
-            type = product.type;
-            return;
-          }
-        })
-        let obj = {
-          _id: id,
-          type: type,
-          active: false
-        }
-        this.category.push(obj);
-      }
-    })
-    if (this.category[0] !== undefined)
-      //this.category[0].active = true;
-      this.onToggleTab(this.category[0]._id);
+    this.onConfigCategory();
+    this.next = !this.next;
+    window.scrollTo(0, 0);
+  }
+
+  onBack() {
     this.next = !this.next;
     window.scrollTo(0, 0);
   }
@@ -152,34 +133,108 @@ export class PostCreatingComponent implements OnInit, AfterViewInit, AfterViewCh
   }
 
   onSubmit() {
-    console.log(this.productValue);
     let post = this.postForm.value;
-    post.product = this.onFormatPost(this.productValue);
+    let productValue = {};
+    for (let key in this.productForm) {
+      productValue[key] = this.productForm[key].value;
+    }
+    post.product = this.onFormatPost(productValue);
     post.date = new Date();
     post.vipexpire = post.date;
     post.comment = [];
     post.approval = false;
     post.available = false;
-    //console.log(post);
+    console.log(JSON.stringify(post));
+    this.postSv.save(post).subscribe(result => {
+      if (result) this.loaded = true;
+      this.postUrl = `post/${result._id}`;
+      $('.ui.basic.modal')
+      .modal('show')
+      ;
+    });
+  }
+
+  onNavigatePost(){
+    this.router.navigate([this.postUrl]);
   }
 
   onFormatPost(productArr: any) {
+    //format product
     let product = [];
+    //foreach product
     for (let key in productArr) {
       let obj = {};
-        obj['_type'] = key;
-        for (let k in productArr[key].generalInfo) {
-          let p = productArr[key].generalInfo;
+      //add general and specific information to the product
+      for (let k in productArr[key].generalInfo) {
+        let p = productArr[key].generalInfo;
+        obj[k] = p[k];
+      }
+      //estate's specific information is different from another product
+      if (key == "est") {
+        let p = productArr[key].specificInfo;
+        for (let k in p) {
+          if (k == "salecontract" || k == "leasecontract") {
+            if (this.productForm['est'].controls['specificInfo'].controls[k].invalid)
+              continue;
+          }
           obj[k] = p[k];
         }
+      }
+      else {
+        obj['_type'] = key;
         for (let k in productArr[key].specificInfo) {
           let p = productArr[key].specificInfo;
           obj[k] = p[k];
         }
-    
+      }
       product.push(obj);
     }
     return product;
+  }
+
+  onConfigCategory() {
+    //prepare form of product before click next step
+    let cateId = $('#category_selection').dropdown('get value');
+    if (cateId.length == 0) {
+      this.category = [];
+      return;
+    }
+    let save = [];
+    let temp = []
+    this.category.forEach((item, index, object) => {
+      if (cateId.indexOf(item._id) == -1) {
+        //delete this.productValue[item._id];
+      }
+      else {
+        save.push(item._id);
+        temp.push(item);
+      }
+    })
+    this.category = temp;
+    cateId.forEach(id => {
+      if (save.indexOf(id) == -1) {
+        let obj = {
+          _id: id,
+          type: this.getProductType(id),
+          active: false
+        }
+        this.category.push(obj);
+      }
+
+    })
+    if (this.category[0] !== undefined)
+      this.onToggleTab(this.category[0]._id);
+  }
+
+  getProductType(id) {
+    let value;
+    this.products.forEach(item => {
+      if (item._id == id) {
+        value = item.type;
+        return;
+      }
+    })
+    return value;
   }
 
 }

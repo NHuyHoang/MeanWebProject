@@ -18,7 +18,6 @@ module.exports = {
 			.then(data => data)
 			.catch(reject => reject)
 	},
-
 	getById: (id) => {
 		return Post.findOne({ _id: id })
 			.populate(['userpost', 'comment.usercmt'])
@@ -295,7 +294,6 @@ module.exports = {
 					break;
 			}
 		}
-		console.log(objFilter.product);
 		objFilter.approval = true;
 		objFilter.available = true;
 		let promise1 = Post.find(objFilter)
@@ -319,7 +317,19 @@ module.exports = {
 		return Post.find({userpost:id}).count().then(data => {
 			return {count:data};
 		});
-	}
+	},
+	
+	adminGetAll: (filter) => {
+		let objFilter = {};
+		if(filter.approval !== undefined)
+			objFilter.approval = filter.approval;
+		return Post.find(objFilter,{comment:0})
+			.populate(['userpost'])
+			.sort({ "date":-1 }).limit(20).skip(filter.skip)
+			.then(data => data)
+			.catch(reject => reject)
+	},
+
 }
 
 function exchangeCurrency() {
@@ -350,8 +360,3 @@ function convertToUSD(currency, amount) {
 	return amount / ex;
 }
 
-/* function getVipPost(filter){
-	let d = new Date();
-	filter.vipexpire = {"$gte":ISODate(d.toISOString)};
-	return Post.find(filter);
-} */

@@ -1,0 +1,24 @@
+<div class="ui  visible sidebar vertical menu">
+  <div class="sidebar_content">
+    <a class="item"
+      [routerLink]="['user']"
+      routerLinkActive="active" 
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      Manage account
+    </a>
+    <a class="item"
+      [routerLink]="['post']"
+      routerLinkActive="active" 
+      [routerLinkActiveOptions]="{exact: true}"
+    >
+      Manage user's post
+    </a>
+
+  </div>
+  <div class="pusher">
+  </div>
+</div>
+<div id="main_panel">
+  <router-outlet></router-outlet>
+</div>

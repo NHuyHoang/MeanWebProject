@@ -6,7 +6,7 @@ import { GLOBAL_VAR } from './shared-variable';
 export class GdriveService {
   private body = new URLSearchParams();
   private header = new Headers();
-  private REMOVE_FILE_URL = `${GLOBAL_VAR.APP_URL_PREFIX}google/drive/remove`;
+  private REMOVE_FILE_URL = `google/drive/remove`;
 
   constructor(@Inject(Http) private http) { }
 

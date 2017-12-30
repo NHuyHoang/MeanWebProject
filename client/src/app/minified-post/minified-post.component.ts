@@ -112,6 +112,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   }
   //navigate to the specific post
   onPostRedirect() {
+    console.log(this.post._id);
     this.router.navigate(['/post', this.post._id]);
   }
 
@@ -142,4 +143,6 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   onNavigateUserHome(){
     this.router.navigate(['visit',this.post.userpost._id]);
   }
+
+ 
 }

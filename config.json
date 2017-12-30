@@ -1,0 +1,4 @@
+{
+    "db":"mongodb://localhost:27017/meanWebDB_1",
+    "secret":"tieuluanchuyennganh"
+}

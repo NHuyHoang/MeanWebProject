@@ -1,12 +1,12 @@
 import { Inject } from '@angular/core';
-import { Http,URLSearchParams,Headers } from '@angular/http';
+import { Http,URLSearchParams, RequestOptions, Headers } from '@angular/http';
 
 import { Post } from '../../models/Posts';
 import { Comment } from '../../models/Comments';
 import { GLOBAL_VAR } from './shared-variable'
 import { Response } from '@angular/http/src/static_response';
 export class PostService {
-  private URL_PREFIX = `${GLOBAL_VAR.APP_URL_PREFIX}post/`;
+  private URL_PREFIX = `post/`;
   private USER_POST_URL = `${this.URL_PREFIX}getbyuserid`;
   private PUT_COMMENT_URL = `${this.URL_PREFIX}pushcmt`;
   private PUT_REPLY_URL = `${this.URL_PREFIX}pushrep`;
@@ -16,12 +16,11 @@ export class PostService {
   private GET_WITH_FILTER_URL = `${this.URL_PREFIX}getwithfilter`;
   private GET_POST_COUNT_URL = `${this.URL_PREFIX}getpostcount`;
   private SAVE_POST = `${this.URL_PREFIX}save`;
-  private header = new Headers();
 
+  private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' })});
   private body = new URLSearchParams();
 
   constructor(@Inject(Http) private http) { 
-    this.header.append('Content-Type', 'application/x-www-form-urlencoded');
   }
   //format post array
   formatPostList(list:any[]):Post[]{
@@ -50,43 +49,34 @@ export class PostService {
   getUserPost(id:string,skip:string){
     this.body.set('id',id);
     this.body.set('skip',skip);
-    return this.http.post(this.USER_POST_URL,this.body,{
-      headers:this.header
-    }).map(
+    
+    return this.http.post(this.USER_POST_URL,this.body).map(
       (res:Response) => res.json()
     )
   }
   //get post by id
   getById(id:string){
     this.body.set('id',id);
-    return this.http.post(this.GET_BY_ID_URL,this.body,{
-      headers:this.header
-    }).map(
+    return this.http.post(this.GET_BY_ID_URL,this.body).map(
       (res:Response) => res.json()
     )
   }
   //get all posts
   getAll(skip:number){
     this.body.set('skip',skip.toString());
-    return this.http.post(this.GET_ALL,this.body,{
-      headers:this.header
-    }).map(
+    return this.http.post(this.GET_ALL,this.body).map(
       (res:Response) => res.json()
     )
   }
   //save comment
   pushCmt(cmt:any){
-    return this.http.put(this.PUT_COMMENT_URL, JSON.stringify(cmt),{
-      headers:{'Content-Type': 'application/json'}
-    }).map(
+    return this.http.post(this.PUT_COMMENT_URL, JSON.stringify(cmt),this.options).map(
       (res:Response) => res.json()
     )
   }
   //save the reply in post
   pushRep(rep:any){
-    return this.http.put(this.PUT_REPLY_URL, JSON.stringify(rep),{
-      headers:{'Content-Type': 'application/json'}
-    }).map(
+    return this.http.post(this.PUT_REPLY_URL, JSON.stringify(rep),this.options).map(
       (res:Response) => res.json()
     )
   }
@@ -97,27 +87,20 @@ export class PostService {
   }
 
   getWithFilter(filter:any){
-    return this.http.post(this.GET_WITH_FILTER_URL, JSON.stringify(filter),{
-      headers:{'Content-Type': 'application/json'}
-    }).map(
+    return this.http.post(this.GET_WITH_FILTER_URL, JSON.stringify(filter),this.options).map(
       (res:Response) => res.json()
     )
   }
 
   getPostCount(id){
     this.body.set('id',id);
-    console.log(id);
-    return this.http.post(this.GET_POST_COUNT_URL,this.body,{
-      headers:this.header
-    }).map(
+    return this.http.post(this.GET_POST_COUNT_URL).map(
       (res:Response) => res.json()
     )
   }
 
   save(post){
-    return this.http.post(this.SAVE_POST,JSON.stringify(post),{
-      headers:{'Content-Type': 'application/json'}
-    }).map(
+    return this.http.post(this.SAVE_POST,JSON.stringify(post),this.options).map(
       (res:Response) => res.json()
     )
   }

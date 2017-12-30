@@ -10,25 +10,7 @@ export class InterceptedHttp extends Http{
         super(backend, defaultOptions);
     }
  
-    /* get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.get(GLOBAL_VAR.APP_URL_PREFIX + url, this.addJwt(options)).catch(this.handleError);
-    }
- 
-    post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.post(GLOBAL_VAR.APP_URL_PREFIX + url, body, this.addJwt(options)).catch(this.handleError);
-    }
- 
-    put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.put(GLOBAL_VAR.APP_URL_PREFIX + url, body, this.addJwt(options)).catch(this.handleError);
-    }
- 
-    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.delete(GLOBAL_VAR.APP_URL_PREFIX + url, this.addJwt(options)).catch(this.handleError);
-    } */
- 
-    // private helper methods
- 
-    /* private addJwt(options?: RequestOptionsArgs): RequestOptionsArgs {
+    private addJwt(options?: RequestOptionsArgs): RequestOptionsArgs {
         // ensure request options and headers are not null
         options = options || new RequestOptions();
         options.headers = options.headers || new Headers();
@@ -36,26 +18,26 @@ export class InterceptedHttp extends Http{
         // add authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
-            options.headers.append('Authorization', 'Bearer ' + currentUser.token);
+            options.headers.set('Authorization', 'Bearer ' + currentUser.token);
         }
  
         return options;
-    } */
+    }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.get(GLOBAL_VAR.APP_URL_PREFIX + url);
+        return super.get(GLOBAL_VAR.APP_URL_PREFIX + url,this.addJwt(options));
     }
  
-    post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.post(GLOBAL_VAR.APP_URL_PREFIX + url, body);
+    post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        return super.post(GLOBAL_VAR.APP_URL_PREFIX + url, body, this.addJwt(options));
     }
  
-    put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.put(GLOBAL_VAR.APP_URL_PREFIX + url, body);
+    put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        return super.put(GLOBAL_VAR.APP_URL_PREFIX + url, body,this.addJwt(options));
     }
  
     delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return super.delete(GLOBAL_VAR.APP_URL_PREFIX + url);
+        return super.delete(GLOBAL_VAR.APP_URL_PREFIX + url,this.addJwt(options));
     }
  
     private handleError(error: any) {
@@ -72,7 +54,7 @@ export function InterceptedHttpFactory(xhrBackend: XHRBackend, requestOptions: R
     return new InterceptedHttp(xhrBackend, requestOptions);
 }
  
-export let customHttpProvider = {
+export let InterceptedHttpProvider = {
     provide: Http,
     useFactory: InterceptedHttpFactory,
     deps: [XHRBackend, RequestOptions]

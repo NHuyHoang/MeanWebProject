@@ -42,7 +42,7 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
   ) {
     this.loginForm = formbuilder.group({
       'email': ['bluegasus@gmail.com'],
-      'pass': ['ip_jQZJ8qGXUNBa', this.customValidator(this.PASS_REGEX).bind(this)]
+      'pass': ['Huyhoang3562927@', this.customValidator(this.PASS_REGEX).bind(this)]
     })
   }
 
@@ -66,12 +66,14 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
               this.failMess = true;
             }
             else {
-              this.user = new User(data._id, data.email, data.name, data.point, data.img);
+              this.user = new User(data._id, data.email, data.name, data.point, data.img,data.token);
               this.loginservice.onEmitSigninUser(this.user);
               if(JSON.parse(localStorage.getItem('currentUser')) === null){
                   localStorage.setItem('currentUser',JSON.stringify(this.user));
               }
-              this.router.navigate(['user']);
+              if(data.admin && data.admin === true)
+                this.router.navigate(['private'])
+              else this.router.navigate(['user']);
             }
           })
 

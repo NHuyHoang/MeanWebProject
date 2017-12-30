@@ -1,5 +1,7 @@
 const UsersService = require('../services/UsersService');
-
+const _ = require("lodash");
+const config = require("../config.json");
+let jwt = require("jsonwebtoken");
 module.exports = {
 	getAll:(req, res) => {
 		UsersService.getAll().then((data) => {
@@ -15,8 +17,15 @@ module.exports = {
 	getByEmailPass:(req,res) => {
 		if(!req.body.email || !req.body.pass) res.json({message:"invalid email or pass"});
 		else UsersService.getByEmailPass(req.body.email,req.body.pass).then((data) => {
-			if(!data) res.send({message:'Not found'});
-			else res.send(data);
+			if(!data || data.message === "not found") res.send({message:'not found'});
+			if(data.admin && data.admin === true){
+				data.token = jwt.sign({ sub: data._id,admin: true }, config.secret);
+				res.send(_.omit(data,["pass"]));
+			}
+			else {
+				data.token = jwt.sign({ sub: data._id }, config.secret)
+				res.send(_.omit(data,"pass"));
+			};
 		})
 	},
 	getById:(req,res) => {

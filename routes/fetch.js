@@ -24,8 +24,8 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getbyarea`,PostsController.getByArea)
 	  .post(`${prefix}getbyuserid`,PostsController.getByUserId)
 	  .post(`${prefix}update`,PostsController.update)
-	  .put(`${prefix}pushcmt`,PostsController.pushComment)
-	  .put(`${prefix}pushrep`,PostsController.pushReply)
+	  .post(`${prefix}pushcmt`,PostsController.pushComment)
+	  .post(`${prefix}pushrep`,PostsController.pushReply)
 	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost)
 	  .post(`${prefix}getwithfilter`,PostsController.getWithFilter)
 	  .post(`${prefix}getvippost`,PostsController.getVipPost)
@@ -42,5 +42,8 @@ router.post(`${prefix}getbyid`,CatesController.getById);
 prefix = '/google/';
 router.post(`${prefix}drive/upload`,GApiController.GUpload)
 router.post(`${prefix}drive/remove`,GApiController.GFileRemove);
+//private
+prefix = '/private/';
+router.post(`${prefix}post/getall`,PostsController.adminGetAll);
 
 module.exports = router;

@@ -8,7 +8,7 @@ import { GLOBAL_VAR } from '../shared-service/shared-variable'
 
 @Injectable()
 export class LoginPageService {
-  private USER_VALIDATE_URL = `${GLOBAL_VAR.APP_URL_PREFIX}user/getbyemailpass`;
+  private USER_VALIDATE_URL = `user/getbyemailpass`;
   private user = new User();
   private body = new URLSearchParams();
   private header = new Headers();

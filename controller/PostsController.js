@@ -1,5 +1,6 @@
 const PostsService = require('../services/PostsService');
 const _ = require('lodash');
+const adVerify = require('./AdminVerify');
 
 module.exports = {
 	getAll: (req, res) => {
@@ -116,6 +117,18 @@ module.exports = {
 			PostsService.save(req.body).then(result => {
 				res.send({ _id:result._id });
 			})
+		}
+	},
+	adminGetAll:(req,res)=>{
+		if(!req.body) res.send({message:"invalid request"});
+		else{
+			adVerify.verify(req)
+				.then(result => {
+						PostsService.adminGetAll(req.body).then(data => {
+							res.send(data);
+						})
+					
+				}).catch(err => res.sendStatus(404).send('Unauthorized'));
 		}
 	}
 

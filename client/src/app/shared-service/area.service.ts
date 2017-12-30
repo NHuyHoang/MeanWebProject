@@ -6,19 +6,17 @@ import { GLOBAL_VAR } from './shared-variable';
 
 @Injectable()
 export class AreaService {
-  private GET_CHILD_AREA_URL = `${GLOBAL_VAR.APP_URL_PREFIX}area/getchildarea`;
-  private GET_ALL_AREA_URL = `${GLOBAL_VAR.APP_URL_PREFIX}area/getall`;
+  private GET_CHILD_AREA_URL = `area/getchildarea`;
+  private GET_ALL_AREA_URL = `area/getall`;
   private body = new URLSearchParams();
-  private header = new Headers();
+  
   constructor(@Inject(Http) private http) {
-    this.header.append('Content-Type', 'application/x-www-form-urlencoded');
    }
 
   getChildArea(id:string){
-    this.body.set('id',id);
-    return this.http.post(this.GET_CHILD_AREA_URL,this.body,{
-      Headers:this.header
-    }).map(
+    this.body.append('id',id);
+    
+    return this.http.post(this.GET_CHILD_AREA_URL,this.body).map(
       (res:Response) => res.json()
     )
   }

@@ -1,0 +1,28 @@
+.main_panel{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.ui.celled.table tr th:last-child{
+    border-right:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+
+.ui.celled.table tr th:first-child{
+    border-left:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+
+.ui.table tfoot tr:first-child > th:last-child, .ui.table tfoot tr:first-child > th:first-child{
+    border-bottom:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+
+.ui.modal{
+ top:20%!important;
+}
+
+
+.btn_holder{
+    position:relative;
+    width:100%;
+    text-align: left;
+}

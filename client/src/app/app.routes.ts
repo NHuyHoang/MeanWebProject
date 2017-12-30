@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { UserHomeRoutes } from './user-home/user-home.route'
 import { VisitUserComponent } from './visit-user/visit-user.component';
 import { LoginGuard } from './shared-service/login.guard';
+import { AdminComponent } from './admin/admin.component';
+import { PrivateRoutes } from './admin/private.routes'
 
 const ROUTES:Routes = [
     {path:"", component:MainPageComponent},
@@ -16,7 +18,9 @@ const ROUTES:Routes = [
     {path:"post/:_id", component:SpecPostComponent},
     {path:"post", component:PostComponent},
     {path:"visit/:id", component:VisitUserComponent},
-    {path: '**', component: MainPageComponent }
+    {path:'private',component:AdminComponent,children:PrivateRoutes},
+    {path: '**', component: MainPageComponent },
+
 ]
 
 export const APP_ROUTING = RouterModule.forRoot(ROUTES);

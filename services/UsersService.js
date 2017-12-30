@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/users');
+const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
 	//get all user
@@ -17,10 +19,13 @@ module.exports = {
 		})
 	},
 	getByEmailPass: (email,pass) => {
-		return User.findOne({email:email,pass:pass},(err, data) =>{
-			if(err) throw err;
-			return data;
+		return User.findOne({email:email}).lean().then(user => {
+			if(!user) return user;
+			if(bcrypt.compareSync(pass,user.pass))
+				return user;
+			else return {message:"not found"}
 		})
+		//return User.findOne({email:email,pass:pass}).lean();
 	},
 	//find user by id
 	getById: (id) => {

@@ -1,0 +1,19 @@
+.sidebar_content{
+    margin-top:100px;
+    text-align: left!important;
+}
+a{
+    font-size:15px;
+}
+#main_panel{
+    width:calc(100% - 15rem);
+    height: auto;  
+    position: relative;
+    margin-top: 80px;
+    margin-left: 15rem;
+    margin-right: auto;
+    z-index: 102;
+}
+
+
+

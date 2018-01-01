@@ -14,11 +14,13 @@ import { VisitUserModule } from './visit-user/visit-user.module';
 import { LoginGuard } from './shared-service/login.guard';
 import { LoginPageService } from './login-page/login-page.service';
 import { AdminModule } from './admin/admin.module';
-
+import { AdminGuard } from './admin/admin.guard';
+import { OauthComponent } from './oauth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    OauthComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ import { AdminModule } from './admin/admin.module';
     VisitUserModule,
     AdminModule
   ],
-  providers: [Title, DateTimeFormatService, LoginGuard, LoginPageService, InterceptedHttpProvider],
+  providers: [Title, DateTimeFormatService, LoginGuard, AdminGuard, LoginPageService, InterceptedHttpProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

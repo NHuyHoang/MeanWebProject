@@ -2,11 +2,22 @@ const UsersService = require('../services/UsersService');
 const _ = require("lodash");
 const config = require("../config.json");
 let jwt = require("jsonwebtoken");
+const adVerify = require('./AdminVerify')
+
 module.exports = {
 	getAll:(req, res) => {
-		UsersService.getAll().then((data) => {
-			res.send(data);
-		})
+		if(!req.body) res.send({message:"invalid request"})
+		adVerify.verify(req)
+			.then(() => {
+				UsersService.getAll(req.body.skip).then((data) => {
+					
+					res.send(data);
+				})
+			})
+			.catch(() => res.sendStatus(404).send("Unauthorized"));
+	},
+	countUser:(req,res) =>{
+		return UsersService.countUser().then(count => res.send({count:count}));
 	},
 	getByEmail:(req, res) => {
 		if(!req.body.email) res.json({message:"invalid email"});
@@ -56,5 +67,17 @@ module.exports = {
 		else UsersService.remove(id).then((data) => {
 			res.send(data);
 		})
+	},
+	verify:(req,res) => {
+		adVerify.verify(req)
+			.then(() => res.send({admin:true}))
+			.catch(() => res.send({admin:false}));
+	},
+	oauth:(req,res) =>{
+		let p = new Promise((resolve,reject)=>{
+			if(req.user !== undefined)
+				resolve(req.user);
+		})
+		p.then(user => res.send(user));
 	}
 }

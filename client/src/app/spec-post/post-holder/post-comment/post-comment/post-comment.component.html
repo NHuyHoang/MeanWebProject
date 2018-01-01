@@ -21,8 +21,8 @@
                     </a>
                 </div>
             </div>
-            <div class="comment_reply collapse" [id]="comment._id" [ngClass]="{'show':this.collapsed}">
-                <div *ngFor="let rep of reply" id="comments">
+            <div  class="comment_reply collapse" [id]="comment._id" [ngClass]="{'show':this.collapsed}">
+                <div *ngFor="let rep of replySub | async" id="comments">
                     <div class="comment_item">
                         <div class="comment_ava">
                             <img (click)="onNavigateUserHome(rep?.usercmt._id)" id="avatar" [src]="rep?.usercmt.img">

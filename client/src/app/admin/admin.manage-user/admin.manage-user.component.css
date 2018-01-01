@@ -1,0 +1,16 @@
+.ui.celled.table tr th:last-child{
+    border-right:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+
+.ui.celled.table tr th:first-child{
+    border-left:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+
+.ui.table tfoot tr:first-child > th:last-child, .ui.table tfoot tr:first-child > th:first-child{
+    border-bottom:1px solid rgba(34, 36, 38, 0.1)!important;
+}
+.main_panel{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+}

@@ -11,6 +11,8 @@ import {
   DateTimeFormatService,
   PostService
  } from '../../../../shared-service/shared-service';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -27,6 +29,8 @@ export class PostCommentComponent implements OnInit, OnChanges {
   private dateComment = {date:"",time:""};
   private signInUser;
   private collapsed = false;
+  private replySub = new Subject<any[]>();
+  private done = false;
   constructor(
     @Inject(UserService) private userSV,
     @Inject(DateTimeFormatService) private datetimeformatSV,
@@ -60,17 +64,26 @@ export class PostCommentComponent implements OnInit, OnChanges {
       this.user = this.comment.usercmt;
       this.reply = [];
       if(this.comment.reply !== undefined){
-        this.reply = this.comment.reply;
-        this.reply.forEach(element => {
+        //this.reply = this.comment.reply;
+        console.log(this.reply);
+
+        this.onGetUserReply(this.comment.reply)
+          .then((result:any[]) => {
+            this.reply = result;
+            this.replySub.next(result);
+            this.done = true;
+          })
+
+        /* this.reply.forEach((element,index,obj) => {
           let date = this.datetimeformatSV.formatDate(element.date);                  //format date time reply
           let time = element.date.getHours().toString()
                      + "h" + element.date.getMinutes().toString();
-          element.date = `${time} ${date}`;                                           
+          obj[index].date = `${time} ${date}`;                                           
           this.userSV.getUserInfo(element.usercmt).subscribe(                        //get the user reply info
             user =>{
-              element.usercmt = user;
+              obj[index].usercmt = user;
             })
-        })
+        }) */
       }
       this.replyForm.patchValue({
         '_cmtid':this.comment._id
@@ -108,5 +121,26 @@ export class PostCommentComponent implements OnInit, OnChanges {
   }
   onNavigateUserHome(id){
     this.router.navigate(['visit',id])
+  }
+
+  onGetUserReply(repArr){
+    let result = [];
+    return new Promise((resolve,reject)=>{
+      repArr.forEach(element => {
+        let date = this.datetimeformatSV.formatDate(element.date);                  //format date time reply
+        let time = element.date.getHours().toString()
+                   + "h" + element.date.getMinutes().toString();
+        element.date = `${time} ${date}`;    
+        console.log(element.usercmt);                                       
+        this.userSV.getUserInfo(element.usercmt).subscribe(                        //get the user reply info
+          user =>{
+            element.usercmt = user;
+            console.log(element.usercmt._id+ "|"+user._id);
+            result.push(element);
+            if(result.length == repArr.length)
+              resolve(result);
+          })
+      })
+    })
   }
 }

@@ -6,15 +6,36 @@ const AreasController = require('../controller/AreasController');
 const CatesController = require('../controller/CatesController');
 const UploadController = require('../controller/UploadController');
 const GApiController = require('../controller/GoogleApiController');
+const passport = require('passport');
+GApiController.passportInit();
+
+const expressJwt = require('express-jwt');
+
+const config = require('../config.json');
+function jwtExpress(){
+	return expressJwt({
+		secret: config.secret,
+		getToken: function (req) {
+			if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+				//console.log(req.headers.authorization.split(' ')[1]);	
+				return req.headers.authorization.split(' ')[1];
+			}
+			return null;
+		}
+	})
+}
 //User
 let prefix = '/user/';
 router.post(`${prefix}`, UsersController.getById)
-	  .delete(`${prefix}remove`, UsersController.remove)
-	  .get(`${prefix}getall`, UsersController.getAll)
+	  .delete(`${prefix}remove`,jwtExpress(), UsersController.remove)
+	  .post(`${prefix}getall`,jwtExpress(), UsersController.getAll)
 	  .post(`${prefix}getbyemail`, UsersController.getByEmail)
 	  .post(`${prefix}getbyemailpass`, UsersController.getByEmailPass)
 	  .post(`${prefix}save`, UsersController.save)
-	  .post(`${prefix}update`,UsersController.update);
+	  .post(`${prefix}update`,jwtExpress(),UsersController.update)
+	  .get(`${prefix}verify`,UsersController.verify)
+	  .get(`${prefix}count`,jwtExpress(),UsersController.countUser)
+	  .get(`${prefix}oauth`,UsersController.oauth);
 //post
 prefix = '/post/';
 router.post(`${prefix}getall`,PostsController.getAll)
@@ -24,26 +45,30 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getbyarea`,PostsController.getByArea)
 	  .post(`${prefix}getbyuserid`,PostsController.getByUserId)
 	  .post(`${prefix}update`,PostsController.update)
-	  .post(`${prefix}pushcmt`,PostsController.pushComment)
-	  .post(`${prefix}pushrep`,PostsController.pushReply)
+	  .post(`${prefix}pushcmt`,jwtExpress(),PostsController.pushComment)
+	  .post(`${prefix}pushrep`,jwtExpress(),PostsController.pushReply)
 	  .get(`${prefix}getminmaxcost`,PostsController.getMinMaxCost)
 	  .post(`${prefix}getwithfilter`,PostsController.getWithFilter)
 	  .post(`${prefix}getvippost`,PostsController.getVipPost)
 	  .post(`${prefix}getpostcount`,PostsController.getPostCountByUserId)
-	  .post(`${prefix}save`,PostsController.save);
+	  .post(`${prefix}save`,jwtExpress(),PostsController.save);
 //Area
 prefix = '/area/';
-router.post(`${prefix}getchildarea`,AreasController.getChildArea);
-router.get(`${prefix}getall`,AreasController.getAll);
+router.post(`${prefix}getchildarea`,AreasController.getChildArea)
+	  .get(`${prefix}getall`,AreasController.getAll);
 //Cate
 prefix = '/cate/';
 router.post(`${prefix}getbyid`,CatesController.getById);
 //Upload
 prefix = '/google/';
 router.post(`${prefix}drive/upload`,GApiController.GUpload)
-router.post(`${prefix}drive/remove`,GApiController.GFileRemove);
+	  .post(`${prefix}drive/remove`,GApiController.GFileRemove)
+	  .get(`${prefix}oauth`, passport.authenticate('google', { scope: ['email', 'profile'] }))
+	  .get(`${prefix}oauth/redirect`,passport.authenticate('google'),GApiController.googleAuthenticated);
 //private
 prefix = '/private/';
-router.post(`${prefix}post/getall`,PostsController.adminGetAll);
-
+router.post(`${prefix}post/getall`,jwtExpress(),PostsController.adminGetAll)
+	  .get(`${prefix}post/unapproved-count`,jwtExpress(),PostsController.adminUnapprovedCount)
+	  .post(`${prefix}post/approve`,jwtExpress(),PostsController.adminApprovePost);
 module.exports = router;
+

@@ -34,8 +34,7 @@ const userSchema = new Schema({
 	},
 	pass: {
 		type: String, 
-		required: [true, 'pass is required'],
-		validate:passValidation
+		required: [true, 'pass is required']
 	},
 	img: String,
 	point: Number

@@ -26,7 +26,15 @@ export class LoginPageService {
       headers:this.header
     }).map(
       (res:Response) => res.json()
-    )
+    ) 
+    
+  }
+
+  getUserByGoogle(){
+    return this.http.get('google/oauth')
+      .map(
+        (res:Response) => res.json()
+      )
   }
 
   onEmitSigninUser(user:User){

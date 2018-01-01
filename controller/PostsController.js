@@ -130,6 +130,23 @@ module.exports = {
 					
 				}).catch(err => res.sendStatus(404).send('Unauthorized'));
 		}
+	},
+	adminUnapprovedCount:(req,res)=>{
+		adVerify.verify(req)
+				.then(result => {
+						PostsService.adminUnapprovedCount().then(data => {
+							res.send({count:data});
+						})
+				}).catch(err => res.sendStatus(404).send('Unauthorized'));
+	},
+	adminApprovePost:(req,res)=>{
+		if(!req.body) res.send({message:"invalid request"});
+		adVerify.verify(req)
+				.then(result => {
+						PostsService.adminApprovePost(req.body).then(data => {
+							res.send(data);
+						}).catch(err => res.send(err));
+				}).catch(err => res.sendStatus(404).send('Unauthorized'));
 	}
 
 }

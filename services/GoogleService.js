@@ -2,6 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+var plus = google.plus('v1');
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/drive-nodejs-quickstart.json
@@ -20,13 +21,13 @@ module.exports = {
                 }
                 authorize(JSON.parse(content))
                     .then(oauth => {
-                        resolve(gUpload(oauth,file));
+                        resolve(gUpload(oauth, file));
                     }).catch(err => reject(err));
             });
         })
     },
-    GFileRemove:function(id){
-        return new Promise((resolve, reject)=>{
+    GFileRemove: function (id) {
+        return new Promise((resolve, reject) => {
             fs.readFile(TOKEN_SECRET, function processClientSecrets(err, content) {
                 if (err) {
                     console.log('Error loading client secret file: ' + err);
@@ -34,10 +35,30 @@ module.exports = {
                 }
                 authorize(JSON.parse(content))
                     .then(oauth => {
-                        resolve(gDelete(oauth,id));
+                        resolve(gDelete(oauth, id));
                     }).catch(err => reject(err));
             });
         })
+    },
+    gplus: function () {
+        /* var OAuth2 = google.auth.OAuth2;
+        var oauth2Client = new OAuth2(
+            '350022490200-ddvbbjp4pbtvnbhobcobil8jh1ri141d.apps.googleusercontent.com',
+            'l0IXRjHOp2uNGuGtmQO9e_mF',
+            '/fetch/google/oauth'
+        );
+
+
+        oauth2Client.credentials = {
+            access_token: 'ya29.Gls0BcfDQPMq76l3s4SPTLGKTAavP9qQ3u6eNzPbK1FpquSaRFnPSWHXxzT7-VcrmCwGCKH-UeYQdKrBUAvnqPUZwf7evMsxw0iqhtP5r9Jv5tui2xj37G12DbcV',
+            refresh_token: '1/zNrm73RBLG3cK044BUVyAIQMFbZDt5I45rmJxVP4U7U0EQYW87Meb6op8hU-cj0V'
+          };          
+        plus.people.get({
+            userId: 'me',
+            auth: oauth2Client
+          },function (err, user) {
+            console.log(user);
+          }); */
     }
 }
 // Load client secrets from a local file.
@@ -60,7 +81,7 @@ function authorize(credentials) {
     return new Promise(
         (resolve, reject) => {
             fs.readFile(TOKEN_PATH, function (err, token) {
-                if(err) reject(err);
+                if (err) reject(err);
                 oauth2Client.credentials = JSON.parse(token);
                 resolve(oauth2Client);
                 //callback(oauth2Client);    
@@ -152,7 +173,7 @@ function listFiles(auth) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 
-function gUpload(auth,file) {
+function gUpload(auth, file) {
     var fileMetadata = {
         'name': file.name
     };
@@ -162,7 +183,7 @@ function gUpload(auth,file) {
     };
 
     var service = google.drive({ version: 'v3', auth: auth });
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         service.files.create({
             resource: fileMetadata,
             media: media,
@@ -175,14 +196,14 @@ function gUpload(auth,file) {
                     if (err) return console.log(err);
                     console.log('File deleted successfully');
                 });
-                resolve(gfile.id )
+                resolve(gfile.id)
             }
         });
     })
-    
+
 }
 
-function gDelete(auth,id) {
+function gDelete(auth, id) {
     var service = google.drive({ version: 'v3', auth: auth });
     return new Promise((resolve, reject) => {
         service.files.delete({
@@ -194,6 +215,6 @@ function gDelete(auth,id) {
             } else {
                 resolve({ success: true });
             }
-        }); 
+        });
     })
 }

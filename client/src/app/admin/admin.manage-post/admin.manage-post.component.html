@@ -6,12 +6,25 @@
         <label>Not approved</label>
       </div>
     </div>
+
     <div>
       <table class="ui celled  table table_panel segment">
         <div *ngIf="loading" class="ui active dimmer">
           <div class="ui text loader">Loading</div>
         </div>
         <thead>
+          <tr>
+            <th colspan="5">
+
+              <div class="ui success message">
+                <i class="close icon"></i>
+                <div class="header">
+                    You have <strong>{{unapproved_count}}</strong> unapproved posts
+                </div>
+                <i>Displayed {{loaded}} posts</i>
+              </div>
+            </th>
+          </tr>
           <tr>
             <th class="one wide">Approved</th>
             <th class="four wide">User</th>
@@ -24,7 +37,7 @@
           <tr *ngFor="let post of posts">
             <td class="collapsing">
               <div class="ui fitted slider checkbox">
-                <input type="checkbox" [checked]="post.approval">
+                <input [id]="post._id" type="checkbox" [checked]="post.approval" (change)="choosePostApprove(post._id)">
                 <label></label>
               </div>
             </td>
@@ -55,7 +68,7 @@
             </th>
             <th colspan="3">
               <div class="right floated two ui buttons">
-                <button class="ui blue button">Commit</button>
+                <button [ngClass]="{'loading':loading}" [disabled]="loading" (click)="onCommit()" class="ui blue button">Commit</button>
                 <button (click)="onGetWithFilter()" class="ui  button">More post</button>
               </div>
             </th>
@@ -67,8 +80,8 @@
   <div *ngIf="showInfo" class="spec_info ui segments">
     <div class="btn_holder ui segment ">
       <button (click)="onBack()" class="ui fluid big blue left labeled icon button">
-          <i class="angle left icon"></i>
-          Back
+        <i class="angle left icon"></i>
+        Back
       </button>
     </div>
 

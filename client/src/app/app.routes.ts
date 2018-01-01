@@ -10,6 +10,8 @@ import { VisitUserComponent } from './visit-user/visit-user.component';
 import { LoginGuard } from './shared-service/login.guard';
 import { AdminComponent } from './admin/admin.component';
 import { PrivateRoutes } from './admin/private.routes'
+import { AdminGuard } from './admin/admin.guard';
+import { OauthComponent } from './oauth.component';
 
 const ROUTES:Routes = [
     {path:"", component:MainPageComponent},
@@ -18,8 +20,10 @@ const ROUTES:Routes = [
     {path:"post/:_id", component:SpecPostComponent},
     {path:"post", component:PostComponent},
     {path:"visit/:id", component:VisitUserComponent},
-    {path:'private',component:AdminComponent,children:PrivateRoutes},
+    {path:'private',component:AdminComponent,children:PrivateRoutes, canActivate:[AdminGuard]},
+    {path: 'oauth', component: OauthComponent },
     {path: '**', component: MainPageComponent },
+    
 
 ]
 

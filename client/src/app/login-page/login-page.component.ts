@@ -18,6 +18,7 @@ import { PostService } from '../shared-service/post.service';
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
 import { Comment } from '../../models/Comments';
+import { GLOBAL_VAR } from '../shared-service/shared-service';
 
 @Component({
   selector: 'app-login-page',
@@ -72,7 +73,7 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
                   localStorage.setItem('currentUser',JSON.stringify(this.user));
               }
               if(data.admin && data.admin === true)
-                this.router.navigate(['private'])
+                this.router.navigate(['private/post'])
               else this.router.navigate(['user']);
             }
           })
@@ -96,5 +97,11 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
   onFailMess() {
     this.failMess = false;
   }
+
+  onGoogleOAuth(){
+    //window.open('http://127.0.0.1:3000/fetch/google/oauth');
+    window.location.replace(GLOBAL_VAR.APP_URL_PREFIX + "google/oauth");
+  }
+
 
 }

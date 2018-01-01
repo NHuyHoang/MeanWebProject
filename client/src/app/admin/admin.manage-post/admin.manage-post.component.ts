@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit,AfterViewChecked} from '@angular/core';
 import { PrivatePostService } from '../private-services/private-post.service';
 import { PostService, DateTimeFormatService } from '../../shared-service/shared-service';
 import { Router } from '@angular/router'
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './admin.manage-post.component.html',
   styleUrls: ['./admin.manage-post.component.css']
 })
-export class AdManagePostComponent implements OnInit,AfterViewInit {
+export class AdManagePostComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private showInfo = false;
   private loading = true;
   private posts = [];
@@ -19,7 +19,10 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
   private loaded = 0;
   private post = new BehaviorSubject<any>({});
   private user = new BehaviorSubject<any>({});
-  private offset = {x:0,y:0};
+  private point = 1;
+  private offset = { x: 0, y: 0 };
+  private unapproved_count = 0;
+  private approve_list = [];
 
   constructor( @Inject(PrivatePostService) private prPostSv,
     @Inject(PostService) private postSv,
@@ -27,13 +30,28 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
     @Inject(Router) private router) {
     this.onGetPost();
     this.post.subscribe(p => {
-      if(p !== undefined)
+      if (p.userpost !== undefined) {
         this.user.next(p.userpost);
+
+        console.log(p.userpost);
+        this.point = p.userpost.point;
+      }
     })
+
+    this.prPostSv.unApprovedCount().subscribe(result => {
+      this.unapproved_count = result.count;
+    });
   }
 
-  ngAfterViewInit(){
-   
+  ngAfterViewInit() {
+
+  }
+
+  ngAfterViewChecked(){
+    $(`.ui.rating`).rating({
+      initialRating: this.point,
+      maxRating: 5
+    });
   }
 
   ngOnInit() {
@@ -44,6 +62,7 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
   }
 
   onGetPost(filter?) {
+    this.approve_list = [];
     if (filter === undefined)
       filter = {}
     filter.skip = this.loaded;
@@ -61,7 +80,7 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
       })
 
       this.posts = this.posts.concat(holder);
-      this.loaded += this.posts.length;
+      this.loaded += holder.length;
       console.log(this.posts)
     });
   }
@@ -82,14 +101,14 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
     $('.table_info').transition('fly left');
     this.post.next(post);
     this.showInfo = true;
-    
+
     //this.router.navigate(['post', id]);
   }
 
-  onBack(){
+  onBack() {
     $('.table_info').transition('fly left');
     this.showInfo = false;
-    window.scrollTo(this.offset.x,this.offset.y);
+    window.scrollTo(this.offset.x, this.offset.y);
   }
 
   onGetWithFilter() {
@@ -101,5 +120,24 @@ export class AdManagePostComponent implements OnInit,AfterViewInit {
       this.onGetPost();
   }
 
+  choosePostApprove(id) {
+    if ($(`#${id}`).is(':checked')) {
+      this.approve_list.push(id);
+    }
+    else {
+      this.approve_list.splice(this.approve_list.indexOf(id), 1);
+    }
+  }
+
+  onCommit() {
+    this.loading = true;
+
+    let obj = { idArr: this.approve_list };
+    console.log(obj);
+    this.prPostSv.approve(obj).subscribe(result => {
+      if (result.success)
+        this.loading = false
+    });
+  }
 
 }

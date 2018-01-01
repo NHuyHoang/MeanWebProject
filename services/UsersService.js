@@ -1,21 +1,43 @@
 const mongoose = require('mongoose');
 const User = require('../models/users');
+const Post = require('../models/posts');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
 module.exports = {
 	//get all user
-	getAll: () => {
-		return User.find({},(err,data) => {
-			if(err) throw err;
-			return data;
-		})
+	getAll: (skip) => {
+		let promise1 = 
+			User.find({},{email:1,name:1,img:1,point:1}).limit(20).skip(skip).lean();
+		return Promise.all([promise1])
+				.then(values => {
+					let result = [];
+					return new Promise((res,rej)=>{
+						values[0].forEach(user =>{
+							Post.find({userpost:user._id}).count().then(c =>{
+								let holder = user;
+								holder.postCount = c;
+								result.push(holder);
+								//console.log(result);
+								if(result.length == values[0].length){
+									res(result);
+								} 
+							})
+						})
+					})
+				})		
+	},
+	countUser:()=>{
+		return User.find({}).count();
 	},
 	//find user by email
 	getByEmail: (email) => {
-		return User.findOne({email:email},(err, data) =>{
-			if(err) throw err;
-			return data;
+		return new Promise((res,rej)=>{
+			User.findOne({email:email},{email:1,_id:1,img:1,point:1,name:1}).lean()
+			.then(data => {
+				if(data === null) rej();
+				else res(data);
+			})
 		})
 	},
 	getByEmailPass: (email,pass) => {

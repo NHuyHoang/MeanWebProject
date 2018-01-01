@@ -5,14 +5,13 @@ import { RouterModule } from '@angular/router';
 import { AdManageUserComponent } from './admin.manage-user/admin.manage-user.component';
 import { AdManagePostComponent } from './admin.manage-post/admin.manage-post.component';
 import { PrivatePostService } from './private-services/private-post.service';
-import { SpecInfoComponent } from './admin.manage-post/spec-info/spec-info.component';
-import { MinifiedPostComponent } from '../minified-post/minified-post.component';
 import { MinifiedPostModule } from '../minified-post/minified-post.module';
+import { PrivateUserService } from './private-services/private-user.service';
 
 @NgModule({
-    declarations:[ AdminComponent, AdManageUserComponent, AdManagePostComponent, SpecInfoComponent ],
+    declarations:[ AdminComponent, AdManageUserComponent, AdManagePostComponent ],
     imports:[ CommonModule,RouterModule,MinifiedPostModule ],
     exports:[],
-    providers:[PrivatePostService]
+    providers:[PrivatePostService,PrivateUserService]
 })
 export class AdminModule{}

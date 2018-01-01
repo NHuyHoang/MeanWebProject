@@ -1,3 +1,47 @@
-<p>
-  admin.manage-user works!
-</p>
+<div class="main_panel">
+  <div class="ui success message">
+    <div class="header">
+      {{count}} users
+    </div>
+    <i>Displayed {{loaded}} users</i>
+  </div>
+  <table class="ui celled  table table_panel segment">
+    <div *ngIf="loading" class="ui active dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+    <thead>
+      <tr>
+        <th class="four wide">User</th>
+        <th class="four wide">Point</th>
+        <th class="four wide">Email</th>
+        <th class="four wide">Post</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>
+          <h4 class="ui image header">
+            <img [src]="user?.img" class="ui mini rounded image">
+            <div class="content">
+              {{user.name}}
+            </div>
+          </h4>
+        </td>
+        <td>
+          <div [id]="user._id" class="ui star rating"></div>
+        </td>
+        <td>
+          <strong>{{user.email}}</strong>
+        </td>
+        <td>
+          <p>{{user.postCount}}</p>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+
+  <button (click)="getUser()" class="ui big fluid button">More user</button>
+
+</div>

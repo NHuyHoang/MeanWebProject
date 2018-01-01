@@ -5,7 +5,7 @@
       <div class="" id="content_login" [ngClass]="{'ui loading form':isLoading}">
       <div class="loginFail" *ngIf="failMess" (click)="onFailMess()"><h1>Wrong email or password, please try again</h1></div>
       <header [ngStyle]="{'filter': isLoading ? 'blur(2px)':'blur(0px)'}">Welcome</header>
-      <form class="ui big  form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" [ngStyle]="{'filter': isLoading ? 'blur(2px)':'blur(0px)'}">
+      <form class="ui big  form" [formGroup]="loginForm" [ngStyle]="{'filter': isLoading ? 'blur(2px)':'blur(0px)'}">
         <div class=" field">
           <div class="ui fluid icon input">
             <input id="email" placeholder="Your email" type="email" email formControlName="email">
@@ -20,7 +20,7 @@
             <i *ngIf="loginForm.controls['pass'].invalid" class="red remove icon"></i>
           </div>
         </div>
-        <button class="ui large positive button" [disabled]="loginForm.invalid">Sign in</button>
+        <button (click)="onSubmit()"  class="ui large positive button" [disabled]="loginForm.invalid">Sign in</button>
         <div class="ui horizontal divider">
           <p>OR</p>
         </div>
@@ -28,7 +28,7 @@
           <i class="facebook icon"></i>
           Login with Facebook
         </button>
-        <button id="gg_btn" class="ui google plus button">
+        <button  (click)="onGoogleOAuth()"  id="gg_btn" class="ui google plus button">
           <i class="google plus icon"></i>
           Login with Google
         </button>

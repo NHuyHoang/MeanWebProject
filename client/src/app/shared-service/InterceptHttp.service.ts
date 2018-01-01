@@ -19,6 +19,7 @@ export class InterceptedHttp extends Http{
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
             options.headers.set('Authorization', 'Bearer ' + currentUser.token);
+            //options.headers.set("Access-Control-Allow-Origin", "*");
         }
  
         return options;

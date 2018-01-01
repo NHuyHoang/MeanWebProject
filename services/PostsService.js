@@ -322,13 +322,33 @@ module.exports = {
 	adminGetAll: (filter) => {
 		let objFilter = {};
 		if(filter.approval !== undefined)
-			objFilter.approval = filter.approval;
+			objFilter.approval = filter.approval;	
 		return Post.find(objFilter,{comment:0})
 			.populate(['userpost'])
 			.sort({ "date":-1 }).limit(20).skip(filter.skip)
 			.then(data => data)
 			.catch(reject => reject)
 	},
+
+	adminUnapprovedCount:() => {
+		return Post.find({approval:false}).count();
+	},
+
+	adminApprovePost:(postId)=>{
+		let count = 0;
+		return new Promise((resolve,reject) => {
+			postId.idArr.forEach(id => {
+				Post.update({_id:id},{$set:{approval:true,available:true}},(err,result)=>{
+					if(err) reject({success:false});
+					else count++;
+					if(count == postId.idArr.length)
+						resolve({success:true});
+				})
+			})
+		})
+
+
+	}
 
 }
 

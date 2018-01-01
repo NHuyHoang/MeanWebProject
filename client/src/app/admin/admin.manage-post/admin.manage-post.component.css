@@ -26,3 +26,9 @@
     width:100%;
     text-align: left;
 }
+
+.spec_info{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}

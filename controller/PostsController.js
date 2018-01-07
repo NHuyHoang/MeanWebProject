@@ -109,7 +109,9 @@ module.exports = {
 		PostsService.getVipPost(req.body).then(data=>res.send(data));
 	},
 	getPostCountByUserId:(req,res) => {
-		PostsService.getPostCountByUserId(req.body.id).then(data => res.send(data));
+		PostsService.getPostCountByUserId(req.body.id).then(data => {
+			res.send(data)
+		});
 	},
 	save:(req,res)=>{
 		if(!req.body) res.send({message:"invalid request"});
@@ -147,6 +149,15 @@ module.exports = {
 							res.send(data);
 						}).catch(err => res.send(err));
 				}).catch(err => res.sendStatus(404).send('Unauthorized'));
+	},
+	activateVip:(req,res)=>{
+		if(!req.body) res.send({message:"invalid request"});
+		PostsService.activateVip(req.body)
+			.then(data => {
+				if(data.nModified == 1)
+					res.send({success:true});
+				else res.send({success:false});
+			});
 	}
 
 }

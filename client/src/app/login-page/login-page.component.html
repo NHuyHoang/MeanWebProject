@@ -24,7 +24,7 @@
         <div class="ui horizontal divider">
           <p>OR</p>
         </div>
-        <button disabled id="fb_btn" class="ui facebook button">
+        <button (click)="onFacebookOAuth()" id="fb_btn" class="ui facebook button">
           <i class="facebook icon"></i>
           Login with Facebook
         </button>
@@ -34,9 +34,7 @@
         </button>
         <div class="ui divider">
         </div>
-        <h5>You don't have any account? Create one &nbsp;
-          <a>here</a>
-        </h5>
+        
       </form>
     </div>
   </div>

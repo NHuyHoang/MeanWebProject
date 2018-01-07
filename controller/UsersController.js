@@ -79,5 +79,10 @@ module.exports = {
 				resolve(req.user);
 		})
 		p.then(user => res.send(user));
+	},
+	getManyUser:(req,res) => {
+		if(!req.body || !req.body.idArr) res.send({message:"invalid request"});
+		else UsersService.getManyUser(req.body.idArr)
+				.then(result => res.send(result));
 	}
 }

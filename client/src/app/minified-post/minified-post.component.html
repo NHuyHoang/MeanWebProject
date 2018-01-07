@@ -1,13 +1,16 @@
-<div id="post" class="ui raised segments">
+<div id="post" class="ui raised segments" [ngClass]="{'disabled':!post.approval}" >
   <div id="post_info">
     <div class="post_ava">
       <img (click)="onNavigateUserHome()" id="avatar" [src]=user.img>
     </div>
-    <div *ngIf="onCompareDate(post?.vipexpire)" class="ribbon-wrapper-green"><div class="ribbon-green">VIP</div></div>
+    <div *ngIf="isVip" class="ribbon-wrapper-green">
+      <div class="ribbon-green">VIP</div>
+    </div>
     <div class="post_info_item">
-      
+
       <div class="post_userinf">
-        <div>{{user?.name}}</div>
+        <div [hidden] = "infoSelection" >{{user?.name}}</div>
+        <div [hidden] = "!infoSelection" >{{user?.email}}</div>
         <div id="post_user_rating ">
           <div [id]="postIdAsync | async " class="ui mini star rating">
             <i class="icon"></i>
@@ -17,20 +20,17 @@
             <i class="icon"></i>
           </div>
         </div>
-        <div>
-          <i class="mail icon"></i>
-        
-        
-
+        <div (click)="onToggleNameEmail()">
+          <i class="mail icon" data-content="Hello. This is a wide pop-up which allows for lots of content with additional space. You can fit a lot of words here and the paragraphs will be pretty wide." data-variation="wide"></i>
         </div>
         <div *ngIf="onCheckUserPost()">
           <i *ngIf="onCheckAvailable()" class=" unhide icon"></i>
           <i *ngIf="!onCheckAvailable()" class=" red hide icon"></i>
-          <i  class="configure icon"></i>
+          <i data-toggle="collapse" [attr.data-target]="'#'+post._id+'cl'" class="configure icon"></i>
         </div>
-        
+
       </div>
-      <div (click)="onPostRedirect()"  class="post_title">
+      <div (click)="onPostRedirect()" class="post_title">
         <div>{{ellipsisTitle}} </div>
       </div>
       <div class="post_info">
@@ -50,26 +50,35 @@
       </div>
     </div>
   </div>
+  <div class="collapse" [id]="post._id + 'cl'">
+    <form class="ui form vip_form">
+      <div class="field">
+        <label>Date expire</label>
+        <div class="two fields">
+          <div class="field">
+            <input [(ngModel)]="vipexpire" type="date" name="vipinput" />
+          </div>
+          <div class="field">
+            <button [disabled]="vipexpire === undefined || !onCompareDate2()" (click)="onActiveVip()" class="ui fluid yellow button">Activate</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
   <div class="post_product">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-
-      <!-- <li class="nav-item">
-        <a (click)="onToggle('tab1')" class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">Mobile</a>
-      </li>
-
-      <li class="nav-item">
-        <a (click)="onToggle('tab2')" class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab">Profile</a>
-      </li> -->
       <li *ngFor="let product of products" class="nav-item">
-        <a [ngClass]="{'active':product.active}" (click)="onToggleTab(product._id)" class="nav-link" id="profile-tab" data-toggle="tab" href="" role="tab" aria-controls="profile"
-          aria-selected="false">{{product.category | titlecase}} <i *ngIf="product.sold" class="green check circle icon"></i></a>
+        <a [ngClass]="{'active':product.active}" (click)="onToggleTab(product._id)" class="nav-link" id="profile-tab" data-toggle="tab"
+          href="" role="tab" aria-controls="profile" aria-selected="false">{{product.category | titlecase}}
+          <i *ngIf="product.sold" class="green check circle icon"></i>
+        </a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div *ngFor="let product of products" class="post_holder">
         <div [hidden]="!product.active" class="tab-pane show active" id="" role="tabpanel">
-          <product-info [isSpec]="isSpec" [product]="product" [cmtCount]="cmtCount" ></product-info>
-          
+          <product-info [isSpec]="isSpec" [product]="product" [cmtCount]="cmtCount"></product-info>
+
         </div>
       </div>
     </div>

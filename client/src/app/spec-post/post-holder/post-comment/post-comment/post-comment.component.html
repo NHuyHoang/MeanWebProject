@@ -21,7 +21,7 @@
                     </a>
                 </div>
             </div>
-            <div  class="comment_reply collapse" [id]="comment._id" [ngClass]="{'show':this.collapsed}">
+            <div  class="comment_reply collapse" [id]="comment._id" [ngClass]="{'show':collapsed | async}">
                 <div *ngFor="let rep of replySub | async" id="comments">
                     <div class="comment_item">
                         <div class="comment_ava">

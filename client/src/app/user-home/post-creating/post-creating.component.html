@@ -1,19 +1,19 @@
 <div class="ui basic modal">
-    <div class="ui icon header">
-      <i class="checkmark icon"></i>
-      Successfully post!!!
+  <div class="ui icon header">
+    <i class="checkmark icon"></i>
+    Successfully post!!!
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      Stay
     </div>
-    <div class="actions">
-      <div class="ui red basic cancel inverted button">
-        <i class="remove icon"></i>
-        Stay
-      </div>
-      <div (click)="onNavigatePost()" class="ui green ok inverted button">
-        <i class="checkmark icon"></i>
-        View
-      </div>
+    <div (click)="onNavigatePost()" class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      View
     </div>
   </div>
+</div>
 <div id="main_panel" class="ui raised segment">
   <p></p>
   <div class="header_segment">
@@ -70,7 +70,9 @@
           </select>
         </div>
         <div class="field">
-          <button [disabled]="postForm.controls['subareaid'].value === null" (click)="onNext()" class="ui fluid blue button next_step_btn">Next step</button>
+          <button [disabled]="postForm.controls['subareaid'].value === null || postForm.controls['title'].value ==='' || postForm.controls['title'].value === null " (click)="onNext()" class="ui fluid blue button next_step_btn">
+            Next step
+          </button>
         </div>
 
       </form>

@@ -100,8 +100,11 @@ export class LoginPageComponent implements AfterContentChecked, OnInit {
 
   onGoogleOAuth(){
     //window.open('http://127.0.0.1:3000/fetch/google/oauth');
-    window.location.replace(GLOBAL_VAR.APP_URL_PREFIX + "google/oauth");
+    window.location.replace( GLOBAL_VAR.APP_URL_PREFIX + "/google/oauth");
   }
 
+  onFacebookOAuth(){
+    window.location.replace(GLOBAL_VAR.APP_URL_PREFIX + "/facebook/oauth");
+  }
 
 }

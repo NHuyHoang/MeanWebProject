@@ -32,8 +32,6 @@ export class AdManagePostComponent implements OnInit, AfterViewInit, AfterViewCh
     this.post.subscribe(p => {
       if (p.userpost !== undefined) {
         this.user.next(p.userpost);
-
-        console.log(p.userpost);
         this.point = p.userpost.point;
       }
     })
@@ -67,7 +65,6 @@ export class AdManagePostComponent implements OnInit, AfterViewInit, AfterViewCh
       filter = {}
     filter.skip = this.loaded;
     this.prPostSv.getAll(filter).subscribe(result => {
-      console.log(result);
       this.loading = false;
 
       let holder = this.postSv.formatPostList(result)
@@ -81,7 +78,6 @@ export class AdManagePostComponent implements OnInit, AfterViewInit, AfterViewCh
 
       this.posts = this.posts.concat(holder);
       this.loaded += holder.length;
-      console.log(this.posts)
     });
   }
 
@@ -130,10 +126,10 @@ export class AdManagePostComponent implements OnInit, AfterViewInit, AfterViewCh
   }
 
   onCommit() {
+    if(this.approve_list.length == 0) return;
     this.loading = true;
 
     let obj = { idArr: this.approve_list };
-    console.log(obj);
     this.prPostSv.approve(obj).subscribe(result => {
       if (result.success)
         this.loading = false

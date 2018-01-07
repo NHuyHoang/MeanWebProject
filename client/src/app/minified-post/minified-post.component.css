@@ -203,3 +203,11 @@ product_specific_info
   .ribbon-green:after {
     right: 0;
   }
+
+  .vip_form{
+      display:relative;
+      width:50%;
+      margin-left: auto!important;
+      margin-right: auto!important;
+      text-align: left;
+  }

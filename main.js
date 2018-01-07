@@ -18,7 +18,7 @@ const fetch = require('./routes/fetch');
 
 
 let corsOption = {
-    "origin": "http://127.0.0.1:4200",
+    "origin": ["http://127.0.0.1:4200","http://localhost:4200"],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "allowedHeaders":'X-Requested-With,content-type,Authorization',
     "preflightContinue": true,

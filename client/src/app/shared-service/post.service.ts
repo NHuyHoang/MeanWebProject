@@ -16,6 +16,7 @@ export class PostService {
   private GET_WITH_FILTER_URL = `${this.URL_PREFIX}getwithfilter`;
   private GET_POST_COUNT_URL = `${this.URL_PREFIX}getpostcount`;
   private SAVE_POST = `${this.URL_PREFIX}save`;
+  private ACTIVATE_VIP = `${this.URL_PREFIX}activevip`;
 
   private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' })});
   private body = new URLSearchParams();
@@ -94,13 +95,19 @@ export class PostService {
 
   getPostCount(id){
     this.body.set('id',id);
-    return this.http.post(this.GET_POST_COUNT_URL).map(
-      (res:Response) => res.json()
+    return this.http.post(this.GET_POST_COUNT_URL,this.body).map(
+      (res:Response) =>  res.json()
     )
   }
 
   save(post){
     return this.http.post(this.SAVE_POST,JSON.stringify(post),this.options).map(
+      (res:Response) => res.json()
+    )
+  }
+
+  activateVip(obj){
+    return this.http.post(this.ACTIVATE_VIP,JSON.stringify(obj),this.options).map(
       (res:Response) => res.json()
     )
   }

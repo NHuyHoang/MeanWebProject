@@ -77,5 +77,14 @@ module.exports = {
 			if(err) throw err;
 			doc.remove();//trigger the pre remove -> delete all post
 		});
+	},
+	getManyUser:(idArr) => {
+		let filter = [];
+		idArr.forEach(id => {
+			let obj = {_id:id};
+			filter.push(obj);
+		})
+		return User.find({$or:filter},{_id:1,name:1,email:1,img:1,point:1}).lean()
+				.then(data => data);	
 	}
 }

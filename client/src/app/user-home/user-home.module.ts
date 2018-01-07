@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';//import this to use router-outle
 import { UserPostComponent } from './user-post/user-post.component';
 import { SharedModule } from '../../shared-module/shared.module';
 import { ProductModule } from './post-creating/product-form/product.module';
+import { User_ROUTING } from './user-home.route';
 
 @NgModule({
     declarations:[ 
@@ -23,7 +24,8 @@ import { ProductModule } from './post-creating/product-form/product.module';
         RouterModule,FormsModule,
         SharedModule,
         ProductModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        User_ROUTING
     ],
     providers:[PostService, AreaService, CategoryService]
 })

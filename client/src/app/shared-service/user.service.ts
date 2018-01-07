@@ -9,9 +9,10 @@ export class UserService {
   }
 
   getUserInfo(id:string){
-    this.body.append('id',id);
+    this.body.set('id',id);
     return this.http.post(this.GET_USER_BYID,this.body).map(
       (res:Response) => res.json()
     )
   }
+  
 }

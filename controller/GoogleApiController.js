@@ -7,10 +7,11 @@ const jwt = require('jsonwebtoken');
 //google authentication
 var passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+const FacebookStrategy = require('passport-facebook');
 const client_secret = require('../credential/client_secret_oauth.json')
 
 const User = require('../models/users');
-const UserServices = require('../services/UsersService')
+const UserServices = require('../services/UsersService');
 const mongoose = require('mongoose');
 const query = require('querystring');
 const _ = require('lodash');

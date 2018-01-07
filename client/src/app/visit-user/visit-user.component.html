@@ -40,7 +40,7 @@
       <router-outlet></router-outlet>
 
         <div class="post_holder" *ngFor="let post of posts">
-          <mini-post [user]="user" [post]="post"></mini-post>
+          <mini-post *ngIf="post.approval" [user]="user" [post]="post"></mini-post>
         </div>
 
       <div *ngIf="loading" class="loading_post">

@@ -3,7 +3,7 @@ import { Component, OnInit, OnChanges, AfterViewInit, Input, Inject, SimpleChang
 import { User } from '../../models/User';
 import { Post } from '../../models/Posts';
 import { Router } from '@angular/router';
-import { AreaService, DateTimeFormatService, CategoryService } from '../shared-service/shared-service'
+import { AreaService, DateTimeFormatService, CategoryService, PostService } from '../shared-service/shared-service'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 declare var $:any;
@@ -18,6 +18,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('post') public post;
   @Input('isSpec') public isSpec;
   @Input('isHomeMode') public homeMode;
+  private vipexpire:any;
 
   private tab1 = true;
   private tab2 = false;
@@ -29,6 +30,8 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
   private area;
   private datePost = { date: "", time: "" };
   private cmtCount = 0;
+  private isVip = false;
+  private infoSelection = true;
 
   private userAsyncObj = new BehaviorSubject<any>({});
   private postIdAsync = new BehaviorSubject<string>('default');
@@ -38,7 +41,8 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
     @Inject(AreaService) private areaService,
     @Inject(DateTimeFormatService) private datetimeformatSV,
     @Inject(CategoryService) private categorySV,
-    @Inject(Router) private router) {
+    @Inject(Router) private router,
+    @Inject(PostService) private postSV) {
     
     //subscribe for user and postId for setting unique point of each post
      
@@ -55,6 +59,7 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
       this.datePost.date = this.datetimeformatSV.formatDate(this.post.date);
       this.datePost.time = this.post.date.getHours().toString() + "h" + this.post.date.getMinutes().toString();
       this.cmtCount = this.post.comment.length;
+      this.isVip = this.onCompareDate(this.post.vipexpire);
       //get area name
       this.areaService.getChildArea(this.post.subareaid).subscribe((data) => {
         this.area = data;
@@ -144,5 +149,29 @@ export class MinifiedPostComponent implements OnInit, OnChanges, AfterViewInit {
     this.router.navigate(['visit',this.post.userpost._id]);
   }
 
+  onActiveVip(){
+    console.log(this.post.date);
+    let d = new Date(this.vipexpire);
+    let obj = {
+      id:this.post._id,
+      date:d.toISOString()
+    }
+    console.log(obj);
+    if(this.onCompareDate2()){
+      this.postSV.activateVip(obj).subscribe(result =>{
+        if(result.success)
+          this.isVip = true;
+      });
+    }
+  }
+
+  onCompareDate2(){
+    let d = new Date(this.vipexpire);
+    return d > this.post.date;
+  }
+
+  onToggleNameEmail(){
+    this.infoSelection = !this.infoSelection;
+  }
  
 }

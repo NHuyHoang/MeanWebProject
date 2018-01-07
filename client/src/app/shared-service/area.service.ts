@@ -14,7 +14,7 @@ export class AreaService {
    }
 
   getChildArea(id:string){
-    this.body.append('id',id);
+    this.body.set('id',id);
     
     return this.http.post(this.GET_CHILD_AREA_URL,this.body).map(
       (res:Response) => res.json()

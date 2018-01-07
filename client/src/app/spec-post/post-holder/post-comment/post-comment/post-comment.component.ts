@@ -28,9 +28,8 @@ export class PostCommentComponent implements OnInit, OnChanges {
   private showReply = false;
   private dateComment = {date:"",time:""};
   private signInUser;
-  private collapsed = false;
+  private collapsed = new BehaviorSubject<boolean>(false);
   private replySub = new Subject<any[]>();
-  private done = false;
   constructor(
     @Inject(UserService) private userSV,
     @Inject(DateTimeFormatService) private datetimeformatSV,
@@ -65,25 +64,12 @@ export class PostCommentComponent implements OnInit, OnChanges {
       this.reply = [];
       if(this.comment.reply !== undefined){
         //this.reply = this.comment.reply;
-        console.log(this.reply);
 
         this.onGetUserReply(this.comment.reply)
           .then((result:any[]) => {
             this.reply = result;
             this.replySub.next(result);
-            this.done = true;
           })
-
-        /* this.reply.forEach((element,index,obj) => {
-          let date = this.datetimeformatSV.formatDate(element.date);                  //format date time reply
-          let time = element.date.getHours().toString()
-                     + "h" + element.date.getMinutes().toString();
-          obj[index].date = `${time} ${date}`;                                           
-          this.userSV.getUserInfo(element.usercmt).subscribe(                        //get the user reply info
-            user =>{
-              obj[index].usercmt = user;
-            })
-        }) */
       }
       this.replyForm.patchValue({
         '_cmtid':this.comment._id
@@ -97,17 +83,14 @@ export class PostCommentComponent implements OnInit, OnChanges {
   
   //submit reply
   onSubmitReply(){
-    if(this.replyForm.invalid || this.signInUser._id === null) {
-      alert("Please login for comment or reply another user");
-      return
-    };
+    
     this.replyForm.patchValue({
       'date':(new Date()).toISOString()
     })
+    this.collapsed.next(true);
     this.postSV.pushRep(this.replyForm.value).subscribe(data => {                       //save the reply to database
       if(data.success === true)                                                         //if success push a reply to comment
-      {                                                                     
-        this.collapsed = true;
+      {                                                      
         this.showReply = true;
         data.data.usercmt = this.signInUser;
         let dateHolder = new Date(data.data.date);
@@ -115,7 +98,8 @@ export class PostCommentComponent implements OnInit, OnChanges {
         let time = dateHolder.getHours().toString()
                    + "h" + dateHolder.getMinutes().toString();
         data.data.date =  `${time} ${date}`;
-        this.reply.push(data.data)
+        this.reply.push(data.data);
+        this.replySub.next(this.reply);
       }
     })
   }
@@ -130,12 +114,10 @@ export class PostCommentComponent implements OnInit, OnChanges {
         let date = this.datetimeformatSV.formatDate(element.date);                  //format date time reply
         let time = element.date.getHours().toString()
                    + "h" + element.date.getMinutes().toString();
-        element.date = `${time} ${date}`;    
-        console.log(element.usercmt);                                       
+        element.date = `${time} ${date}`;                                
         this.userSV.getUserInfo(element.usercmt).subscribe(                        //get the user reply info
           user =>{
             element.usercmt = user;
-            console.log(element.usercmt._id+ "|"+user._id);
             result.push(element);
             if(result.length == repArr.length)
               resolve(result);

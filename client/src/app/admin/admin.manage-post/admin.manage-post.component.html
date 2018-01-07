@@ -68,7 +68,7 @@
             </th>
             <th colspan="3">
               <div class="right floated two ui buttons">
-                <button [ngClass]="{'loading':loading}" [disabled]="loading" (click)="onCommit()" class="ui blue button">Commit</button>
+                <button [ngClass]="{'loading':loading}" [disabled]="loading || approve_list.length == 0" (click)="onCommit()" class="ui blue button">Commit</button>
                 <button (click)="onGetWithFilter()" class="ui  button">More post</button>
               </div>
             </th>

@@ -346,7 +346,10 @@ module.exports = {
 				})
 			})
 		})
+	},
 
+	activateVip:(obj)=>{
+		return Post.update({_id:obj.id},{$set:{vipexpire:obj.date}})
 
 	}
 

@@ -6,8 +6,10 @@ const AreasController = require('../controller/AreasController');
 const CatesController = require('../controller/CatesController');
 const UploadController = require('../controller/UploadController');
 const GApiController = require('../controller/GoogleApiController');
+const FbApiController = require('../controller/FacebookApiController');
 const passport = require('passport');
 GApiController.passportInit();
+FbApiController.passportInit();
 
 const expressJwt = require('express-jwt');
 
@@ -35,7 +37,8 @@ router.post(`${prefix}`, UsersController.getById)
 	  .post(`${prefix}update`,jwtExpress(),UsersController.update)
 	  .get(`${prefix}verify`,UsersController.verify)
 	  .get(`${prefix}count`,jwtExpress(),UsersController.countUser)
-	  .get(`${prefix}oauth`,UsersController.oauth);
+	  .get(`${prefix}oauth`,UsersController.oauth)
+	  .post(`${prefix}getusersinfo`,UsersController.getManyUser);
 //post
 prefix = '/post/';
 router.post(`${prefix}getall`,PostsController.getAll)
@@ -51,7 +54,8 @@ router.post(`${prefix}getall`,PostsController.getAll)
 	  .post(`${prefix}getwithfilter`,PostsController.getWithFilter)
 	  .post(`${prefix}getvippost`,PostsController.getVipPost)
 	  .post(`${prefix}getpostcount`,PostsController.getPostCountByUserId)
-	  .post(`${prefix}save`,jwtExpress(),PostsController.save);
+	  .post(`${prefix}save`,jwtExpress(),PostsController.save)
+	  .post(`${prefix}activevip`,jwtExpress(),PostsController.activateVip);
 //Area
 prefix = '/area/';
 router.post(`${prefix}getchildarea`,AreasController.getChildArea)
@@ -65,6 +69,11 @@ router.post(`${prefix}drive/upload`,GApiController.GUpload)
 	  .post(`${prefix}drive/remove`,GApiController.GFileRemove)
 	  .get(`${prefix}oauth`, passport.authenticate('google', { scope: ['email', 'profile'] }))
 	  .get(`${prefix}oauth/redirect`,passport.authenticate('google'),GApiController.googleAuthenticated);
+prefix = '/facebook/';  
+router.get(`${prefix}oauth`,passport.authenticate('facebook',{ scope: ['email'] }))
+	  .get(`${prefix}oauth/redirect`,
+	  passport.authenticate('facebook'),FbApiController.fbAuthenticated);;
+
 //private
 prefix = '/private/';
 router.post(`${prefix}post/getall`,jwtExpress(),PostsController.adminGetAll)

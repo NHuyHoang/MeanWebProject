@@ -30,7 +30,9 @@ export class ProductInfoComponent implements OnInit,OnChanges {
       })
       this.product = this.productSV.getPrototype(this.product);
       if(this.product.categoryid !== "est")
-        this.keys = Object.keys(this.product.specificInfo);
+        if(this.product.specificInfo !==undefined)
+          this.keys = Object.keys(this.product.specificInfo);
+        else this.keys = [];
       else {
         this.keys = {
           info:[],

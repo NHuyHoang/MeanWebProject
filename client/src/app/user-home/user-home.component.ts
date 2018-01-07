@@ -36,7 +36,9 @@ export class UserHomeComponent implements OnInit, AfterContentChecked, AfterView
   ) {
     window.scrollTo(0, 0)
     this.user = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(this.user._id);
     this.postService.getPostCount(this.user._id).subscribe(data => {
+      console.log(data);
       this.postCount = data.count;
       let path = location.pathname;
       if(path === "/user/post-create")

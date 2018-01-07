@@ -1,5 +1,5 @@
 export const GLOBAL_VAR = {
-    APP_URL_PREFIX:"http://127.0.0.1:3000/fetch/",
+    APP_URL_PREFIX:"http://localhost:3000/fetch/",
     PRODUCT_ID:{
         'mobile':'59ccb33a6b406109345ed119',
         'laptop':'59ccb33a6b406109345ed118',
